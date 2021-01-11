@@ -10,15 +10,18 @@
 
 #include "Engine/Engine.h"
 
+#include "Events/Event.h"
+#include "Events/WindowEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+
 #include "Scene/Scene.h"
 #include "Scene/SceneObject.h"
-#include "Scene/Material.h"
-#include "Scene/Pass.h"
-#include "Scene/Shader.h"
-#include "Scene/Mesh.h"
-#include "Scene/Texture.h"
+#include "Scene/RenderTarget.h"
 
 #include "Components/Transform.h"
+#include "Components/Tag.h"
+#include "Components/SceneObjectDelegate.h"
 #include "Components/Camera.h"
 #include "Components/MeshFilter.h"
 #include "Components/SpriteRenderer.h"
@@ -27,6 +30,15 @@
 #include "Systems/SpriteSystem.h"
 #include "Systems/MeshFilterSystem.h"
 
-#include "Renderer/RenderTarget.h"
+#include "Resources/Mesh.h"
+#include "Resources/Shader.h"
+#include "Resources/Pass.h"
+#include "Resources/Texture.h"
+#include "Resources/Material.h"
+#include "Resources/Mesh.h"
+#include "Resources/ResourceManager.h"
+#include "Resources/ResourceManifest.h"
+
+#include <gtc/type_ptr.hpp>
 
 #endif /* Lutra_h */

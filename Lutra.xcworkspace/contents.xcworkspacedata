@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:3rdparty/Dependents.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:editor/Editor.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:examples/Examples.xcodeproj">
    </FileRef>
    <FileRef

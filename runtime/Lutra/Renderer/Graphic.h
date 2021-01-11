@@ -15,43 +15,13 @@
 namespace Lutra {
 
     struct Mesh;
+    struct SubMesh;
     class Material;
+    class Shader;
     class Texture;
     class Camera;
     class RenderTarget;
     class FrameBuffer;
-
-    struct HashFunc
-    {
-        std::size_t operator()(const std::pair<Mesh*, uint8_t> &key) const
-        {
-            using std::size_t;
-            using std::hash;
-     
-            return hash<Mesh*>()(key.first) + hash<uint8_t>()(key.second);
-        }
-        
-        std::size_t operator()(const std::pair<Material*, uint8_t> &key) const
-        {
-            using std::size_t;
-            using std::hash;
-     
-            return hash<Material*>()(key.first) + hash<uint8_t>()(key.second);
-        }
-    };
-
-    struct EqualKey
-    {
-        bool operator () (const std::pair<Mesh*, uint8_t> &lhs, const std::pair<Mesh*, uint8_t> &rhs) const
-        {
-            return lhs.first == rhs.first && lhs.second == rhs.second;
-        }
-        
-        bool operator () (const std::pair<Material*, uint8_t> &lhs, const std::pair<Material*, uint8_t> &rhs) const
-        {
-            return lhs.first == rhs.first && lhs.second == rhs.second;
-        }
-    };
 
     class Graphic
     {
@@ -70,27 +40,28 @@ namespace Lutra {
         void SetClearColor(const glm::vec4& color);
         void Clear(uint8_t flag);
         
-        void SetRenderTarget(std::shared_ptr<RenderTarget>& renderTarget);
+        void SetRenderTarget(const std::shared_ptr<RenderTarget>& renderTarget, bool binding = true);
         
-        void DrawMesh(Mesh* mesh, Material* material, Camera* camera, const glm::mat4& modelMatrix, uint8_t submesh);
+        void DrawMesh(Mesh* mesh, Material* material, Camera* camera, uint8_t submesh, uint8_t passID, const glm::mat4& modelMatrix);
         
         void Begin();
         void End();
     
     private:
         
-        std::shared_ptr<VertexArray> updateVertexArray(Mesh* mesh, uint8_t submesh);
-        std::shared_ptr<Program> updateProgram(Material* material, uint32_t passID);
+        std::shared_ptr<VertexArray> getVertexArray(Mesh* mesh, uint8_t submesh);
+        std::shared_ptr<Program> getProgram(Material* material, uint32_t passID);
         std::shared_ptr<DeviceTexture> getDeviceTextureBy(Texture* tex);
         
     private:
         
         std::unique_ptr<RenderDevice> m_renderDevice;
         
-        std::unordered_map<std::pair<Mesh*, uint8_t>, std::shared_ptr<VertexArray>, HashFunc, EqualKey> m_meshList;
-        std::unordered_map<std::pair<Material*, uint8_t>, std::shared_ptr<Program>, HashFunc, EqualKey> m_materialList;
-        std::unordered_map<Texture*, std::shared_ptr<DeviceTexture>>                                    m_textureList;
-        std::unordered_map<RenderTarget*, std::shared_ptr<FrameBuffer>>                                 m_renderTargetList;
+        std::unordered_map<std::size_t, std::shared_ptr<VertexBuffer>>  m_vboList;
+        std::unordered_map<std::size_t, std::shared_ptr<VertexArray>>   m_vaoList;
+        std::unordered_map<std::size_t, std::shared_ptr<Program>>       m_programList;
+        std::unordered_map<std::size_t, std::shared_ptr<DeviceTexture>> m_deviceTextureList;
+        std::unordered_map<std::size_t, std::shared_ptr<FrameBuffer>>   m_frameBufferList;
     };
 
 }

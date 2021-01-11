@@ -7,11 +7,12 @@
 
 #include "Engine.h"
 #include "Renderer/Context.h"
+#include "Event.h"
 
 namespace Lutra {
 
-    Engine::Engine()
-    : m_graphic(Graphic::API::OpenGL)
+    Engine::Engine(Graphic::API api)
+    : m_graphic(api)
     {
         
     }

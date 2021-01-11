@@ -25,7 +25,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BE37175A25A5ACB1003C2AA0 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		BE37175F25A5EE47003C2AA0 /* libLutra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLutra.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE37181325A6F3A7003C2AA0 /* libDependents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDependents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFA49C225A2FA5500587F63 /* Examples */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Examples; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +74,6 @@
 			children = (
 				BE37181325A6F3A7003C2AA0 /* libDependents.a */,
 				BE37175F25A5EE47003C2AA0 /* libLutra.a */,
-				BE37175A25A5ACB1003C2AA0 /* OpenGL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,12 +259,15 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/stb_image,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
 					../runtime/Lutra,
 				);
 				OTHER_LDFLAGS = (
@@ -289,12 +290,15 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/stb_image,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
 					../runtime/Lutra,
 				);
 				OTHER_LDFLAGS = (

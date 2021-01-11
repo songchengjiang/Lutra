@@ -26,7 +26,6 @@ namespace Lutra {
     void FrameBufferGL::Bind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, m_id);
-        glViewport(0, 0, m_spec.Width, m_spec.Height);
     }
 
     void FrameBufferGL::Unbind()

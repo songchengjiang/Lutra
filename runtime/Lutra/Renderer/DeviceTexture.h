@@ -35,6 +35,8 @@ namespace Lutra {
 
         virtual void Bind() const = 0;
         
+        virtual uint32_t GetID() const = 0;
+        
     };
 }
 

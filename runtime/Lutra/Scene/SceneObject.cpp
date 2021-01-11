@@ -9,9 +9,8 @@
 
 namespace Lutra {
 
-    SceneObject::SceneObject(entt::entity handle, const std::string& name, Scene *scene)
+    SceneObject::SceneObject(entt::entity handle, Scene *scene)
         : m_handle(handle)
-        , m_name(name)
         , m_scene(scene)
     {
         

@@ -13,6 +13,16 @@
 namespace Lutra {
 
     class RenderTarget;
+
+    struct Viewport
+    {
+        float X;
+        float Y;
+        float Width;
+        float Height;
+    };
+
+
     struct Camera
     {
         enum class ProjectionType {
@@ -27,6 +37,7 @@ namespace Lutra {
         float ZNear{1.0f};
         float ZFar{100.0f};
         
+        Viewport Viewport_{0.0f, 0.0f, 1.0f, 1.0f};
         std::shared_ptr<RenderTarget> RenderTarget_;
         
         glm::mat4 ViewMat;

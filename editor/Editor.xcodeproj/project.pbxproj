@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE72AA7425A849770024C494 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA7225A849770024C494 /* Application.cpp */; };
+		BE72AA7925A849D20024C494 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA7825A849D20024C494 /* main.cpp */; };
+		BE72AA7D25A84A020024C494 /* libDependents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE72AA7C25A84A020024C494 /* libDependents.a */; };
+		BE72AA7F25A84A020024C494 /* libLutra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE72AA7E25A84A020024C494 /* libLutra.a */; };
+		BE72AA8725A8527D0024C494 /* GUIWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA8525A8527D0024C494 /* GUIWindow.cpp */; };
+		BE72AA8D25A853EB0024C494 /* ProjectWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA8B25A853EB0024C494 /* ProjectWindow.cpp */; };
+		BE72AA9525A863640024C494 /* SceneWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA9325A863640024C494 /* SceneWindow.cpp */; };
+		BE72AA9A25A8AA550024C494 /* ComponentGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA9825A8AA550024C494 /* ComponentGUI.cpp */; };
+		BE72AAB025A99F3B0024C494 /* LogWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAAE25A99F3B0024C494 /* LogWindow.cpp */; };
+		BE72AAC525A9AAA10024C494 /* PropertyWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAC325A9AAA10024C494 /* PropertyWindow.cpp */; };
+		BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAC725A9AB140024C494 /* PropertyGUI.cpp */; };
+		BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */; };
+		BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA358825A9EDC7001B8E38 /* IconManager.cpp */; };
+		BEFA35A425AAB240001B8E38 /* folder.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359425AA14E3001B8E38 /* folder.png */; };
+		BEFA35A525AAB240001B8E38 /* camera.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359525AA14E3001B8E38 /* camera.png */; };
+		BEFA35A625AAB240001B8E38 /* object.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359625AA14E3001B8E38 /* object.png */; };
+		BEFA35A725AAB240001B8E38 /* image.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359725AA14E3001B8E38 /* image.png */; };
+		BEFA35A825AAB240001B8E38 /* mesh.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359825AA14E3001B8E38 /* mesh.png */; };
+		BEFA35AD25AABBC5001B8E38 /* square.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA35AB25AABBBF001B8E38 /* square.png */; };
+		BEFA35AE25AABBC5001B8E38 /* tag.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA35AC25AABBBF001B8E38 /* tag.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BE72AA6325A848D90024C494 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = Resources/Icons;
+			dstSubfolderSpec = 6;
+			files = (
+				BEFA35AD25AABBC5001B8E38 /* square.png in CopyFiles */,
+				BEFA35AE25AABBC5001B8E38 /* tag.png in CopyFiles */,
+				BEFA35A425AAB240001B8E38 /* folder.png in CopyFiles */,
+				BEFA35A525AAB240001B8E38 /* camera.png in CopyFiles */,
+				BEFA35A625AAB240001B8E38 /* object.png in CopyFiles */,
+				BEFA35A725AAB240001B8E38 /* image.png in CopyFiles */,
+				BEFA35A825AAB240001B8E38 /* mesh.png in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BE72AA6525A848D90024C494 /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE72AA7225A849770024C494 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		BE72AA7325A849770024C494 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		BE72AA7825A849D20024C494 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		BE72AA7C25A84A020024C494 /* libDependents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDependents.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE72AA7E25A84A020024C494 /* libLutra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libLutra.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE72AA8525A8527D0024C494 /* GUIWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindow.cpp; sourceTree = "<group>"; };
+		BE72AA8625A8527D0024C494 /* GUIWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIWindow.h; sourceTree = "<group>"; };
+		BE72AA8B25A853EB0024C494 /* ProjectWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectWindow.cpp; sourceTree = "<group>"; };
+		BE72AA8C25A853EB0024C494 /* ProjectWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectWindow.h; sourceTree = "<group>"; };
+		BE72AA9325A863640024C494 /* SceneWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneWindow.cpp; sourceTree = "<group>"; };
+		BE72AA9425A863640024C494 /* SceneWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneWindow.h; sourceTree = "<group>"; };
+		BE72AA9825A8AA550024C494 /* ComponentGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ComponentGUI.cpp; sourceTree = "<group>"; };
+		BE72AA9925A8AA550024C494 /* ComponentGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComponentGUI.h; sourceTree = "<group>"; };
+		BE72AAAE25A99F3B0024C494 /* LogWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogWindow.cpp; sourceTree = "<group>"; };
+		BE72AAAF25A99F3B0024C494 /* LogWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogWindow.h; sourceTree = "<group>"; };
+		BE72AAC325A9AAA10024C494 /* PropertyWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyWindow.cpp; sourceTree = "<group>"; };
+		BE72AAC425A9AAA10024C494 /* PropertyWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyWindow.h; sourceTree = "<group>"; };
+		BE72AAC725A9AB140024C494 /* PropertyGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PropertyGUI.cpp; sourceTree = "<group>"; };
+		BE72AAC825A9AB140024C494 /* PropertyGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyGUI.h; sourceTree = "<group>"; };
+		BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceWindow.cpp; sourceTree = "<group>"; };
+		BE72AAD025A9B4140024C494 /* ResourceWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceWindow.h; sourceTree = "<group>"; };
+		BEFA358825A9EDC7001B8E38 /* IconManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IconManager.cpp; sourceTree = "<group>"; };
+		BEFA358925A9EDC7001B8E38 /* IconManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
+		BEFA359425AA14E3001B8E38 /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder.png; sourceTree = "<group>"; };
+		BEFA359525AA14E3001B8E38 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		BEFA359625AA14E3001B8E38 /* object.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = object.png; sourceTree = "<group>"; };
+		BEFA359725AA14E3001B8E38 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		BEFA359825AA14E3001B8E38 /* mesh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh.png; sourceTree = "<group>"; };
+		BEFA35AB25AABBBF001B8E38 /* square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square.png; sourceTree = "<group>"; };
+		BEFA35AC25AABBBF001B8E38 /* tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tag.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE72AA6225A848D90024C494 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE72AA7D25A84A020024C494 /* libDependents.a in Frameworks */,
+				BE72AA7F25A84A020024C494 /* libLutra.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE72AA5C25A848D90024C494 = {
+			isa = PBXGroup;
+			children = (
+				BEFA359225AA14E3001B8E38 /* Resources */,
+				BE72AACD25A9B0C30024C494 /* Propertys */,
+				BE72AA8925A853CD0024C494 /* Windows */,
+				BE72AA7725A849940024C494 /* App */,
+				BE72AA7825A849D20024C494 /* main.cpp */,
+				BE72AA6625A848D90024C494 /* Products */,
+				BE72AA7B25A84A020024C494 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BE72AA6625A848D90024C494 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE72AA6525A848D90024C494 /* Editor */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE72AA7725A849940024C494 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BEFA358825A9EDC7001B8E38 /* IconManager.cpp */,
+				BEFA358925A9EDC7001B8E38 /* IconManager.h */,
+				BE72AA7225A849770024C494 /* Application.cpp */,
+				BE72AA7325A849770024C494 /* Application.h */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		BE72AA7B25A84A020024C494 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE72AA7C25A84A020024C494 /* libDependents.a */,
+				BE72AA7E25A84A020024C494 /* libLutra.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE72AA8925A853CD0024C494 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				BE72AA8525A8527D0024C494 /* GUIWindow.cpp */,
+				BE72AA8625A8527D0024C494 /* GUIWindow.h */,
+				BE72AA8B25A853EB0024C494 /* ProjectWindow.cpp */,
+				BE72AA8C25A853EB0024C494 /* ProjectWindow.h */,
+				BE72AAC325A9AAA10024C494 /* PropertyWindow.cpp */,
+				BE72AAC425A9AAA10024C494 /* PropertyWindow.h */,
+				BE72AA9325A863640024C494 /* SceneWindow.cpp */,
+				BE72AA9425A863640024C494 /* SceneWindow.h */,
+				BE72AAAE25A99F3B0024C494 /* LogWindow.cpp */,
+				BE72AAAF25A99F3B0024C494 /* LogWindow.h */,
+				BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */,
+				BE72AAD025A9B4140024C494 /* ResourceWindow.h */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		BE72AACD25A9B0C30024C494 /* Propertys */ = {
+			isa = PBXGroup;
+			children = (
+				BE72AA9825A8AA550024C494 /* ComponentGUI.cpp */,
+				BE72AA9925A8AA550024C494 /* ComponentGUI.h */,
+				BE72AAC725A9AB140024C494 /* PropertyGUI.cpp */,
+				BE72AAC825A9AB140024C494 /* PropertyGUI.h */,
+			);
+			path = Propertys;
+			sourceTree = "<group>";
+		};
+		BEFA359225AA14E3001B8E38 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BEFA359325AA14E3001B8E38 /* Icons */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BEFA359325AA14E3001B8E38 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				BEFA35AB25AABBBF001B8E38 /* square.png */,
+				BEFA35AC25AABBBF001B8E38 /* tag.png */,
+				BEFA359425AA14E3001B8E38 /* folder.png */,
+				BEFA359525AA14E3001B8E38 /* camera.png */,
+				BEFA359625AA14E3001B8E38 /* object.png */,
+				BEFA359725AA14E3001B8E38 /* image.png */,
+				BEFA359825AA14E3001B8E38 /* mesh.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE72AA6425A848D90024C494 /* Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE72AA6C25A848D90024C494 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildPhases = (
+				BE72AA6125A848D90024C494 /* Sources */,
+				BE72AA6225A848D90024C494 /* Frameworks */,
+				BE72AA6325A848D90024C494 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Editor;
+			productName = Editor;
+			productReference = BE72AA6525A848D90024C494 /* Editor */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE72AA5D25A848D90024C494 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1210;
+				TargetAttributes = {
+					BE72AA6425A848D90024C494 = {
+						CreatedOnToolsVersion = 12.1;
+					};
+				};
+			};
+			buildConfigurationList = BE72AA6025A848D90024C494 /* Build configuration list for PBXProject "Editor" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE72AA5C25A848D90024C494;
+			productRefGroup = BE72AA6625A848D90024C494 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE72AA6425A848D90024C494 /* Editor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE72AA6125A848D90024C494 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE72AAC525A9AAA10024C494 /* PropertyWindow.cpp in Sources */,
+				BE72AA9A25A8AA550024C494 /* ComponentGUI.cpp in Sources */,
+				BE72AA9525A863640024C494 /* SceneWindow.cpp in Sources */,
+				BE72AA7925A849D20024C494 /* main.cpp in Sources */,
+				BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */,
+				BE72AA8D25A853EB0024C494 /* ProjectWindow.cpp in Sources */,
+				BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */,
+				BE72AA7425A849770024C494 /* Application.cpp in Sources */,
+				BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */,
+				BE72AA8725A8527D0024C494 /* GUIWindow.cpp in Sources */,
+				BE72AAB025A99F3B0024C494 /* LogWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BE72AA6A25A848D90024C494 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BE72AA6B25A848D90024C494 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BE72AA6D25A848D90024C494 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/stb_image,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
+					../runtime/Lutra,
+					"$(PROJECT_DIR)",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/lib/osx/Debug/libglfw3.a,
+					"-framework",
+					Cocoa,
+					"-framework",
+					IOKit,
+					"-framework",
+					CoreFoundation,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BE72AA6E25A848D90024C494 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/stb_image,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
+					../runtime/Lutra,
+					"$(PROJECT_DIR)",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/lib/osx/Debug/libglfw3.a,
+					"-framework",
+					Cocoa,
+					"-framework",
+					IOKit,
+					"-framework",
+					CoreFoundation,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE72AA6025A848D90024C494 /* Build configuration list for PBXProject "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE72AA6A25A848D90024C494 /* Debug */,
+				BE72AA6B25A848D90024C494 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE72AA6C25A848D90024C494 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE72AA6D25A848D90024C494 /* Debug */,
+				BE72AA6E25A848D90024C494 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE72AA5D25A848D90024C494 /* Project object */;
+}

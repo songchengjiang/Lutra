@@ -11,6 +11,7 @@
 #include <string>
 #include <tuple>
 #include "Systems/System.h"
+#include "Events/Event.h"
 
 namespace Lutra {
 
@@ -26,9 +27,13 @@ namespace Lutra {
         
         SceneObject CreateSceneObject(const std::string& name = std::string());
         void DestroySceneObject(SceneObject so);
+        const std::vector<SceneObject>& GetSceneObjects() const { return m_sceneObjectList; }
+        
+        EventDispatcher& GetEventDispatcher() { return m_eventDispatcher; }
         
         template<typename T>
         void AppendSystem();
+        const std::vector<std::unique_ptr<System>>& GetSystems() const { return m_systemList; }
         
         void OnUpdate(const FrameContext& context, Graphic& graphic);
         
@@ -36,8 +41,10 @@ namespace Lutra {
         
     private:
         
-        entt::registry m_registry;
+        entt::registry                       m_registry;
+        std::vector<SceneObject>             m_sceneObjectList;
         std::vector<std::unique_ptr<System>> m_systemList;
+        EventDispatcher                      m_eventDispatcher;
         friend class SceneObject;
         friend class System;
     };

@@ -23,17 +23,6 @@ namespace Lutra {
         
         glm::mat4 LocalMat;
         glm::mat4 WorldMat;
-        
-        void AddChild(Transform* child);
-        void RemoveChild(Transform* child);
-        const std::vector<Transform*>& GetChildren() const { return m_children; }
-        
-        Transform* GetParent() { return m_parent; }
-        
-    private:
-        
-        Transform* m_parent{nullptr};
-        std::vector<Transform*> m_children;
     };
 }
 

@@ -5188,13 +5188,13 @@ bool ImGui::TreeNodeV(const void* ptr_id, const char* fmt, va_list args)
     return TreeNodeExV(ptr_id, 0, fmt, args);
 }
 
-bool ImGui::TreeNodeEx(const char* label, ImGuiTreeNodeFlags flags)
+bool ImGui::TreeNodeEx(const char* label, ImGuiTreeNodeFlags flags, ImTextureID user_texture_id)
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)
         return false;
 
-    return TreeNodeBehavior(window->GetID(label), flags, label, NULL);
+    return TreeNodeBehavior(window->GetID(label), flags, label, NULL, user_texture_id);
 }
 
 bool ImGui::TreeNodeEx(const char* str_id, ImGuiTreeNodeFlags flags, const char* fmt, ...)
@@ -5283,7 +5283,7 @@ bool ImGui::TreeNodeBehaviorIsOpen(ImGuiID id, ImGuiTreeNodeFlags flags)
     return is_open;
 }
 
-bool ImGui::TreeNodeBehavior(ImGuiID id, ImGuiTreeNodeFlags flags, const char* label, const char* label_end)
+bool ImGui::TreeNodeBehavior(ImGuiID id, ImGuiTreeNodeFlags flags, const char* label, const char* label_end, ImTextureID user_texture_id)
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)
@@ -5450,7 +5450,12 @@ bool ImGui::TreeNodeBehavior(ImGuiID id, ImGuiTreeNodeFlags flags, const char* l
         }
         else
         {
-            RenderTextClipped(text_pos, frame_bb.Max, label, label_end, &label_size);
+            float ImageSize = 0.0f;
+            if (user_texture_id != NULL) {
+                window->DrawList->AddImage(user_texture_id, text_pos, text_pos + ImVec2(g.FontSize, g.FontSize), {0.0f, 0.0f}, {1.0f, 1.0f}, GetColorU32(ImVec4(1,1,1,1)));
+                ImageSize = text_offset_x;
+            }
+            RenderTextClipped(text_pos + ImVec2(ImageSize, 0.0f), frame_bb.Max, label, label_end, &label_size);
         }
     }
     else
@@ -5468,7 +5473,12 @@ bool ImGui::TreeNodeBehavior(ImGuiID id, ImGuiTreeNodeFlags flags, const char* l
             RenderArrow(window->DrawList, ImVec2(text_pos.x - text_offset_x + padding.x, text_pos.y + g.FontSize * 0.15f), text_col, is_open ? ImGuiDir_Down : ImGuiDir_Right, 0.70f);
         if (g.LogEnabled)
             LogRenderedText(&text_pos, ">");
-        RenderText(text_pos, label, label_end, false);
+        float ImageSize = 0.0f;
+        if (user_texture_id != NULL) {
+            window->DrawList->AddImage(user_texture_id, text_pos, text_pos + ImVec2(g.FontSize, g.FontSize), {0.0f, 0.0f}, {1.0f, 1.0f}, GetColorU32(ImVec4(1,1,1,1)));
+            ImageSize = text_offset_x;
+        }
+        RenderText(text_pos + ImVec2(ImageSize, 0.0f), label, label_end, false);
     }
 
     if (is_open && !(flags & ImGuiTreeNodeFlags_NoTreePushOnOpen))
@@ -5543,13 +5553,13 @@ void ImGui::SetNextItemOpen(bool is_open, ImGuiCond cond)
 
 // CollapsingHeader returns true when opened but do not indent nor push into the ID stack (because of the ImGuiTreeNodeFlags_NoTreePushOnOpen flag).
 // This is basically the same as calling TreeNodeEx(label, ImGuiTreeNodeFlags_CollapsingHeader). You can remove the _NoTreePushOnOpen flag if you want behavior closer to normal TreeNode().
-bool ImGui::CollapsingHeader(const char* label, ImGuiTreeNodeFlags flags)
+bool ImGui::CollapsingHeader(const char* label, ImGuiTreeNodeFlags flags, ImTextureID user_texture_id)
 {
     ImGuiWindow* window = GetCurrentWindow();
     if (window->SkipItems)
         return false;
 
-    return TreeNodeBehavior(window->GetID(label), flags | ImGuiTreeNodeFlags_CollapsingHeader, label);
+    return TreeNodeBehavior(window->GetID(label), flags | ImGuiTreeNodeFlags_CollapsingHeader, label, NULL, user_texture_id);
 }
 
 bool ImGui::CollapsingHeader(const char* label, bool* p_open, ImGuiTreeNodeFlags flags)

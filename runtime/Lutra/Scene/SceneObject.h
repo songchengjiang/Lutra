@@ -18,14 +18,11 @@ namespace Lutra {
     public:
         
         SceneObject() = default;
-        SceneObject(entt::entity handle, const std::string& name, Scene *scene);
+        SceneObject(entt::entity handle, Scene *scene);
         SceneObject(const SceneObject& other) = default;
         SceneObject(const SceneObject&& other);
         
         ~SceneObject() = default;
-        
-        void SetName(const std::string& name) { m_name = name; }
-        const std::string& GetName() const { return m_name; }
         
         template<typename T, typename... Args>
         T& AddComponent(Args&&... args)
@@ -34,16 +31,16 @@ namespace Lutra {
             T& component = m_scene->m_registry.emplace<T>(m_handle, std::forward<Args>(args)...);
             return component;
         }
-
+        
         template<typename T>
-        T& GetComponent()
+        T& GetComponent() const
         {
             LT_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
             return m_scene->m_registry.get<T>(m_handle);
         }
-
+        
         template<typename T>
-        bool HasComponent()
+        bool HasComponent() const
         {
             return m_scene->m_registry.has<T>(m_handle);
         }
@@ -69,9 +66,17 @@ namespace Lutra {
             return !(*this == other);
         }
         
+        SceneObject& operator=(const SceneObject& other) = default;
+        
+        SceneObject& operator=(SceneObject&& other)
+        {
+            m_handle = std::move(other.m_handle);
+            m_scene = std::move(other.m_scene);
+            return *this;
+        }
+        
     private:
         entt::entity m_handle{ entt::null };
-        std::string  m_name;
         Scene       *m_scene = nullptr;
     };
 

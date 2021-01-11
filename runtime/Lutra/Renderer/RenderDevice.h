@@ -27,6 +27,33 @@ namespace Lutra {
         STENCIL = 1<<2
     };
 
+    enum class GraphicBlendMode
+    {
+        Disabled,
+        Normal,
+        Screen,
+        PremultipliedAlpha,
+        Add,
+        Multiply
+    };
+
+    enum class GraphicCullMode
+    {
+        Front,
+        Back,
+        FrontAndBack
+    };
+
+    struct GraphicState
+    {
+        GraphicBlendMode BMode;
+        GraphicCullMode CMode;
+        bool        DepthTest;
+        bool        DepthWrite;
+        bool        TwoSided;
+        glm::bvec4  ColorMask;
+    };
+
     class RenderDevice
     {
     public:
@@ -51,7 +78,7 @@ namespace Lutra {
         
         virtual std::shared_ptr<DeviceTexture> CreateTexture2D(int width, int height, DeviceTextureForamt format) = 0;
         
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vao) = 0;
+        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state) = 0;
     
 
     };

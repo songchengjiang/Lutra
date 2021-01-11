@@ -59,6 +59,20 @@
 		BE71494F25A30EF000EF2DF0 /* Camera.h in Headers */ = {isa = PBXBuildFile; fileRef = BE71494D25A30EF000EF2DF0 /* Camera.h */; };
 		BE71495525A317E400EF2DF0 /* SpriteRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE71495325A317E400EF2DF0 /* SpriteRenderer.cpp */; };
 		BE71495625A317E400EF2DF0 /* SpriteRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = BE71495425A317E400EF2DF0 /* SpriteRenderer.h */; };
+		BE72AAA025A94F9F0024C494 /* Tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA9E25A94F9F0024C494 /* Tag.cpp */; };
+		BE72AAA125A94F9F0024C494 /* Tag.h in Headers */ = {isa = PBXBuildFile; fileRef = BE72AA9F25A94F9F0024C494 /* Tag.h */; };
+		BE72AAA625A950CB0024C494 /* SceneObjectDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAA425A950CB0024C494 /* SceneObjectDelegate.cpp */; };
+		BE72AAA725A950CB0024C494 /* SceneObjectDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BE72AAA525A950CB0024C494 /* SceneObjectDelegate.h */; };
+		BEFA35B525AAC958001B8E38 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA35B325AAC958001B8E38 /* Resource.cpp */; };
+		BEFA35B625AAC958001B8E38 /* Resource.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA35B425AAC958001B8E38 /* Resource.h */; };
+		BEFA35BA25AACBD2001B8E38 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA35B825AACBD2001B8E38 /* Stream.cpp */; };
+		BEFA35BB25AACBD2001B8E38 /* Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA35B925AACBD2001B8E38 /* Stream.h */; };
+		BEFA35E025AAE7AD001B8E38 /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA35DE25AAE7AD001B8E38 /* ResourceManager.cpp */; };
+		BEFA35E125AAE7AD001B8E38 /* ResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA35DF25AAE7AD001B8E38 /* ResourceManager.h */; };
+		BEFA36A625AAFCF6001B8E38 /* StreamYaml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA36A425AAFCF6001B8E38 /* StreamYaml.cpp */; };
+		BEFA36A725AAFCF6001B8E38 /* StreamYaml.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA36A525AAFCF6001B8E38 /* StreamYaml.h */; };
+		BEFA377025AB4A76001B8E38 /* ResourceManifest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA376E25AB4A76001B8E38 /* ResourceManifest.cpp */; };
+		BEFA377125AB4A76001B8E38 /* ResourceManifest.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA376F25AB4A76001B8E38 /* ResourceManifest.h */; };
 		BEFA49D725A2FC7E00587F63 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA49D525A2FC7E00587F63 /* Scene.cpp */; };
 		BEFA49D825A2FC7E00587F63 /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA49D625A2FC7E00587F63 /* Scene.h */; };
 		BEFA49DC25A2FC9800587F63 /* SceneObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA49DA25A2FC9800587F63 /* SceneObject.cpp */; };
@@ -116,6 +130,12 @@
 		BE37194425A70F94003C2AA0 /* FrameBuffer_GL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameBuffer_GL.h; sourceTree = "<group>"; };
 		BE37194B25A73CC6003C2AA0 /* MeshFilterSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshFilterSystem.cpp; sourceTree = "<group>"; };
 		BE37194C25A73CC6003C2AA0 /* MeshFilterSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshFilterSystem.h; sourceTree = "<group>"; };
+		BE37195325A7FC01003C2AA0 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		BE37195425A7FECD003C2AA0 /* WindowEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowEvent.h; sourceTree = "<group>"; };
+		BE37195525A7FF72003C2AA0 /* KeyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvent.h; sourceTree = "<group>"; };
+		BE37195625A80166003C2AA0 /* MouseEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvent.h; sourceTree = "<group>"; };
+		BE37195725A80243003C2AA0 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
+		BE37195825A802B3003C2AA0 /* MouseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseCode.h; sourceTree = "<group>"; };
 		BE71494225A3021B00EF2DF0 /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		BE71494325A3021B00EF2DF0 /* Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
 		BE71494825A30B0900EF2DF0 /* Timestep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Timestep.h; sourceTree = "<group>"; };
@@ -124,6 +144,20 @@
 		BE71494D25A30EF000EF2DF0 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		BE71495325A317E400EF2DF0 /* SpriteRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteRenderer.cpp; sourceTree = "<group>"; };
 		BE71495425A317E400EF2DF0 /* SpriteRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpriteRenderer.h; sourceTree = "<group>"; };
+		BE72AA9E25A94F9F0024C494 /* Tag.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tag.cpp; sourceTree = "<group>"; };
+		BE72AA9F25A94F9F0024C494 /* Tag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		BE72AAA425A950CB0024C494 /* SceneObjectDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectDelegate.cpp; sourceTree = "<group>"; };
+		BE72AAA525A950CB0024C494 /* SceneObjectDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneObjectDelegate.h; sourceTree = "<group>"; };
+		BEFA35B325AAC958001B8E38 /* Resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Resource.cpp; sourceTree = "<group>"; };
+		BEFA35B425AAC958001B8E38 /* Resource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
+		BEFA35B825AACBD2001B8E38 /* Stream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stream.cpp; sourceTree = "<group>"; };
+		BEFA35B925AACBD2001B8E38 /* Stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stream.h; sourceTree = "<group>"; };
+		BEFA35DE25AAE7AD001B8E38 /* ResourceManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceManager.cpp; sourceTree = "<group>"; };
+		BEFA35DF25AAE7AD001B8E38 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
+		BEFA36A425AAFCF6001B8E38 /* StreamYaml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StreamYaml.cpp; sourceTree = "<group>"; };
+		BEFA36A525AAFCF6001B8E38 /* StreamYaml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamYaml.h; sourceTree = "<group>"; };
+		BEFA376E25AB4A76001B8E38 /* ResourceManifest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceManifest.cpp; sourceTree = "<group>"; };
+		BEFA376F25AB4A76001B8E38 /* ResourceManifest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceManifest.h; sourceTree = "<group>"; };
 		BEFA499525A2F8F700587F63 /* libLutra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLutra.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEFA49D525A2FC7E00587F63 /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
 		BEFA49D625A2FC7E00587F63 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
@@ -154,8 +188,6 @@
 				BE37174025A58915003C2AA0 /* Program.h */,
 				BE37174F25A59F29003C2AA0 /* VertexArray.h */,
 				BE37178725A6B4D4003C2AA0 /* DeviceTexture.h */,
-				BE37193825A708FE003C2AA0 /* RenderTarget.cpp */,
-				BE37193925A708FE003C2AA0 /* RenderTarget.h */,
 				BE37193E25A70F32003C2AA0 /* FrameBuffer.cpp */,
 				BE37193F25A70F32003C2AA0 /* FrameBuffer.h */,
 			);
@@ -165,21 +197,13 @@
 		BE10721825A31B96003ACBA7 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				BE10722125A3587A003ACBA7 /* Mesh.cpp */,
-				BE10722225A3587A003ACBA7 /* Mesh.h */,
-				BE10723325A36238003ACBA7 /* Material.cpp */,
-				BE10723425A36238003ACBA7 /* Material.h */,
-				BE10723925A3632B003ACBA7 /* Pass.cpp */,
-				BE10723A25A3632B003ACBA7 /* Pass.h */,
 				BEFA49D525A2FC7E00587F63 /* Scene.cpp */,
 				BEFA49D625A2FC7E00587F63 /* Scene.h */,
 				BEFA49DA25A2FC9800587F63 /* SceneObject.cpp */,
 				BEFA49DB25A2FC9800587F63 /* SceneObject.h */,
 				BE71494825A30B0900EF2DF0 /* Timestep.h */,
-				BE10724125A418BA003ACBA7 /* Shader.cpp */,
-				BE10724225A418BA003ACBA7 /* Shader.h */,
-				BE37179025A6C195003C2AA0 /* Texture.cpp */,
-				BE37179125A6C195003C2AA0 /* Texture.h */,
+				BE37193825A708FE003C2AA0 /* RenderTarget.cpp */,
+				BE37193925A708FE003C2AA0 /* RenderTarget.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -228,6 +252,19 @@
 			path = GL;
 			sourceTree = "<group>";
 		};
+		BE37195225A7FBD2003C2AA0 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				BE37195325A7FC01003C2AA0 /* Event.h */,
+				BE37195425A7FECD003C2AA0 /* WindowEvent.h */,
+				BE37195525A7FF72003C2AA0 /* KeyEvent.h */,
+				BE37195625A80166003C2AA0 /* MouseEvent.h */,
+				BE37195725A80243003C2AA0 /* KeyCode.h */,
+				BE37195825A802B3003C2AA0 /* MouseCode.h */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		BE71495125A30F0D00EF2DF0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,8 +278,39 @@
 				BE71495425A317E400EF2DF0 /* SpriteRenderer.h */,
 				BE10722E25A360DB003ACBA7 /* Renderer.cpp */,
 				BE10722F25A360DB003ACBA7 /* Renderer.h */,
+				BE72AA9E25A94F9F0024C494 /* Tag.cpp */,
+				BE72AA9F25A94F9F0024C494 /* Tag.h */,
+				BE72AAA425A950CB0024C494 /* SceneObjectDelegate.cpp */,
+				BE72AAA525A950CB0024C494 /* SceneObjectDelegate.h */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		BEFA35B025AAC8A0001B8E38 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE37179025A6C195003C2AA0 /* Texture.cpp */,
+				BE37179125A6C195003C2AA0 /* Texture.h */,
+				BE10724125A418BA003ACBA7 /* Shader.cpp */,
+				BE10724225A418BA003ACBA7 /* Shader.h */,
+				BE10723925A3632B003ACBA7 /* Pass.cpp */,
+				BE10723A25A3632B003ACBA7 /* Pass.h */,
+				BE10723325A36238003ACBA7 /* Material.cpp */,
+				BE10723425A36238003ACBA7 /* Material.h */,
+				BE10722125A3587A003ACBA7 /* Mesh.cpp */,
+				BE10722225A3587A003ACBA7 /* Mesh.h */,
+				BEFA35B325AAC958001B8E38 /* Resource.cpp */,
+				BEFA35B425AAC958001B8E38 /* Resource.h */,
+				BEFA35B825AACBD2001B8E38 /* Stream.cpp */,
+				BEFA35B925AACBD2001B8E38 /* Stream.h */,
+				BEFA36A425AAFCF6001B8E38 /* StreamYaml.cpp */,
+				BEFA36A525AAFCF6001B8E38 /* StreamYaml.h */,
+				BEFA35DE25AAE7AD001B8E38 /* ResourceManager.cpp */,
+				BEFA35DF25AAE7AD001B8E38 /* ResourceManager.h */,
+				BEFA376E25AB4A76001B8E38 /* ResourceManifest.cpp */,
+				BEFA376F25AB4A76001B8E38 /* ResourceManifest.h */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BEFA498C25A2F8F700587F63 = {
@@ -264,6 +332,8 @@
 		BEFA499725A2F8F700587F63 /* Lutra */ = {
 			isa = PBXGroup;
 			children = (
+				BEFA35B025AAC8A0001B8E38 /* Resources */,
+				BE37195225A7FBD2003C2AA0 /* Events */,
 				BE37171025A48B58003C2AA0 /* Engine */,
 				BE10721825A31B96003ACBA7 /* Scene */,
 				BE71495125A30F0D00EF2DF0 /* Components */,
@@ -285,9 +355,11 @@
 				BE71494525A3021B00EF2DF0 /* Transform.h in Headers */,
 				BE37178B25A6B560003C2AA0 /* DeviceTexture_GL.h in Headers */,
 				BE71495625A317E400EF2DF0 /* SpriteRenderer.h in Headers */,
+				BEFA377125AB4A76001B8E38 /* ResourceManifest.h in Headers */,
 				BE10725125A46031003ACBA7 /* SpriteSystem.h in Headers */,
 				BE71494F25A30EF000EF2DF0 /* Camera.h in Headers */,
 				BE37175125A59F29003C2AA0 /* VertexArray.h in Headers */,
+				BEFA35BB25AACBD2001B8E38 /* Stream.h in Headers */,
 				BE10723625A36238003ACBA7 /* Material.h in Headers */,
 				BE10721E25A31CE3003ACBA7 /* Graphic.h in Headers */,
 				BE37172E25A581BC003C2AA0 /* RenderDevice.h in Headers */,
@@ -295,7 +367,9 @@
 				BE37173525A582C4003C2AA0 /* RenderDevice_GL.h in Headers */,
 				BE10724A25A457A2003ACBA7 /* System.h in Headers */,
 				BE37194E25A73CC6003C2AA0 /* MeshFilterSystem.h in Headers */,
+				BE72AAA725A950CB0024C494 /* SceneObjectDelegate.h in Headers */,
 				BE10723C25A3632B003ACBA7 /* Pass.h in Headers */,
+				BEFA36A725AAFCF6001B8E38 /* StreamYaml.h in Headers */,
 				BEFA49DD25A2FC9800587F63 /* SceneObject.h in Headers */,
 				BE37193B25A708FE003C2AA0 /* RenderTarget.h in Headers */,
 				BE37179325A6C195003C2AA0 /* Texture.h in Headers */,
@@ -305,10 +379,13 @@
 				BE37172125A4B04F003C2AA0 /* TransformSystem.h in Headers */,
 				BEFA49D825A2FC7E00587F63 /* Scene.h in Headers */,
 				BE10723125A360DB003ACBA7 /* Renderer.h in Headers */,
+				BEFA35B625AAC958001B8E38 /* Resource.h in Headers */,
 				BE37194125A70F32003C2AA0 /* FrameBuffer.h in Headers */,
 				BE37194625A70F94003C2AA0 /* FrameBuffer_GL.h in Headers */,
 				BE10722A25A35F26003ACBA7 /* MeshFilter.h in Headers */,
 				BE37174A25A58D88003C2AA0 /* Program_GL.h in Headers */,
+				BE72AAA125A94F9F0024C494 /* Tag.h in Headers */,
+				BEFA35E125AAE7AD001B8E38 /* ResourceManager.h in Headers */,
 				BE37174225A58915003C2AA0 /* Program.h in Headers */,
 				BE10724425A418BA003ACBA7 /* Shader.h in Headers */,
 				BE37171425A48B6B003C2AA0 /* Engine.h in Headers */,
@@ -378,6 +455,7 @@
 				BE10722925A35F26003ACBA7 /* MeshFilter.cpp in Sources */,
 				BE37171325A48B6B003C2AA0 /* Engine.cpp in Sources */,
 				BE37194525A70F94003C2AA0 /* FrameBuffer_GL.cpp in Sources */,
+				BEFA35E025AAE7AD001B8E38 /* ResourceManager.cpp in Sources */,
 				BE37172025A4B04F003C2AA0 /* TransformSystem.cpp in Sources */,
 				BE10724925A457A2003ACBA7 /* System.cpp in Sources */,
 				BE37178A25A6B560003C2AA0 /* DeviceTexture_GL.cpp in Sources */,
@@ -386,6 +464,8 @@
 				BE37193A25A708FE003C2AA0 /* RenderTarget.cpp in Sources */,
 				BE10723B25A3632B003ACBA7 /* Pass.cpp in Sources */,
 				BE37174925A58D88003C2AA0 /* Program_GL.cpp in Sources */,
+				BE72AAA025A94F9F0024C494 /* Tag.cpp in Sources */,
+				BE72AAA625A950CB0024C494 /* SceneObjectDelegate.cpp in Sources */,
 				BE37194025A70F32003C2AA0 /* FrameBuffer.cpp in Sources */,
 				BE71495525A317E400EF2DF0 /* SpriteRenderer.cpp in Sources */,
 				BE10722325A3587A003ACBA7 /* Mesh.cpp in Sources */,
@@ -394,7 +474,11 @@
 				BEFA49D725A2FC7E00587F63 /* Scene.cpp in Sources */,
 				BE10723525A36238003ACBA7 /* Material.cpp in Sources */,
 				BE10724325A418BA003ACBA7 /* Shader.cpp in Sources */,
+				BEFA377025AB4A76001B8E38 /* ResourceManifest.cpp in Sources */,
+				BEFA35B525AAC958001B8E38 /* Resource.cpp in Sources */,
 				BE37173425A582C4003C2AA0 /* RenderDevice_GL.cpp in Sources */,
+				BEFA35BA25AACBD2001B8E38 /* Stream.cpp in Sources */,
+				BEFA36A625AAFCF6001B8E38 /* StreamYaml.cpp in Sources */,
 				BEFA49DC25A2FC9800587F63 /* SceneObject.cpp in Sources */,
 				BE37179225A6C195003C2AA0 /* Texture.cpp in Sources */,
 			);
@@ -524,10 +608,13 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
 					./Lutra,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -546,10 +633,13 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/uuid,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
 					./Lutra,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

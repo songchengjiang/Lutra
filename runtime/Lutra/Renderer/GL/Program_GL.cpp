@@ -19,9 +19,16 @@ namespace Lutra {
         GLuint program = glCreateProgram();
         GLuint glShaderIDs[2];
         uint32_t shaderIndex = 0;
+        
+        GLint major = 0;
+        GLint minor = 0;
+        glGetIntegerv(GL_MAJOR_VERSION, &major);
+        glGetIntegerv(GL_MINOR_VERSION, &minor);
+        std::string header = "#version " + std::to_string(major) + std::to_string(minor) + "0\n";
         auto shaderCompile = [&](GLenum shaderType, const std::string& source){
             GLuint shader = glCreateShader(shaderType);
-            const GLchar* sourceCStr = source.c_str();
+            std::string finalSource = header + source;
+            const GLchar* sourceCStr = finalSource.c_str();
             glShaderSource(shader, 1, &sourceCStr, 0);
 
             glCompileShader(shader);

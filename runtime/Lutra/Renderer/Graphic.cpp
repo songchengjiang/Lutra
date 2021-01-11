@@ -46,11 +46,12 @@ namespace Lutra {
         m_renderDevice->Clear(flag);
     }
 
-    void Graphic::SetRenderTarget(std::shared_ptr<RenderTarget>& renderTarget)
+    void Graphic::SetRenderTarget(const std::shared_ptr<RenderTarget>& renderTarget, bool binding)
     {
+        auto hash = std::hash<RenderTarget*>()(renderTarget.get());
         std::shared_ptr<FrameBuffer> fbo;
-        auto iter = m_renderTargetList.find(renderTarget.get());
-        if (iter == m_renderTargetList.end()) {
+        auto iter = m_frameBufferList.find(hash);
+        if (iter == m_frameBufferList.end()) {
             FramebufferSpecification spec;
             spec.Width = renderTarget->GetWidth();
             spec.Height = renderTarget->GetHeight();
@@ -64,6 +65,7 @@ namespace Lutra {
                 }
             }
             fbo = m_renderDevice->CreateFrameBuffer(spec);
+            m_frameBufferList.insert(std::make_pair(hash, fbo));
         }else {
             fbo = iter->second;
         }
@@ -72,17 +74,18 @@ namespace Lutra {
          || renderTarget->GetHeight() != fbo->GetSpecification().Height) {
             fbo->Resize(renderTarget->GetWidth(), renderTarget->GetHeight());
         }
-        
-        fbo->Bind();
+        if (binding)
+            fbo->Bind();
+        else
+            fbo->Unbind();
     }
 
-    std::shared_ptr<VertexArray> Graphic::updateVertexArray(Mesh* mesh, uint8_t submesh)
+    std::shared_ptr<VertexArray> Graphic::getVertexArray(Mesh* mesh, uint8_t submesh)
     {
-        std::shared_ptr<VertexArray> VAO;
-        auto meshIter = m_meshList.find(std::make_pair(mesh, submesh));
-        if (meshIter == m_meshList.end()) {
-            std::vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
-            
+        auto vboHash = std::hash<Mesh*>()(mesh);
+        std::shared_ptr<VertexBuffer> VBO;
+        auto vboIter = m_vboList.find(vboHash);
+        if (vboIter == m_vboList.end()) {
             std::vector<BufferElement> bufferElements;
             if (!mesh->Vertices.empty()) {
                 bufferElements.push_back({BufferDataType::Float3, "a_position", false});
@@ -103,35 +106,44 @@ namespace Lutra {
             if (!mesh->Texcoord1.empty()) {
                 bufferElements.push_back({BufferDataType::Float2, "a_texcoord1", false});
             }
-            auto vb = m_renderDevice->CreateVertexBuffer(mesh->SequentialBuffer.data(), (uint32_t)mesh->SequentialBuffer.size(), bufferElements);
-            vertexBuffers.push_back(vb);
-            
+            VBO = m_renderDevice->CreateVertexBuffer(mesh->SequentialBuffer.data(), (uint32_t)mesh->SequentialBuffer.size(), bufferElements);
+            m_vboList.insert(std::make_pair(vboHash, VBO));
+            mesh->MarkForUpdate = false;
+        }else {
+            VBO = vboIter->second;
+            if (mesh->MarkForUpdate) {
+                VBO->SetData(mesh->SequentialBuffer.data(), (uint32_t)mesh->SequentialBuffer.size());
+                mesh->MarkForUpdate = false;
+            }
+        }
+        
+        auto vaoHash = vboHash + std::hash<uint8_t>()(submesh);
+        std::shared_ptr<VertexArray> VAO;
+        auto meshIter = m_vaoList.find(vaoHash);
+        if (meshIter == m_vaoList.end()) {
+            std::vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
+            vertexBuffers.push_back(VBO);
             std::shared_ptr<IndexBuffer> indexBuffer;
             if (!mesh->SubMeshList[submesh].Indices.empty()) {
                 indexBuffer = m_renderDevice->CreateIndexBuffer(mesh->SubMeshList[submesh].Indices.data(), (uint32_t)mesh->SubMeshList[submesh].Indices.size());
             }
             VAO = m_renderDevice->CreateVertexArray(vertexBuffers, indexBuffer);
-            m_meshList.insert(std::make_pair(std::make_pair(mesh, submesh), VAO));
-            mesh->MarkForUpdate = false;
+            m_vaoList.insert(std::make_pair(vaoHash, VAO));
         }else {
             VAO = meshIter->second;
-            if (meshIter->first.first->MarkForUpdate) {
-                auto& vbos = VAO->GetVertexBuffers();
-                vbos.front()->SetData(mesh->SequentialBuffer.data(), (uint32_t)mesh->SequentialBuffer.size());
-                meshIter->first.first->MarkForUpdate = false;
-            }
         }
         return VAO;
     }
 
-    std::shared_ptr<Program> Graphic::updateProgram(Material* material, uint32_t passID)
+    std::shared_ptr<Program> Graphic::getProgram(Material* material, uint32_t passID)
     {
+        auto hash = material->GetPass(passID)->GetShader().GetHash();
         std::shared_ptr<Program> program;
-        auto materialIter = m_materialList.find(std::make_pair(material, passID));
-        if (materialIter == m_materialList.end()) {
+        auto materialIter = m_programList.find(hash);
+        if (materialIter == m_programList.end()) {
             auto& pass = material->GetPass(0);
-            program = m_renderDevice->CreateProgram(pass.GetShader().GetVertexSource(), pass.GetShader().GetFragmentSource());
-            m_materialList.insert(std::make_pair(std::make_pair(material, 0), program));
+            program = m_renderDevice->CreateProgram(pass->GetShader().GetVertexSource(), pass->GetShader().GetFragmentSource());
+            m_programList.insert(std::make_pair(hash, program));
         }else {
             program = materialIter->second;
         }
@@ -140,32 +152,33 @@ namespace Lutra {
 
     std::shared_ptr<DeviceTexture> Graphic::getDeviceTextureBy(Texture* tex)
     {
+        auto hash = std::hash<Texture*>()(tex);
         std::shared_ptr<DeviceTexture> deviceTexture;
-        auto iter = m_textureList.find(tex);
-        if (iter == m_textureList.end()) {
+        auto iter = m_deviceTextureList.find(hash);
+        if (iter == m_deviceTextureList.end()) {
             if (tex->GetType() == TextureType::TEX2D) {
                 auto tex2D = static_cast<Texture2D*>(tex);
                 deviceTexture = m_renderDevice->CreateTexture2D(tex2D->GetWidth(), tex2D->GetHeight(), (DeviceTextureForamt)tex2D->GetFormat());
                 if (!tex2D->GetData().empty())
                     deviceTexture->SetData(tex2D->GetData().data(), (uint32_t)tex2D->GetData().size());
-                m_textureList.insert(std::make_pair(tex, deviceTexture));
+                m_deviceTextureList.insert(std::make_pair(hash, deviceTexture));
             }
+            tex->SetTextureID(deviceTexture->GetID());
         }else {
             deviceTexture = iter->second;
         }
         return deviceTexture;
     }
 
-    void Graphic::DrawMesh(Mesh* mesh, Material* material, Camera* camera, const glm::mat4& modelMatrix, uint8_t submesh)
+    void Graphic::DrawMesh(Mesh* mesh, Material* material, Camera* camera, uint8_t submesh, uint8_t passID, const glm::mat4& modelMatrix)
     {
-        uint32_t passID = 0;
-        auto VAO = updateVertexArray(mesh, submesh);
-        auto program = updateProgram(material, passID);
+        auto VAO = getVertexArray(mesh, submesh);
+        auto program = getProgram(material, passID);
         
         program->Bind();
         
         uint32_t texUnit = 0;
-        for (auto &value : material->GetPass(0).GetShader().GetValues()) {
+        for (auto &value : material->GetPass(0)->GetShader().GetValues()) {
             switch (value.second.Type_) {
                 case ShaderValue::Type::Float:
                     program->SetUniform(value.first, &value.second.Value_.v1, 1);
@@ -202,7 +215,14 @@ namespace Lutra {
         normalWorld = glm::transpose(glm::inverse(normalWorld));
         program->SetUniform("u_NormalWorldMat", &normalWorld, 1);
         
-        m_renderDevice->DrawIndexed(VAO);
+        auto& pass = material->GetPass(passID);
+        m_renderDevice->DrawIndexed(VAO, {(GraphicBlendMode)pass->GetBlendMode(),
+                                          (GraphicCullMode)pass->GetCullMode(),
+                                          pass->GetDepthTest(),
+                                          pass->GetDepthWrite(),
+                                          pass->GetTwoSided(),
+                                          pass->GetColorMask()});
+        program->Unbind();
     }
 
     void Graphic::Begin()

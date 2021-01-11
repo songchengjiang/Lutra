@@ -18,7 +18,7 @@ namespace Lutra {
         
         virtual ~DeviceTextureGL() = default;
 
-        uint32_t GetID() const { return m_id; }
+        virtual uint32_t GetID() const { return m_id; };
         
     protected:
         
@@ -41,7 +41,7 @@ namespace Lutra {
         
     private:
         uint32_t m_width, m_height;
-        GLenum m_internalFormat, m_dataFormat;
+        GLenum m_internalFormat, m_dataFormat, m_dataType;
     };
 }
 

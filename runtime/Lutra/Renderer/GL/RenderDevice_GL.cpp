@@ -86,9 +86,69 @@ namespace Lutra {
         return std::shared_ptr<DeviceTexture>(texture);
     }
 
-    void RenderDeviceGL::DrawIndexed(const std::shared_ptr<VertexArray>& vao)
+    static void SetGraphicState(const GraphicState& state)
     {
+        if (state.BMode != GraphicBlendMode::Disabled) {
+            glEnable(GL_BLEND);
+        }else {
+            glDisable(GL_BLEND);
+        }
+        switch (state.BMode) {
+            case GraphicBlendMode::Normal:
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                break;
+            case GraphicBlendMode::Screen:
+                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
+                break;
+            case GraphicBlendMode::PremultipliedAlpha:
+                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                break;
+            case GraphicBlendMode::Add:
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                break;
+            case GraphicBlendMode::Multiply:
+                glBlendFunc(GL_DST_COLOR, GL_ZERO);
+                break;
+            default:
+                break;
+        }
+        
+        if (state.TwoSided) {
+            glDisable(GL_CULL_FACE);
+        }else {
+            glEnable(GL_CULL_FACE);
+        }
+        
+        switch (state.CMode) {
+            case GraphicCullMode::Front:
+                glCullFace(GL_FRONT);
+                break;
+            case GraphicCullMode::Back:
+                glCullFace(GL_BACK);
+                break;
+            case GraphicCullMode::FrontAndBack:
+                glCullFace(GL_FRONT_AND_BACK);
+                break;
+        }
+        
+        if (state.DepthTest) {
+            glEnable(GL_DEPTH_TEST);
+        }else {
+            glDisable(GL_DEPTH_TEST);
+        }
+        
+        glDepthMask(state.DepthWrite? GL_TRUE: GL_FALSE);
+        
+        auto& colorMask = state.ColorMask;
+        glColorMask(colorMask.r? GL_TRUE: GL_FALSE, colorMask.g? GL_TRUE: GL_FALSE, colorMask.b? GL_TRUE: GL_FALSE, colorMask.a? GL_TRUE: GL_FALSE);
+        
+    }
+
+    void RenderDeviceGL::DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state)
+    {
+        SetGraphicState(state);
         vao->Bind();
         glDrawElements(GL_TRIANGLES, vao->GetIndexBuffer()->GetSize(), GL_UNSIGNED_SHORT, nullptr);
+        vao->Unbind();
     }
 }

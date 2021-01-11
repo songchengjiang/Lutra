@@ -16,7 +16,7 @@ namespace Lutra {
     class Engine
     {
     public:
-        Engine();
+        Engine(Graphic::API api = Graphic::API::OpenGL);
         ~Engine() = default;
         
         void AddScene(const std::shared_ptr<Scene>& scene) { m_sceneList.push_back(scene); }

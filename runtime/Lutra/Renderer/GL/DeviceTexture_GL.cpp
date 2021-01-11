@@ -38,16 +38,30 @@ namespace Lutra {
         return 0;
     }
 
+    static GLenum ConvertDeviceTextureForamtToDataType(DeviceTextureForamt format)
+    {
+        switch (format) {
+            case DeviceTextureForamt::RGB8:
+            case DeviceTextureForamt::RGBA8: return GL_UNSIGNED_BYTE;
+            case DeviceTextureForamt::D16:
+            case DeviceTextureForamt::D24: return GL_UNSIGNED_INT;
+            case DeviceTextureForamt::D32F: return GL_FLOAT;
+            case DeviceTextureForamt::D24S8: return GL_UNSIGNED_INT_24_8;
+            case DeviceTextureForamt::D32FS8: return GL_FLOAT;
+        }
+        return 0;
+    }
+
     DeviceTexture2DGL::DeviceTexture2DGL(uint32_t width, uint32_t height, DeviceTextureForamt format)
         : m_width(width)
         , m_height(height)
     {
         m_internalFormat = ConvertDeviceTextureForamtToInternalFormat(format);
         m_dataFormat     = ConvertDeviceTextureForamtToFormat(format);
-
+        m_dataType       = ConvertDeviceTextureForamtToDataType(format);
         glGenTextures(1, &m_id);
         glBindTexture(GL_TEXTURE_2D, m_id);
-        glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_width, m_height, 0, m_dataFormat, GL_UNSIGNED_BYTE, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_width, m_height, 0, m_dataFormat, m_dataType, nullptr);
         //glTexStorage2D(GL_TEXTURE_2D, 1, m_internalFormat, m_width, m_height);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -66,7 +80,7 @@ namespace Lutra {
     void DeviceTexture2DGL::SetData(const void* data, uint32_t size)
     {
         glBindTexture(GL_TEXTURE_2D, m_id);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, m_dataFormat, GL_UNSIGNED_BYTE, data);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, m_dataFormat, m_dataType, data);
     }
 
     void DeviceTexture2DGL::Bind() const
