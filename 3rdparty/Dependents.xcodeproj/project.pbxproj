@@ -41,6 +41,12 @@
 		BE37193225A6FE0F003C2AA0 /* glfw3.h in Headers */ = {isa = PBXBuildFile; fileRef = BE37192C25A6FE0E003C2AA0 /* glfw3.h */; };
 		BE37193325A6FE0F003C2AA0 /* glfw3native.h in Headers */ = {isa = PBXBuildFile; fileRef = BE37192D25A6FE0E003C2AA0 /* glfw3native.h */; };
 		BE37193425A6FE0F003C2AA0 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE37193125A6FE0E003C2AA0 /* libglfw3.a */; };
+		BE41ECC525AC53750067AC14 /* ImGuiFileDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ECC225AC53750067AC14 /* ImGuiFileDialog.cpp */; };
+		BE41ECC625AC53750067AC14 /* ImGuiFileDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = BE41ECC325AC53750067AC14 /* ImGuiFileDialog.h */; };
+		BE41ECC725AC53750067AC14 /* ImGuiFileDialogConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BE41ECC425AC53750067AC14 /* ImGuiFileDialogConfig.h */; };
+		BE41ECFC25AD51970067AC14 /* CustomFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ECFA25AD51970067AC14 /* CustomFont.cpp */; };
+		BE41ECFD25AD51970067AC14 /* CustomFont.h in Headers */ = {isa = PBXBuildFile; fileRef = BE41ECFB25AD51970067AC14 /* CustomFont.h */; };
+		BE41ED0025AD532E0067AC14 /* CustomImGuiFileDialogConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BE41ECFF25AD532E0067AC14 /* CustomImGuiFileDialogConfig.h */; };
 		BEFA35DC25AADFB9001B8E38 /* sole.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BEFA35DB25AADFB9001B8E38 /* sole.hpp */; };
 		BEFA370F25AAFE1F001B8E38 /* anchor.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA36AE25AAFE1E001B8E38 /* anchor.h */; };
 		BEFA371025AAFE1F001B8E38 /* binary.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA36AF25AAFE1E001B8E38 /* binary.h */; };
@@ -173,6 +179,12 @@
 		BE37192C25A6FE0E003C2AA0 /* glfw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
 		BE37192D25A6FE0E003C2AA0 /* glfw3native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfw3native.h; sourceTree = "<group>"; };
 		BE37193125A6FE0E003C2AA0 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
+		BE41ECC225AC53750067AC14 /* ImGuiFileDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiFileDialog.cpp; sourceTree = "<group>"; };
+		BE41ECC325AC53750067AC14 /* ImGuiFileDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuiFileDialog.h; sourceTree = "<group>"; };
+		BE41ECC425AC53750067AC14 /* ImGuiFileDialogConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuiFileDialogConfig.h; sourceTree = "<group>"; };
+		BE41ECFA25AD51970067AC14 /* CustomFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomFont.cpp; sourceTree = "<group>"; };
+		BE41ECFB25AD51970067AC14 /* CustomFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFont.h; sourceTree = "<group>"; };
+		BE41ECFF25AD532E0067AC14 /* CustomImGuiFileDialogConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImGuiFileDialogConfig.h; sourceTree = "<group>"; };
 		BEFA35DB25AADFB9001B8E38 /* sole.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sole.hpp; sourceTree = "<group>"; };
 		BEFA36AE25AAFE1E001B8E38 /* anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = anchor.h; sourceTree = "<group>"; };
 		BEFA36AF25AAFE1E001B8E38 /* binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary.h; sourceTree = "<group>"; };
@@ -297,6 +309,7 @@
 				BEFA35D625AADE57001B8E38 /* uuid */,
 				BE37192925A6FE0E003C2AA0 /* glfw */,
 				BE37181725A6F3C1003C2AA0 /* stb_image */,
+				BE41ECC125AC53750067AC14 /* imguiFileDialog */,
 				BE3717F925A6F339003C2AA0 /* imgui-node-editor */,
 				BE3717E325A6F330003C2AA0 /* imgui */,
 				BE3717D725A6F329003C2AA0 /* glad */,
@@ -452,6 +465,27 @@
 				BE37193125A6FE0E003C2AA0 /* libglfw3.a */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		BE41ECC125AC53750067AC14 /* imguiFileDialog */ = {
+			isa = PBXGroup;
+			children = (
+				BE41ECF925AD518A0067AC14 /* res */,
+				BE41ECC225AC53750067AC14 /* ImGuiFileDialog.cpp */,
+				BE41ECC325AC53750067AC14 /* ImGuiFileDialog.h */,
+				BE41ECC425AC53750067AC14 /* ImGuiFileDialogConfig.h */,
+				BE41ECFF25AD532E0067AC14 /* CustomImGuiFileDialogConfig.h */,
+			);
+			path = imguiFileDialog;
+			sourceTree = "<group>";
+		};
+		BE41ECF925AD518A0067AC14 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				BE41ECFA25AD51970067AC14 /* CustomFont.cpp */,
+				BE41ECFB25AD51970067AC14 /* CustomFont.h */,
+			);
+			path = res;
 			sourceTree = "<group>";
 		};
 		BEFA35D625AADE57001B8E38 /* uuid */ = {
@@ -649,7 +683,9 @@
 				BEFA371325AAFE1F001B8E38 /* depthguard.h in Headers */,
 				BE3717F625A6F330003C2AA0 /* imstb_textedit.h in Headers */,
 				BEFA372325AAFE1F001B8E38 /* node_data.h in Headers */,
+				BE41ECFD25AD51970067AC14 /* CustomFont.h in Headers */,
 				BEFA374C25AAFE1F001B8E38 /* nodebuilder.h in Headers */,
+				BE41ECC625AC53750067AC14 /* ImGuiFileDialog.h in Headers */,
 				BEFA374E25AAFE1F001B8E38 /* nodeevents.h in Headers */,
 				BEFA375625AAFE1F001B8E38 /* regeximpl.h in Headers */,
 				BEFA374325AAFE1F001B8E38 /* emitterutils.h in Headers */,
@@ -699,7 +735,9 @@
 				BEFA372425AAFE1F001B8E38 /* node_iterator.h in Headers */,
 				BEFA371225AAFE1F001B8E38 /* graphbuilder.h in Headers */,
 				BE37180C25A6F339003C2AA0 /* imgui_node_editor.h in Headers */,
+				BE41ECC725AC53750067AC14 /* ImGuiFileDialogConfig.h in Headers */,
 				BEFA371025AAFE1F001B8E38 /* binary.h in Headers */,
+				BE41ED0025AD532E0067AC14 /* CustomImGuiFileDialogConfig.h in Headers */,
 				BEFA376125AAFE1F001B8E38 /* singledocparser.h in Headers */,
 				BEFA375825AAFE1F001B8E38 /* scanner.h in Headers */,
 				BEFA371925AAFE1F001B8E38 /* emitterstyle.h in Headers */,
@@ -789,6 +827,7 @@
 				BEFA374225AAFE1F001B8E38 /* emitterutils.cpp in Sources */,
 				BEFA374D25AAFE1F001B8E38 /* nodeevents.cpp in Sources */,
 				BEFA374825AAFE1F001B8E38 /* memory.cpp in Sources */,
+				BE41ECC525AC53750067AC14 /* ImGuiFileDialog.cpp in Sources */,
 				BEFA374B25AAFE1F001B8E38 /* nodebuilder.cpp in Sources */,
 				BEFA375B25AAFE1F001B8E38 /* scantag.cpp in Sources */,
 				BEFA374025AAFE1F001B8E38 /* emitterstate.cpp in Sources */,
@@ -797,6 +836,7 @@
 				BE37181B25A6F3C1003C2AA0 /* stb_image.cpp in Sources */,
 				BE3717F425A6F330003C2AA0 /* imgui_widgets.cpp in Sources */,
 				BEFA375125AAFE1F001B8E38 /* parse.cpp in Sources */,
+				BE41ECFC25AD51970067AC14 /* CustomFont.cpp in Sources */,
 				BEFA373925AAFE1F001B8E38 /* convert.cpp in Sources */,
 				BEFA376025AAFE1F001B8E38 /* singledocparser.cpp in Sources */,
 				BE37182625A6FC19003C2AA0 /* imgui_impl_opengl3.cpp in Sources */,
@@ -936,6 +976,7 @@
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -958,6 +999,7 @@
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glad/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/yaml/include,
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/imgui,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
