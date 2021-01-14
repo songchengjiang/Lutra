@@ -26,6 +26,7 @@ namespace LutraEditor {
         
         void SetPropertys(const std::vector<std::shared_ptr<PropertyGUI>>& propertys);
         void Clear() { m_propertyGUIs.clear(); }
+
         
     private:
         

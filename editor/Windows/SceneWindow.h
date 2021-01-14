@@ -30,10 +30,9 @@ namespace LutraEditor {
         
         bool m_isOpen = false;
         std::shared_ptr<Lutra::Scene>   m_scene;
-        std::shared_ptr<Lutra::Texture> m_colorTexture;
+        std::shared_ptr<Lutra::RenderTexture> m_colorTexture;
         Lutra::SceneObject              m_sceneCamera;
         uint32_t                        m_width,m_height;
-        ImVec2                          m_windowSize;
     };
 
 }

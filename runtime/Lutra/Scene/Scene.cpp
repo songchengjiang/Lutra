@@ -13,7 +13,7 @@
 #include "Camera.h"
 #include "Context.h"
 #include "Graphic.h"
-#include "RenderTarget.h"
+#include "Texture.h"
 #include <set>
 
 namespace Lutra {
@@ -22,11 +22,16 @@ namespace Lutra {
     {
     }
 
+    Scene::~Scene()
+    {
+        
+    }
+
     SceneObject Scene::CreateSceneObject(const std::string& name)
     {
         SceneObject so{m_registry.create(), this};
-        so.AddComponent<Transform>();
         so.AddComponent<Tag>().Name = name;
+        so.AddComponent<Transform>();
         so.AddComponent<SceneObjectDelegate>().This = so;
         m_sceneObjectList.push_back(so);
         return so;
@@ -50,26 +55,24 @@ namespace Lutra {
         rContext.Graphic_ = &graphic;
         std::vector<Camera*> rttCameras;
         std::vector<Camera*> mainCameras;
-        std::set<std::shared_ptr<RenderTarget>> renderTargets;
+        std::set<std::shared_ptr<RenderTexture>> renderTextures;
         
         auto view = m_registry.view<Transform, Camera>();
         view.each([&, this](Transform& trans, Camera& cam){
-            if (cam.RenderTarget_ != nullptr) {
-                if (cam.RenderTarget_->GetType() != RenderTargetType::Window) {
-                    rttCameras.push_back(&cam);
-                }else {
-                    mainCameras.push_back(&cam);
-                }
-                renderTargets.insert(cam.RenderTarget_);
+            if (cam.RenderTexture_ != nullptr) {
+                rttCameras.push_back(&cam);
+                renderTextures.insert(cam.RenderTexture_);
+            }else {
+                mainCameras.push_back(&cam);
             }
         });
         
         auto renderFunc = [&rContext, &graphic, this](Camera &cam){
-            if (cam.RenderTarget_ != nullptr) {
-                uint32_t width = cam.RenderTarget_->GetWidth();
-                uint32_t height = cam.RenderTarget_->GetHeight();
+            if (cam.RenderTexture_ != nullptr) {
+                uint32_t width = cam.RenderTexture_->GetWidth();
+                uint32_t height = cam.RenderTexture_->GetHeight();
                 rContext.Camera_ = &cam;
-                graphic.SetRenderTarget(cam.RenderTarget_);
+                graphic.SetRenderTexture(cam.RenderTexture_);
                 graphic.SetViewport(cam.Viewport_.X * width,
                                     cam.Viewport_.Y * height,
                                     cam.Viewport_.Width * width - cam.Viewport_.X * width,
@@ -78,12 +81,12 @@ namespace Lutra {
                 for (auto& system : m_systemList) {
                     system->OnRender(rContext);
                 }
-                graphic.SetRenderTarget(cam.RenderTarget_, false);
+                graphic.SetRenderTexture(cam.RenderTexture_, false);
             }
         };
         
-        for (auto& rt : renderTargets) {
-            graphic.SetRenderTarget(rt);
+        for (auto& rt : renderTextures) {
+            graphic.SetRenderTexture(rt);
             graphic.SetViewport(0, 0, rt->GetWidth(), rt->GetHeight());
             graphic.SetClearColor(rt->GetClearColor());
             graphic.Clear(ClearFlag::COLOR | ClearFlag::DEPTH | ClearFlag::STENCIL);

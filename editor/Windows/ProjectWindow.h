@@ -25,6 +25,8 @@ namespace LutraEditor {
         virtual void Close() override;
         virtual void OnGUI(uint32_t width, uint32_t height) override;
         
+        void Reload();
+        
     private:
         
         void showTree();
@@ -33,19 +35,19 @@ namespace LutraEditor {
         void showMainPopup();
         
         Lutra::SceneObject createSceneObject(const std::string& name);
+        void destroySceneObject(Lutra::SceneObject so);
+        
         Lutra::SceneObject createSprite(const std::string& name);
         Lutra::SceneObject createCamera(const std::string& name);
         
         std::vector<std::shared_ptr<PropertyGUI>> getComponentGUIs(Lutra::SceneObject so);
-        
-        void destroySceneObject(Lutra::SceneObject so);
         
     private:
         
         bool m_isOpen = false;
         PropertyWindow* m_propertyWindow;
         std::shared_ptr<Lutra::Scene> m_scene;
-        Lutra::SceneObject m_rootSceneObject;
+        std::vector<Lutra::SceneObject> m_rootSceneObjects;
         Lutra::SceneObject m_selectedSceneObject;
     };
 

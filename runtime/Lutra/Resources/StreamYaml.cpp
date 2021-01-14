@@ -175,10 +175,12 @@ namespace Lutra {
 
     void WriteStreamYaml::Open()
     {
+        BeginMap("");
     }
 
     void WriteStreamYaml::Close()
     {
+        EndMap();
         std::ofstream fs;
         fs.open(m_path);
         if (fs.is_open()) {
@@ -227,6 +229,16 @@ namespace Lutra {
     void WriteStreamYaml::WriteValue(const std::string& key, float value)
     {
         m_emitter << YAML::Key << key << YAML::Value << value;
+    }
+
+    void WriteStreamYaml::WriteArrayElement(uint32_t value)
+    {
+        m_emitter << value;
+    }
+
+    void WriteStreamYaml::WriteArrayElement(std::string value)
+    {
+        m_emitter << value;
     }
 
     void WriteStreamYaml::WriteValue(const std::string& key, const glm::vec2& value)
@@ -337,7 +349,12 @@ namespace Lutra {
 
     void ReadStreamYaml::Close()
     {
-        
+        m_nodeStack.pop();
+    }
+
+    bool ReadStreamYaml::HasMap(const std::string& key)
+    {
+        return m_nodeStack.top()[key].IsMap();
     }
 
     void ReadStreamYaml::BeginMap(const std::string& key)
@@ -348,6 +365,11 @@ namespace Lutra {
     void ReadStreamYaml::EndMap()
     {
         m_nodeStack.pop();
+    }
+
+    bool ReadStreamYaml::HasArray(const std::string& key)
+    {
+        return m_nodeStack.top()[key].IsSequence();
     }
 
     size_t ReadStreamYaml::BeginArray(const std::string& key)
@@ -369,6 +391,21 @@ namespace Lutra {
     void ReadStreamYaml::LeaveArray()
     {
         m_nodeStack.pop();
+    }
+
+    void ReadStreamYaml::ReadArrayElement(uint32_t& value)
+    {
+        value = m_nodeStack.top().as<uint32_t>();
+    }
+
+    void ReadStreamYaml::ReadArrayElement(std::string& value)
+    {
+        value = m_nodeStack.top().as<std::string>();
+    }
+
+    bool ReadStreamYaml::HasValue(const std::string& key)
+    {
+        return m_nodeStack.top()[key].IsDefined();
     }
 
     void ReadStreamYaml::ReadValue(const std::string& key, bool& value)

@@ -22,23 +22,44 @@ namespace Lutra {
         return mgr;
     }
 
-    Resource* ResourceManager::loadResource(const std::string& path)
+    bool ResourceManager::DestroyResource(const sole::uuid& uuid)
     {
-        ReadStreamYaml stream(ResourceManifest::Instance().GetAbsolutePath(path));
+        ResourceManifest::Instance().SetUUIDAndPath(uuid, "");
+        m_resources.erase(std::find_if(m_resources.begin(), m_resources.end(), [&](const std::shared_ptr<Resource>& resource) -> bool{
+            return resource->GetUUID() == uuid;
+        }));
+        return true;
+    }
+
+    std::shared_ptr<Resource> ResourceManager::loadResource(const std::string& path)
+    {
+        auto uuid = ResourceManifest::Instance().FindUUID(path);
+        if (uuid == sole::uuid{0, 0}) {
+            return nullptr;
+        }
+        auto iter = std::find_if(m_resources.begin(), m_resources.end(), [&uuid](const std::shared_ptr<Resource>& resource) -> bool {
+            return resource->GetUUID() == uuid;
+        });
+        if (iter != m_resources.end())
+            return *iter;
+        ReadStreamYaml stream(path);
         stream.Open();
         int Type = 0;
         stream.ReadValue("Type", Type);
         
-        Resource *resource = nullptr;
+        std::shared_ptr<Resource> resource;
         switch ((ResourceType)Type) {
-            case ResourceType::Texture:
-                resource = new Texture2D();
+            case ResourceType::Texture2D:
+                resource = std::shared_ptr<Resource>(new Texture2D());
+                break;
+            case ResourceType::RenderTexture:
+                resource = std::shared_ptr<Resource>(new RenderTexture());
                 break;
             case ResourceType::Material:
-                resource = new Material();
+                resource = std::shared_ptr<Resource>(new Material());
                 break;
             case ResourceType::Mesh:
-                resource = new Mesh();
+                resource = std::shared_ptr<Resource>(new Mesh());
                 break;
                 
             default:
@@ -50,21 +71,19 @@ namespace Lutra {
         return resource;
     }
 
-    Resource* ResourceManager::loadResource(const sole::uuid& uuid)
+    std::shared_ptr<Resource> ResourceManager::loadResource(const sole::uuid& uuid)
     {
-        return loadResource(ResourceManifest::Instance().GetRelativePath(uuid));
+        return loadResource(ResourceManifest::Instance().FindPath(uuid));
     }
 
     void ResourceManager::saveResource(const std::string& path, Resource* resource)
     {
         ResourceManifest::Instance().SetUUIDAndPath(resource->GetUUID(), path);
         
-        WriteStreamYaml stream(ResourceManifest::Instance().GetAbsolutePath(path));
+        WriteStreamYaml stream(path);
         stream.Open();
-        stream.BeginMap("");
         stream.WriteValue("Type", (int)resource->GetResourceType());
         resource->Serialize(stream);
-        stream.EndMap();
         stream.Close();
     }
 

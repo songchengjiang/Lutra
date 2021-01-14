@@ -23,6 +23,7 @@ namespace Lutra {
     void Resource::Serialize(WriteStream& stream)
     {
         stream.WriteValue("uuid", m_uuid.str());
+        stream.WriteValue("Name", m_name);
     }
 
     void Resource::Deserialize(ReadStream& stream)
@@ -30,6 +31,7 @@ namespace Lutra {
         std::string str;
         stream.ReadValue("uuid", str);
         m_uuid = sole::rebuild(str);
+        stream.ReadValue("Name", m_name);
     }
 
 }

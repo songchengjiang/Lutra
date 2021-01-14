@@ -17,7 +17,7 @@ namespace Lutra {
     class Texture;
     struct ShaderValue
     {
-        enum class Type
+        enum Type
         {
             Float,
             Float2,

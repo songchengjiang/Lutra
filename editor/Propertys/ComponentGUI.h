@@ -53,6 +53,7 @@ namespace LutraEditor {
         
     };
 
+    class ResourceBrowserWidget;
     class SpriteRendererGUI : public ComponentGUI
     {
     public:
@@ -63,6 +64,10 @@ namespace LutraEditor {
         virtual ~SpriteRendererGUI() = default;
         
         virtual void OnGUI() override;
+        
+    private:
+        std::shared_ptr<ResourceBrowserWidget> m_browserWidget;
+        int m_selectedMaterial = -1;
     };
 
     class MeshFilterGUI : public ComponentGUI
@@ -75,6 +80,9 @@ namespace LutraEditor {
         virtual ~MeshFilterGUI() = default;
         
         virtual void OnGUI() override;
+        
+    private:
+        std::shared_ptr<ResourceBrowserWidget> m_browserWidget;
     };
 
     class CameraGUI : public ComponentGUI
@@ -87,6 +95,9 @@ namespace LutraEditor {
         virtual ~CameraGUI() = default;
         
         virtual void OnGUI() override;
+        
+    private:
+        std::shared_ptr<ResourceBrowserWidget> m_browserWidget;
     };
 
     class ComponentAppendGUI : public ComponentGUI

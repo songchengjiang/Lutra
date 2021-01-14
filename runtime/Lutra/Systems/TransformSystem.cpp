@@ -15,7 +15,6 @@ namespace Lutra {
     TransformSystem::TransformSystem(Scene* scene)
     : System(scene)
     {
-        
     }
 
     TransformSystem::~TransformSystem()

@@ -8,6 +8,7 @@
 #ifndef System_hpp
 #define System_hpp
 #include "entt.hpp"
+#include <string>
 
 namespace Lutra {
     
@@ -21,6 +22,8 @@ namespace Lutra {
         System(Scene* scene);
         virtual ~System();
         
+        virtual std::string GetType() const = 0;
+        
         virtual void OnUpdate(const FrameContext& context) = 0;
         virtual void OnRender(const RenderContext& context){};
     
@@ -30,7 +33,7 @@ namespace Lutra {
         
     protected:
         
-        Scene* m_scene{nullptr};
+        Scene*      m_scene{nullptr};
     };
 
 }

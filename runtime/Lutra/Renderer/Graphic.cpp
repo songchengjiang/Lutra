@@ -16,7 +16,6 @@
 #include "Program.h"
 #include "VertexArray.h"
 #include "FrameBuffer.h"
-#include "RenderTarget.h"
 #include <gtc/type_ptr.hpp>
 
 #include "RenderDevice_GL.h"
@@ -46,34 +45,25 @@ namespace Lutra {
         m_renderDevice->Clear(flag);
     }
 
-    void Graphic::SetRenderTarget(const std::shared_ptr<RenderTarget>& renderTarget, bool binding)
+    void Graphic::SetRenderTexture(const std::shared_ptr<RenderTexture>& renderTexture, bool binding)
     {
-        auto hash = std::hash<RenderTarget*>()(renderTarget.get());
+        auto hash = std::hash<RenderTexture*>()(renderTexture.get());
         std::shared_ptr<FrameBuffer> fbo;
         auto iter = m_frameBufferList.find(hash);
         if (iter == m_frameBufferList.end()) {
             FramebufferSpecification spec;
-            spec.Width = renderTarget->GetWidth();
-            spec.Height = renderTarget->GetHeight();
-            if (renderTarget->GetType() == RenderTargetType::Texture) {
-                auto renderTexture = static_cast<RenderTexture*>(renderTarget.get());
-                for (auto& colorAtt : renderTexture->ColorAttachments) {
-                    spec.ColorAttachments.push_back(getDeviceTextureBy(colorAtt.get()));
-                }
-                if (renderTexture->DepthStencilAttachment != nullptr) {
-                    spec.DepthStencilAttachment = getDeviceTextureBy(renderTexture->DepthStencilAttachment.get());
-                }
-            }
+            spec.ColorAttachments.push_back(getDeviceTextureBy(renderTexture.get()));
+            spec.DepthStencilAttachment = m_renderDevice->CreateTexture2D(renderTexture->GetWidth(), renderTexture->GetHeight(), (DeviceTextureForamt)renderTexture->GetDepthFormat());
             fbo = m_renderDevice->CreateFrameBuffer(spec);
             m_frameBufferList.insert(std::make_pair(hash, fbo));
         }else {
             fbo = iter->second;
         }
         
-        if (renderTarget->GetWidth() != fbo->GetSpecification().Width
-         || renderTarget->GetHeight() != fbo->GetSpecification().Height) {
-            fbo->Resize(renderTarget->GetWidth(), renderTarget->GetHeight());
-        }
+//        if (renderTarget->GetWidth() != fbo->GetSpecification().Width
+//         || renderTarget->GetHeight() != fbo->GetSpecification().Height) {
+//            fbo->Resize();
+//        }
         if (binding)
             fbo->Bind();
         else
@@ -161,11 +151,21 @@ namespace Lutra {
                 deviceTexture = m_renderDevice->CreateTexture2D(tex2D->GetWidth(), tex2D->GetHeight(), (DeviceTextureForamt)tex2D->GetFormat());
                 if (!tex2D->GetData().empty())
                     deviceTexture->SetData(tex2D->GetData().data(), (uint32_t)tex2D->GetData().size());
-                m_deviceTextureList.insert(std::make_pair(hash, deviceTexture));
+            }else if (tex->GetType() == TextureType::RENDER) {
+                auto renderTex = static_cast<RenderTexture*>(tex);
+                deviceTexture = m_renderDevice->CreateTexture2D(renderTex->GetWidth(), renderTex->GetHeight(), (DeviceTextureForamt)renderTex->GetColorFormat());
             }
             tex->SetTextureID(deviceTexture->GetID());
+            m_deviceTextureList.insert(std::make_pair(hash, deviceTexture));
         }else {
             deviceTexture = iter->second;
+        }
+        
+        if (deviceTexture->GetFilter() != (DeviceTextureFilter)tex->GetFilter()) {
+            deviceTexture->SetFilter((DeviceTextureFilter)tex->GetFilter());
+        }
+        if (deviceTexture->GettWrap() != (DeviceTextureWrap)tex->GetWrap()) {
+            deviceTexture->SetWrap((DeviceTextureWrap)tex->GetWrap());
         }
         return deviceTexture;
     }
@@ -199,7 +199,8 @@ namespace Lutra {
                     program->SetUniform(value.first, value.second.Value_.m4, 1);
                     break;
                 case ShaderValue::Type::Sampler:
-                    program->SetSampler(value.first, getDeviceTextureBy(value.second.Value_.tex->get()), texUnit++);
+                    if (*value.second.Value_.tex != nullptr)
+                        program->SetSampler(value.first, getDeviceTextureBy(value.second.Value_.tex->get()), texUnit++);
                     break;
                     
                 default:
@@ -232,7 +233,7 @@ namespace Lutra {
 
     void Graphic::End()
     {
-        
+        m_renderDevice->SetGraphicState({GraphicBlendMode::Disabled, GraphicCullMode::Back, true, true, true, glm::bvec4(true)});
     }
 
 }

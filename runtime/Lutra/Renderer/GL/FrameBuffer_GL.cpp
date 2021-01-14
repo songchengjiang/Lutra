@@ -33,10 +33,8 @@ namespace Lutra {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void FrameBufferGL::Resize(uint32_t width, uint32_t height)
+    void FrameBufferGL::Resize()
     {
-        m_spec.Width = width;
-        m_spec.Height = height;
         invalidate();
     }
 

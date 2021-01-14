@@ -20,6 +20,10 @@ namespace Lutra {
         MeshFilterSystem(Scene* scene);
         virtual ~MeshFilterSystem();
         
+        static std::string GetTypeStatic() { return "MeshFilterSystem"; }
+        
+        virtual std::string GetType() const override { return "MeshFilterSystem"; }
+        
         virtual void OnUpdate(const FrameContext& context) override;
     };
 

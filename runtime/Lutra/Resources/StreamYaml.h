@@ -27,6 +27,8 @@ namespace Lutra {
         virtual void EndMap() override;
         virtual void BeginArray(const std::string& key) override;
         virtual void EndArray() override;
+        virtual void WriteArrayElement(uint32_t value) override;
+        virtual void WriteArrayElement(std::string value) override;
         virtual void WriteValue(const std::string& key, bool value) override;
         virtual void WriteValue(const std::string& key, int value) override;
         virtual void WriteValue(const std::string& key, uint32_t value) override;
@@ -58,12 +60,17 @@ namespace Lutra {
         virtual void Open() override;
         virtual void Close() override;
         
+        virtual bool HasMap(const std::string& key) override;
         virtual void BeginMap(const std::string& key) override;
         virtual void EndMap() override;
+        virtual bool HasArray(const std::string& key) override;
         virtual size_t BeginArray(const std::string& key) override;
         virtual void EndArray() override;
         virtual void EnterArray(size_t i) override;
         virtual void LeaveArray() override;
+        virtual void ReadArrayElement(uint32_t& value) override;
+        virtual void ReadArrayElement(std::string& value) override;
+        virtual bool HasValue(const std::string& key) override;
         virtual void ReadValue(const std::string& key, bool& value) override;
         virtual void ReadValue(const std::string& key, int& value) override;
         virtual void ReadValue(const std::string& key, uint32_t& value) override;

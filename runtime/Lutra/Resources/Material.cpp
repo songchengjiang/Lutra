@@ -41,7 +41,7 @@ namespace Lutra {
                         case ShaderValue::Type::Float2: stream.WriteValue("Value", value.second.Value_.v2); break;
                         case ShaderValue::Type::Float3: stream.WriteValue("Value", value.second.Value_.v3); break;
                         case ShaderValue::Type::Float4: stream.WriteValue("Value", value.second.Value_.v3); break;
-                        case ShaderValue::Type::Sampler: stream.WriteValue("Value", (*value.second.Value_.tex)->GetUUID().str()); break;
+                        case ShaderValue::Type::Sampler: stream.WriteValue("Value", (*value.second.Value_.tex) != nullptr? (*value.second.Value_.tex)->GetUUID().str(): ""); break;
                         case ShaderValue::Type::Mat3: stream.WriteValue("Value", *value.second.Value_.m3); break;
                         case ShaderValue::Type::Mat4: stream.WriteValue("Value", *value.second.Value_.m4); break;
                     }
@@ -112,10 +112,9 @@ namespace Lutra {
                             break;
                         case ShaderValue::Type::Sampler:
                         {
-                            std::string value;
-                            stream.ReadValue("Value", value);
-                            auto uuid = sole::rebuild(value);
-                            pass->GetShader().SetSampler(name, ResourceManager::Instance().LoadResource<Texture>(uuid));
+                            std::string uuid;
+                            stream.ReadValue("Value", uuid);
+                            pass->GetShader().SetSampler(name, ResourceManager::Instance().LoadResource<Texture>(sole::rebuild(uuid)));
                         }
                             break;
                         case ShaderValue::Type::Mat3:

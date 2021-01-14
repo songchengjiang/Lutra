@@ -22,22 +22,22 @@ namespace Lutra {
         
         static ResourceManifest& Instance();
         
-        void SetResourcesRootPath(const std::string& path);
-        const std::string& GetResourcesRootPath() const { return m_rootPath; }
+        void SetRootDirectoty(const std::string& dir) { m_root = dir; }
+        const std::string& GetRootDirectoty() const { return m_root; }
         
-        void Load(const std::string& relPath);
-        void Save(const std::string& relPath);
+        void Load(const std::string& absPath);
+        void Save(const std::string& absPath);
         
         void SetUUIDAndPath(const sole::uuid& uuid, const std::string& path);
         
-        std::string GetAbsolutePath(const std::string& relPath);
-        std::string GetRelativePath(const sole::uuid& uuid);
+        std::string FindPath(const sole::uuid& uuid);
+        sole::uuid FindUUID(const std::string& path);
         
     private:
         
         std::unordered_map<sole::uuid, std::string> m_uuidMapPath;
         std::unordered_map<std::string, sole::uuid> m_pathMapuuid;
-        std::string m_rootPath;
+        std::string m_root;
     };
 
 }

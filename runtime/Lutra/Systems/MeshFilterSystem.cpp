@@ -15,7 +15,6 @@ namespace Lutra {
     MeshFilterSystem::MeshFilterSystem(Scene* scene)
     : System(scene)
     {
-        
     }
 
     MeshFilterSystem::~MeshFilterSystem()
@@ -29,7 +28,7 @@ namespace Lutra {
         
         view.each([&](Transform& trans, MeshFilter& mf){
             auto& mesh = mf.MeshPtr;
-            if (mesh->MarkForUpdate) {
+            if (mf.MeshPtr != nullptr && mesh->MarkForUpdate) {
                 mesh->SequentialBuffer.clear();
                 for (size_t i = 0; i < mesh->Vertices.size(); ++i) {
                     mesh->SequentialBuffer.push_back(mesh->Vertices[i].x);

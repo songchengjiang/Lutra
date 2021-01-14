@@ -12,7 +12,7 @@
 
 namespace Lutra {
 
-    class RenderTarget;
+    class RenderTexture;
 
     struct Viewport
     {
@@ -27,7 +27,7 @@ namespace Lutra {
     {
         enum class ProjectionType {
             Perspective = 0,
-            Orthographic = 1
+            Orthographic
         };
         
         ProjectionType ProjType{ProjectionType::Perspective};
@@ -38,7 +38,7 @@ namespace Lutra {
         float ZFar{100.0f};
         
         Viewport Viewport_{0.0f, 0.0f, 1.0f, 1.0f};
-        std::shared_ptr<RenderTarget> RenderTarget_;
+        std::shared_ptr<RenderTexture> RenderTexture_;
         
         glm::mat4 ViewMat;
         glm::mat4 ProjectMat;

@@ -17,7 +17,6 @@ namespace Lutra {
     class Material : public Resource
     {
     public:
-        Material();
         ~Material() = default;
         
         virtual void Serialize(WriteStream& stream) override;
@@ -25,17 +24,24 @@ namespace Lutra {
         
         void AddPass(const std::shared_ptr<Pass>& pass);
         
-        std::shared_ptr<Pass>& GetPass(uint32_t idx) {
+        std::shared_ptr<Pass>& GetPass(size_t idx) {
             LT_CORE_ASSERT(idx < m_passList.size(), "Out Of Range!");
             return m_passList[idx];
         }
         
-        const std::shared_ptr<Pass>& GetPass(uint32_t idx) const {
+        const std::shared_ptr<Pass>& GetPass(size_t idx) const {
             LT_CORE_ASSERT(idx < m_passList.size(), "Out Of Range!");
             return m_passList[idx];
         }
         
         size_t GetPassCount() const { return m_passList.size(); }
+        
+        const std::vector<std::shared_ptr<Pass>>& GetPasses() const { return m_passList; }
+        
+    private:
+        
+        Material();
+        friend class ResourceManager;
         
     private:
         

@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE41ED0925AD7A380067AC14 /* material.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BE41ED0825AD7A2F0067AC14 /* material.png */; };
+		BE41ED0D25ADAB280067AC14 /* ResourceGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED0B25ADAB280067AC14 /* ResourceGUI.cpp */; };
+		BE41ED1125ADB0460067AC14 /* TextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED0F25ADB0460067AC14 /* TextureManager.cpp */; };
+		BE41ED1E25AE9E010067AC14 /* MaterialBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED1C25AE9E010067AC14 /* MaterialBuilder.cpp */; };
+		BE41ED2325AE9E170067AC14 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED2125AE9E170067AC14 /* MeshBuilder.cpp */; };
+		BE41ED2825AE9E460067AC14 /* TextureBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED2625AE9E460067AC14 /* TextureBuilder.cpp */; };
+		BE41ED2E25AEB3B20067AC14 /* ResourceBrowserWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED2C25AEB3B20067AC14 /* ResourceBrowserWidget.cpp */; };
+		BE41ED3425AEEB220067AC14 /* GameWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED3225AEEB220067AC14 /* GameWindow.cpp */; };
+		BE41ED3925AF0D250067AC14 /* SceneBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE41ED3725AF0D250067AC14 /* SceneBuilder.cpp */; };
 		BE72AA7425A849770024C494 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA7225A849770024C494 /* Application.cpp */; };
 		BE72AA7925A849D20024C494 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AA7825A849D20024C494 /* main.cpp */; };
 		BE72AA7D25A84A020024C494 /* libDependents.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE72AA7C25A84A020024C494 /* libDependents.a */; };
@@ -36,6 +45,7 @@
 			dstPath = Resources/Icons;
 			dstSubfolderSpec = 6;
 			files = (
+				BE41ED0925AD7A380067AC14 /* material.png in CopyFiles */,
 				BEFA35AD25AABBC5001B8E38 /* square.png in CopyFiles */,
 				BEFA35AE25AABBC5001B8E38 /* tag.png in CopyFiles */,
 				BEFA35A425AAB240001B8E38 /* folder.png in CopyFiles */,
@@ -49,6 +59,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE41ED0825AD7A2F0067AC14 /* material.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = material.png; sourceTree = "<group>"; };
+		BE41ED0B25ADAB280067AC14 /* ResourceGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceGUI.cpp; sourceTree = "<group>"; };
+		BE41ED0C25ADAB280067AC14 /* ResourceGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceGUI.h; sourceTree = "<group>"; };
+		BE41ED0F25ADB0460067AC14 /* TextureManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManager.cpp; sourceTree = "<group>"; };
+		BE41ED1025ADB0460067AC14 /* TextureManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureManager.h; sourceTree = "<group>"; };
+		BE41ED1C25AE9E010067AC14 /* MaterialBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialBuilder.cpp; sourceTree = "<group>"; };
+		BE41ED1D25AE9E010067AC14 /* MaterialBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialBuilder.h; sourceTree = "<group>"; };
+		BE41ED2125AE9E170067AC14 /* MeshBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilder.cpp; sourceTree = "<group>"; };
+		BE41ED2225AE9E170067AC14 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshBuilder.h; sourceTree = "<group>"; };
+		BE41ED2625AE9E460067AC14 /* TextureBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureBuilder.cpp; sourceTree = "<group>"; };
+		BE41ED2725AE9E460067AC14 /* TextureBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureBuilder.h; sourceTree = "<group>"; };
+		BE41ED2C25AEB3B20067AC14 /* ResourceBrowserWidget.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceBrowserWidget.cpp; sourceTree = "<group>"; };
+		BE41ED2D25AEB3B20067AC14 /* ResourceBrowserWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceBrowserWidget.h; sourceTree = "<group>"; };
+		BE41ED3225AEEB220067AC14 /* GameWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameWindow.cpp; sourceTree = "<group>"; };
+		BE41ED3325AEEB220067AC14 /* GameWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameWindow.h; sourceTree = "<group>"; };
+		BE41ED3725AF0D250067AC14 /* SceneBuilder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneBuilder.cpp; sourceTree = "<group>"; };
+		BE41ED3825AF0D250067AC14 /* SceneBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneBuilder.h; sourceTree = "<group>"; };
+		BE41ED3D25AF1EDA0067AC14 /* ResourceID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceID.h; sourceTree = "<group>"; };
 		BE72AA6525A848D90024C494 /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE72AA7225A849770024C494 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
 		BE72AA7325A849770024C494 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
@@ -95,9 +123,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE41ED1B25AE9DF00067AC14 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				BE41ED1C25AE9E010067AC14 /* MaterialBuilder.cpp */,
+				BE41ED1D25AE9E010067AC14 /* MaterialBuilder.h */,
+				BE41ED2125AE9E170067AC14 /* MeshBuilder.cpp */,
+				BE41ED2225AE9E170067AC14 /* MeshBuilder.h */,
+				BE41ED2625AE9E460067AC14 /* TextureBuilder.cpp */,
+				BE41ED2725AE9E460067AC14 /* TextureBuilder.h */,
+				BE41ED3725AF0D250067AC14 /* SceneBuilder.cpp */,
+				BE41ED3825AF0D250067AC14 /* SceneBuilder.h */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
 		BE72AA5C25A848D90024C494 = {
 			isa = PBXGroup;
 			children = (
+				BE41ED1B25AE9DF00067AC14 /* Builders */,
 				BEFA359225AA14E3001B8E38 /* Resources */,
 				BE72AACD25A9B0C30024C494 /* Propertys */,
 				BE72AA8925A853CD0024C494 /* Windows */,
@@ -123,6 +167,8 @@
 				BEFA358925A9EDC7001B8E38 /* IconManager.h */,
 				BE72AA7225A849770024C494 /* Application.cpp */,
 				BE72AA7325A849770024C494 /* Application.h */,
+				BE41ED0F25ADB0460067AC14 /* TextureManager.cpp */,
+				BE41ED1025ADB0460067AC14 /* TextureManager.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -147,10 +193,14 @@
 				BE72AAC425A9AAA10024C494 /* PropertyWindow.h */,
 				BE72AA9325A863640024C494 /* SceneWindow.cpp */,
 				BE72AA9425A863640024C494 /* SceneWindow.h */,
+				BE41ED3225AEEB220067AC14 /* GameWindow.cpp */,
+				BE41ED3325AEEB220067AC14 /* GameWindow.h */,
 				BE72AAAE25A99F3B0024C494 /* LogWindow.cpp */,
 				BE72AAAF25A99F3B0024C494 /* LogWindow.h */,
 				BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */,
 				BE72AAD025A9B4140024C494 /* ResourceWindow.h */,
+				BE41ED2C25AEB3B20067AC14 /* ResourceBrowserWidget.cpp */,
+				BE41ED2D25AEB3B20067AC14 /* ResourceBrowserWidget.h */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -162,6 +212,8 @@
 				BE72AA9925A8AA550024C494 /* ComponentGUI.h */,
 				BE72AAC725A9AB140024C494 /* PropertyGUI.cpp */,
 				BE72AAC825A9AB140024C494 /* PropertyGUI.h */,
+				BE41ED0B25ADAB280067AC14 /* ResourceGUI.cpp */,
+				BE41ED0C25ADAB280067AC14 /* ResourceGUI.h */,
 			);
 			path = Propertys;
 			sourceTree = "<group>";
@@ -170,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				BEFA359325AA14E3001B8E38 /* Icons */,
+				BE41ED3D25AF1EDA0067AC14 /* ResourceID.h */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -177,6 +230,7 @@
 		BEFA359325AA14E3001B8E38 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				BE41ED0825AD7A2F0067AC14 /* material.png */,
 				BEFA35AB25AABBBF001B8E38 /* square.png */,
 				BEFA35AC25AABBBF001B8E38 /* tag.png */,
 				BEFA359425AA14E3001B8E38 /* folder.png */,
@@ -248,11 +302,19 @@
 				BE72AA9A25A8AA550024C494 /* ComponentGUI.cpp in Sources */,
 				BE72AA9525A863640024C494 /* SceneWindow.cpp in Sources */,
 				BE72AA7925A849D20024C494 /* main.cpp in Sources */,
+				BE41ED2325AE9E170067AC14 /* MeshBuilder.cpp in Sources */,
 				BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */,
+				BE41ED1125ADB0460067AC14 /* TextureManager.cpp in Sources */,
+				BE41ED3425AEEB220067AC14 /* GameWindow.cpp in Sources */,
+				BE41ED0D25ADAB280067AC14 /* ResourceGUI.cpp in Sources */,
+				BE41ED3925AF0D250067AC14 /* SceneBuilder.cpp in Sources */,
 				BE72AA8D25A853EB0024C494 /* ProjectWindow.cpp in Sources */,
 				BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */,
 				BE72AA7425A849770024C494 /* Application.cpp in Sources */,
+				BE41ED2825AE9E460067AC14 /* TextureBuilder.cpp in Sources */,
+				BE41ED1E25AE9E010067AC14 /* MaterialBuilder.cpp in Sources */,
 				BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */,
+				BE41ED2E25AEB3B20067AC14 /* ResourceBrowserWidget.cpp in Sources */,
 				BE72AA8725A8527D0024C494 /* GUIWindow.cpp in Sources */,
 				BE72AAB025A99F3B0024C494 /* LogWindow.cpp in Sources */,
 			);
@@ -379,6 +441,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,
@@ -411,6 +474,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = (
+					/Volumes/Samsung_T5/Dev/Lutra/3rdparty,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/entt,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glfw/include,
 					/Volumes/Samsung_T5/Dev/Lutra/3rdparty/glm,

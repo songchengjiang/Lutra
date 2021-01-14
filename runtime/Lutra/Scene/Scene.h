@@ -23,7 +23,7 @@ namespace Lutra {
     public:
         
         Scene();
-        ~Scene() = default;
+        ~Scene();
         
         SceneObject CreateSceneObject(const std::string& name = std::string());
         void DestroySceneObject(SceneObject so);

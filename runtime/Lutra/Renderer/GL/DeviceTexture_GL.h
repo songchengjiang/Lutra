@@ -36,12 +36,20 @@ namespace Lutra {
         virtual uint32_t GetHeight() const override { return m_height; }
 
         virtual void SetData(const void* data, uint32_t size) override;
+        
+        virtual void SetFilter(DeviceTextureFilter filter) override;
+        virtual DeviceTextureFilter GetFilter() const override { return m_filter; }
+        
+        virtual void SetWrap(DeviceTextureWrap wrap) override;
+        virtual DeviceTextureWrap GettWrap() const override { return m_wrap; }
 
         virtual void Bind() const override;
         
     private:
         uint32_t m_width, m_height;
         GLenum m_internalFormat, m_dataFormat, m_dataType;
+        DeviceTextureFilter m_filter{DeviceTextureFilter::Linear};
+        DeviceTextureWrap m_wrap{DeviceTextureWrap::Clamp};
     };
 }
 

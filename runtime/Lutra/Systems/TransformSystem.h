@@ -19,6 +19,10 @@ namespace Lutra {
         TransformSystem(Scene* scene);
         virtual ~TransformSystem();
         
+        static std::string GetTypeStatic() { return "TransformSystem"; }
+        
+        virtual std::string GetType() const override { return "TransformSystem"; }
+        
         virtual void OnUpdate(const FrameContext& context) override;
         
     };

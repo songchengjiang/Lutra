@@ -32,6 +32,8 @@ namespace Lutra {
         virtual void EndMap() = 0;
         virtual void BeginArray(const std::string& key) = 0;
         virtual void EndArray() = 0;
+        virtual void WriteArrayElement(uint32_t value) = 0;
+        virtual void WriteArrayElement(std::string value) = 0;
         virtual void WriteValue(const std::string& key, bool value) = 0;
         virtual void WriteValue(const std::string& key, int value) = 0;
         virtual void WriteValue(const std::string& key, uint32_t value) = 0;
@@ -55,12 +57,17 @@ namespace Lutra {
         ReadStream() = default;
         virtual ~ReadStream() = default;
         
+        virtual bool HasMap(const std::string& key) = 0;
         virtual void BeginMap(const std::string& key) = 0;
         virtual void EndMap() = 0;
+        virtual bool HasArray(const std::string& key) = 0;
         virtual size_t BeginArray(const std::string& key) = 0;
         virtual void EndArray() = 0;
         virtual void EnterArray(size_t i) = 0;
         virtual void LeaveArray() = 0;
+        virtual void ReadArrayElement(uint32_t& value) = 0;
+        virtual void ReadArrayElement(std::string& value) = 0;
+        virtual bool HasValue(const std::string& key) = 0;
         virtual void ReadValue(const std::string& key, bool& value) = 0;
         virtual void ReadValue(const std::string& key, int& value) = 0;
         virtual void ReadValue(const std::string& key, uint32_t& value) = 0;

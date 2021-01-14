@@ -51,6 +51,24 @@ namespace Lutra {
         }
         return 0;
     }
+    
+    static GLenum ConvertDeviceFilterToFilter(DeviceTextureFilter filter)
+    {
+        switch (filter) {
+            case DeviceTextureFilter::Linear: return GL_LINEAR;
+            case DeviceTextureFilter::Nearest: return GL_NEAREST;
+        }
+        return 0;
+    }
+
+    static GLenum ConvertDeviceWrapToWrap(DeviceTextureWrap wrap)
+    {
+        switch (wrap) {
+            case DeviceTextureWrap::Clamp: return GL_CLAMP_TO_EDGE;
+            case DeviceTextureWrap::Repeat: return GL_REPEAT;
+        }
+        return 0;
+    }
 
     DeviceTexture2DGL::DeviceTexture2DGL(uint32_t width, uint32_t height, DeviceTextureForamt format)
         : m_width(width)
@@ -63,13 +81,8 @@ namespace Lutra {
         glBindTexture(GL_TEXTURE_2D, m_id);
         glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_width, m_height, 0, m_dataFormat, m_dataType, nullptr);
         //glTexStorage2D(GL_TEXTURE_2D, 1, m_internalFormat, m_width, m_height);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
+        SetFilter(m_filter);
+        SetWrap(m_wrap);
     }
 
     DeviceTexture2DGL::~DeviceTexture2DGL()
@@ -81,6 +94,24 @@ namespace Lutra {
     {
         glBindTexture(GL_TEXTURE_2D, m_id);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, m_dataFormat, m_dataType, data);
+    }
+
+    void DeviceTexture2DGL::SetFilter(DeviceTextureFilter filter)
+    {
+        glBindTexture(GL_TEXTURE_2D, m_id);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ConvertDeviceFilterToFilter(filter));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ConvertDeviceFilterToFilter(filter));
+        glBindTexture(GL_TEXTURE_2D, 0);
+        m_filter = filter;
+    }
+
+    void DeviceTexture2DGL::SetWrap(DeviceTextureWrap wrap)
+    {
+        glBindTexture(GL_TEXTURE_2D, m_id);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ConvertDeviceWrapToWrap(wrap));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ConvertDeviceWrapToWrap(wrap));
+        glBindTexture(GL_TEXTURE_2D, 0);
+        m_wrap = wrap;
     }
 
     void DeviceTexture2DGL::Bind() const

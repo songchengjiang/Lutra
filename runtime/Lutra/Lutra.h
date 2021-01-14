@@ -17,7 +17,6 @@
 
 #include "Scene/Scene.h"
 #include "Scene/SceneObject.h"
-#include "Scene/RenderTarget.h"
 
 #include "Components/Transform.h"
 #include "Components/Tag.h"
@@ -25,6 +24,7 @@
 #include "Components/Camera.h"
 #include "Components/MeshFilter.h"
 #include "Components/SpriteRenderer.h"
+#include "Components/Serializable.h"
 
 #include "Systems/TransformSystem.h"
 #include "Systems/SpriteSystem.h"
@@ -36,8 +36,12 @@
 #include "Resources/Texture.h"
 #include "Resources/Material.h"
 #include "Resources/Mesh.h"
+#include "Resources/Stream.h"
 #include "Resources/ResourceManager.h"
 #include "Resources/ResourceManifest.h"
+
+#include "Parsers/SceneParser.h"
+#include "Parsers/SceneLoader.h"
 
 #include <gtc/type_ptr.hpp>
 

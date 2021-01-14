@@ -14,8 +14,6 @@ namespace Lutra {
     class DeviceTexture;
     struct FramebufferSpecification
     {
-        uint32_t Width;
-        uint32_t Height;
         std::vector<std::shared_ptr<DeviceTexture>> ColorAttachments;
         std::shared_ptr<DeviceTexture> DepthStencilAttachment;
     };
@@ -30,7 +28,7 @@ namespace Lutra {
         
         virtual const FramebufferSpecification& GetSpecification() const = 0;
 
-        virtual void Resize(uint32_t width, uint32_t height) = 0;
+        virtual void Resize() = 0;
     };
 
 

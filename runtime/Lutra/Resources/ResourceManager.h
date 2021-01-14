@@ -11,6 +11,7 @@
 
 namespace Lutra {
 
+    class Scene;
     class ResourceManager
     {
     public:
@@ -19,19 +20,25 @@ namespace Lutra {
         
         static ResourceManager& Instance();
         
+        template<typename T, typename... Args>
+        std::shared_ptr<T> CreateResource(Args&&... args);
+        
+        bool DestroyResource(const sole::uuid& uuid);
+        
         template<typename T>
         std::shared_ptr<T> LoadResource(const std::string& path);
         
         template<typename T>
         std::shared_ptr<T> LoadResource(const sole::uuid& uuid);
+        
     
         template<typename T>
         void SaveResource(const std::string& path, const std::shared_ptr<T>& resource);
         
     private:
         
-        Resource* loadResource(const std::string& path);
-        Resource* loadResource(const sole::uuid& uuid);
+        std::shared_ptr<Resource> loadResource(const std::string& path);
+        std::shared_ptr<Resource> loadResource(const sole::uuid& uuid);
         void saveResource(const std::string& path, Resource* resource);
         
     private:
@@ -39,16 +46,24 @@ namespace Lutra {
         std::vector<std::shared_ptr<Resource>> m_resources;
     };
 
+    template<typename T, typename... Args>
+    std::shared_ptr<T> ResourceManager::CreateResource(Args&&... args)
+    {
+        auto res = std::shared_ptr<T>(new T(std::forward<Args>(args)...));
+        m_resources.emplace_back(res);
+        return res;
+    }
+
     template<typename T>
     std::shared_ptr<T> ResourceManager::LoadResource(const std::string& path)
     {
-        return std::shared_ptr<T>(static_cast<T*>(loadResource(path)));
+        return std::dynamic_pointer_cast<T>(loadResource(path));
     }
 
     template<typename T>
     std::shared_ptr<T> ResourceManager::LoadResource(const sole::uuid& uuid)
     {
-        return std::shared_ptr<T>(static_cast<T*>(loadResource(uuid)));
+        return std::dynamic_pointer_cast<T>(loadResource(uuid));
     }
 
     template<typename T>

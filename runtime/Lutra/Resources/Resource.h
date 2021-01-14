@@ -15,7 +15,8 @@ namespace Lutra {
     class ReadStream;
     enum class ResourceType
     {
-        Texture = 0,
+        Texture2D = 0,
+        RenderTexture,
         Material,
         Mesh
     };
@@ -32,10 +33,14 @@ namespace Lutra {
         ResourceType GetResourceType() const { return m_resourceType; }
         const sole::uuid& GetUUID() const { return m_uuid; }
         
+        void SetName(const std::string& name) { m_name = name; }
+        const std::string& GetName() const { return m_name; }
+        
     protected:
       
         ResourceType m_resourceType;
         sole::uuid m_uuid;
+        std::string m_name;
         friend class ResourceManager;
     };
 }

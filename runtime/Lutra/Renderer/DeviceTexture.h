@@ -22,6 +22,18 @@ namespace Lutra {
         D32FS8,
     };
 
+    enum class DeviceTextureFilter
+    {
+        Linear,
+        Nearest,
+    };
+
+    enum class DeviceTextureWrap
+    {
+        Clamp,
+        Repeat,
+    };
+
     class DeviceTexture
     {
     public:
@@ -32,6 +44,12 @@ namespace Lutra {
         virtual uint32_t GetHeight() const = 0;
 
         virtual void SetData(const void* data, uint32_t size) = 0;
+        
+        virtual void SetFilter(DeviceTextureFilter filter) = 0;
+        virtual DeviceTextureFilter GetFilter() const = 0;
+        
+        virtual void SetWrap(DeviceTextureWrap wrap) = 0;
+        virtual DeviceTextureWrap GettWrap() const = 0;
 
         virtual void Bind() const = 0;
         

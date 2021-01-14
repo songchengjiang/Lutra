@@ -9,17 +9,20 @@
 #define FileBrowserWindow_hpp
 #include "GUIWindow.h"
 #include <string>
+#include <unordered_map>
 #include <filesystem>
+#include "IconManager.h"
+#include "ResourceBrowserWidget.h"
 
 namespace LutraEditor {
 
     class PropertyWindow;
     class IconManager;
-    class FileBrowserWindow : public GUIWindow
+    class ResourceWindow : public GUIWindow
     {
     public:
-        FileBrowserWindow(const std::string& root, PropertyWindow* propertyWindow);
-        virtual ~FileBrowserWindow();
+        ResourceWindow(const std::string& root, PropertyWindow* propertyWindow);
+        virtual ~ResourceWindow();
         
         virtual void Open() override;
         virtual void Close() override;
@@ -27,13 +30,25 @@ namespace LutraEditor {
         
     private:
         
-        void showPath(const std::filesystem::path& path);
+        void showMainPopup();
+        
+        void onResourceClicked(const std::filesystem::path& path);
+        void createFolder(const std::string& folder);
+        void createImageTexture(const std::string& name, const std::string& imagePath);
+        void createRenderTexture(const std::string& name, uint32_t width, uint32_t height);
+        void createPlaneMesh(const std::string& name);
+        void createUnlitMaterial(const std::string& name);
+        
+        void destroyResource(const std::filesystem::path& path);
+        
+        std::string getFolder(const std::filesystem::path& path);
         
     private:
         
         bool m_isOpen = false;
+        bool m_isOpenAddResource = false;
         PropertyWindow* m_propertyWindow;
-        IconManager* m_iconMgr;
+        ResourceBrowserWidget m_browserWidget;
         std::string m_root;
         std::filesystem::path m_selectedPath;
     };

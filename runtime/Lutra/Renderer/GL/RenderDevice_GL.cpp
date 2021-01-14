@@ -86,7 +86,7 @@ namespace Lutra {
         return std::shared_ptr<DeviceTexture>(texture);
     }
 
-    static void SetGraphicState(const GraphicState& state)
+    void RenderDeviceGL::SetGraphicState(const GraphicState& state)
     {
         if (state.BMode != GraphicBlendMode::Disabled) {
             glEnable(GL_BLEND);
@@ -141,7 +141,6 @@ namespace Lutra {
         
         auto& colorMask = state.ColorMask;
         glColorMask(colorMask.r? GL_TRUE: GL_FALSE, colorMask.g? GL_TRUE: GL_FALSE, colorMask.b? GL_TRUE: GL_FALSE, colorMask.a? GL_TRUE: GL_FALSE);
-        
     }
 
     void RenderDeviceGL::DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state)

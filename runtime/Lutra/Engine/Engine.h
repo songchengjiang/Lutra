@@ -21,6 +21,7 @@ namespace Lutra {
         
         void AddScene(const std::shared_ptr<Scene>& scene) { m_sceneList.push_back(scene); }
         const std::shared_ptr<Scene>& GetScene(uint32_t idx) const { return m_sceneList[idx];}
+        void RemoveScene(const std::shared_ptr<Scene>& scene);
         
         void OnUpdateFrame(Timestep time);
         

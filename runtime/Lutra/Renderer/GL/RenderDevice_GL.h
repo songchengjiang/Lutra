@@ -23,6 +23,7 @@ namespace Lutra {
         virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
         virtual void SetClearColor(const glm::vec4& color) override;
         virtual void Clear(uint8_t flag) override;
+        virtual void SetGraphicState(const GraphicState& state) override;
         
         virtual std::shared_ptr<FrameBuffer> CreateFrameBuffer(const FramebufferSpecification& spec) override;
         

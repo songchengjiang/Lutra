@@ -15,8 +15,7 @@ namespace LutraEditor {
     : m_scene(scene)
     , m_propertyWindow(propertyWindow)
     {
-        m_rootSceneObject = m_scene->CreateSceneObject("Root");
-        m_selectedSceneObject = m_rootSceneObject;
+        Reload();
     }
 
     ProjectWindow::~ProjectWindow()
@@ -34,16 +33,23 @@ namespace LutraEditor {
         m_isOpen = false;
     }
 
+    void ProjectWindow::Reload()
+    {
+        m_rootSceneObjects.clear();
+        for (auto& so : m_scene->GetSceneObjects()) {
+            if (!so.GetComponent<Lutra::SceneObjectDelegate>().GetParent()) {
+                m_rootSceneObjects.push_back(so);
+            }
+        }
+    }
+
     void ProjectWindow::OnGUI(uint32_t width, uint32_t height)
     {
         //ImGuiID dockspace_id = ImGui::GetID("DockSpace");
     
         ImGui::SetNextWindowSize(ImVec2(200, 600), ImGuiCond_FirstUseEver);
-        //ImGui::SetNextWindowDockID(dockspace_id);
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
         ImGui::Begin("Project", &m_isOpen, window_flags);
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-            m_selectedSceneObject = m_rootSceneObject;
         
         if (m_scene != nullptr) {
             showMainPopup();
@@ -57,9 +63,8 @@ namespace LutraEditor {
 
     void ProjectWindow::showTree()
     {
-        auto& sod = m_rootSceneObject.GetComponent<Lutra::SceneObjectDelegate>();
-        for (auto& child : sod.GetChildren()) {
-            showTreeNode(child);
+        for (auto& so : m_rootSceneObjects) {
+            showTreeNode(so);
         }
     }
 
@@ -72,11 +77,14 @@ namespace LutraEditor {
         if (so.HasComponent<Lutra::Transform>()) {
             guis.emplace_back(new TransformGUI(so));
         }
-        if (so.HasComponent<Lutra::Camera>()) {
-            guis.emplace_back(new CameraGUI(so));
+        if (so.HasComponent<Lutra::MeshFilter>()) {
+            guis.emplace_back(new MeshFilterGUI(so));
         }
         if (so.HasComponent<Lutra::SpriteRenderer>()) {
             guis.emplace_back(new SpriteRendererGUI(so));
+        }
+        if (so.HasComponent<Lutra::Camera>()) {
+            guis.emplace_back(new CameraGUI(so));
         }
         
         guis.emplace_back(new ComponentAppendGUI(so, [this, so](){
@@ -121,13 +129,13 @@ namespace LutraEditor {
         if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootWindow) && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
             ImGui::OpenPopup("MainPopup");
         if (ImGui::BeginPopup("MainPopup")) {
-            if (m_selectedSceneObject != m_rootSceneObject)
+            if (m_selectedSceneObject)
                 if (ImGui::MenuItem("Delete")) {
                     auto parent = m_selectedSceneObject.GetComponent<Lutra::SceneObjectDelegate>().GetParent();
                     destroySceneObject(m_selectedSceneObject);
                     m_propertyWindow->Clear();
-                    m_selectedSceneObject = parent? parent: m_rootSceneObject;
-                    if (m_selectedSceneObject != m_rootSceneObject) {
+                    m_selectedSceneObject = parent? parent: Lutra::SceneObject();
+                    if (m_selectedSceneObject) {
                         m_propertyWindow->SetPropertys(getComponentGUIs(m_selectedSceneObject));
                     }
                 }
@@ -147,21 +155,11 @@ namespace LutraEditor {
     Lutra::SceneObject ProjectWindow::createSceneObject(const std::string& name)
     {
         auto so = m_scene->CreateSceneObject(name);
-        m_selectedSceneObject.GetComponent<Lutra::SceneObjectDelegate>().AddChild(so);
-        return so;
-    }
-
-    Lutra::SceneObject ProjectWindow::createSprite(const std::string& name)
-    {
-        auto so = createSceneObject("Sprite");
-        so.AddComponent<Lutra::SpriteRenderer>();
-        return so;
-    }
-
-    Lutra::SceneObject ProjectWindow::createCamera(const std::string& name)
-    {
-        auto so = createSceneObject("Camera");
-        so.AddComponent<Lutra::Camera>();
+        so.AddComponent<Lutra::Serializable>();
+        if (!m_selectedSceneObject)
+            m_rootSceneObjects.push_back(so);
+        else
+            m_selectedSceneObject.GetComponent<Lutra::SceneObjectDelegate>().AddChild(so);
         return so;
     }
 
@@ -176,8 +174,25 @@ namespace LutraEditor {
         auto parent = sod.GetParent();
         if (parent) {
             parent.GetComponent<Lutra::SceneObjectDelegate>().RemoveChild(so);
+        }else {
+            m_rootSceneObjects.erase(std::find(m_rootSceneObjects.begin(), m_rootSceneObjects.end(), so));
         }
         m_scene->DestroySceneObject(so);
+    }
+
+    Lutra::SceneObject ProjectWindow::createSprite(const std::string& name)
+    {
+        auto so = createSceneObject("Sprite");
+        so.AddComponent<Lutra::MeshFilter>();
+        so.AddComponent<Lutra::SpriteRenderer>();
+        return so;
+    }
+
+    Lutra::SceneObject ProjectWindow::createCamera(const std::string& name)
+    {
+        auto so = createSceneObject("Camera");
+        auto& camera = so.AddComponent<Lutra::Camera>();
+        return so;
     }
 
 }

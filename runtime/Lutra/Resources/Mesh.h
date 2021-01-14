@@ -13,15 +13,21 @@
 
 namespace Lutra {
 
+    enum class PrimitiveType
+    {
+        Line = 0,
+        Triangle
+    };
+
     struct SubMesh
     {
+        PrimitiveType         Type;
         uint32_t              MaterialIndex;
         std::vector<uint16_t> Indices;
     };
 
     struct Mesh : public Resource
     {
-        Mesh();
         virtual void Serialize(WriteStream& stream) override;
         virtual void Deserialize(ReadStream& stream) override;
         
@@ -37,6 +43,10 @@ namespace Lutra {
         std::vector<float> SequentialBuffer;
         
         std::vector<SubMesh> SubMeshList;
+        
+    private:
+        Mesh();
+        friend class ResourceManager;
     };
 }
 

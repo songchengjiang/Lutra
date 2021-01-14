@@ -23,7 +23,7 @@ namespace Lutra {
         
         virtual const FramebufferSpecification& GetSpecification() const override { return m_spec; };
 
-        virtual void Resize(uint32_t width, uint32_t height) override;
+        virtual void Resize() override;
         
     private:
         

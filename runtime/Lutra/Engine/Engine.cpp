@@ -17,6 +17,14 @@ namespace Lutra {
         
     }
 
+    void Engine::RemoveScene(const std::shared_ptr<Scene>& scene)
+    {
+        auto iter = std::find(m_sceneList.begin(), m_sceneList.end(), scene);
+        if (iter != m_sceneList.end()) {
+            m_sceneList.erase(iter);
+        }
+    }
+
     void Engine::OnUpdateFrame(Timestep time)
     {
         m_graphic.Begin();

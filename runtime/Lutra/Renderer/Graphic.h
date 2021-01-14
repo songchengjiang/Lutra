@@ -20,7 +20,7 @@ namespace Lutra {
     class Shader;
     class Texture;
     class Camera;
-    class RenderTarget;
+    class RenderTexture;
     class FrameBuffer;
 
     class Graphic
@@ -40,7 +40,7 @@ namespace Lutra {
         void SetClearColor(const glm::vec4& color);
         void Clear(uint8_t flag);
         
-        void SetRenderTarget(const std::shared_ptr<RenderTarget>& renderTarget, bool binding = true);
+        void SetRenderTexture(const std::shared_ptr<RenderTexture>& renderTexture, bool binding = true);
         
         void DrawMesh(Mesh* mesh, Material* material, Camera* camera, uint8_t submesh, uint8_t passID, const glm::mat4& modelMatrix);
         

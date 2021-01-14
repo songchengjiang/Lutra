@@ -98,7 +98,7 @@ void BuildResources(const std::string& path)
         glm::bvec4(true)
     })));
     material_2->GetPass(0)->GetShader().SetSampler("u_BaseTex", tex1);
-    Lutra::ResourceManager::Instance().SaveResource("Materials/material_2.mat", material);
+    Lutra::ResourceManager::Instance().SaveResource("Materials/material_2.mat", material_2);
     
     std::shared_ptr<Lutra::Mesh> mesh = std::shared_ptr<Lutra::Mesh>(new Lutra::Mesh);
     mesh->Vertices.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -122,16 +122,14 @@ void BuildResources(const std::string& path)
     Lutra::ResourceManager::Instance().SaveResource("Meshs/quat.mesh", mesh);
     
     Lutra::ResourceManifest::Instance().Save("Manifest.yaml");
+    Lutra::ResourceManifest::Instance().Load("Manifest.yaml");
 }
 
 void Init(Lutra::Engine& engine, int width, int height)
 {
     BuildResources("/Users/JasonCheng/Desktop/");
     
-    Lutra::ResourceManifest::Instance().Load("/Users/JasonCheng/Desktop/Manifest.yaml");
-    
     auto scene = std::shared_ptr<Lutra::Scene>(new Lutra::Scene());
-    engine.AddScene(scene);
     scene->AppendSystem<Lutra::TransformSystem>();
     scene->AppendSystem<Lutra::SpriteSystem>();
     scene->AppendSystem<Lutra::MeshFilterSystem>();
@@ -168,7 +166,7 @@ void Init(Lutra::Engine& engine, int width, int height)
 //    rttCamera.RenderTarget_ = std::shared_ptr<Lutra::RenderTarget>(renderTexture);
 //    rttCamera.RenderTarget_->SetClearColor(glm::vec4(0.8f));
     
-    auto renderWindow = new Lutra::RenderWindow(width, height);
+    auto renderWindow = std::shared_ptr<Lutra::RenderTarget>(new Lutra::RenderWindow(width, height));
     
     auto cameraLeftSO = scene->CreateSceneObject("LeftCamera");
     {
@@ -176,8 +174,8 @@ void Init(Lutra::Engine& engine, int width, int height)
         camera.Fov = 60.0f;
         camera.AspectRadio = (float)width * 0.5f / height;
         camera.Viewport_ = {0.0f, 0.0f, 0.5f, 1.0f};
-        camera.RenderTarget_ = std::shared_ptr<Lutra::RenderTarget>(renderWindow);
-        camera.RenderTarget_->SetClearColor(glm::vec4(0.5f, 0.5f, 0.5f, 5.0f));
+        camera.RenderTarget_ = renderWindow;
+        camera.RenderTarget_->SetClearColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
         
         auto& cameraTrans = cameraLeftSO.GetComponent<Lutra::Transform>();
         cameraTrans.Position = glm::vec3(0.0f, 0.0f, 5.0f);
@@ -189,7 +187,7 @@ void Init(Lutra::Engine& engine, int width, int height)
         camera.Fov = 60.0f;
         camera.AspectRadio = (float)width * 0.5f / height;
         camera.Viewport_ = {0.5f, 0.0f, 1.0f, 1.0f};
-        camera.RenderTarget_ = std::shared_ptr<Lutra::RenderTarget>(renderWindow);
+        camera.RenderTarget_ = renderWindow;
         
         auto& cameraTrans = cameraRightSO.GetComponent<Lutra::Transform>();
         cameraTrans.Position = glm::vec3(0.0f, 0.0f, 2.0f);
@@ -203,6 +201,11 @@ void Init(Lutra::Engine& engine, int width, int height)
         renderWindow->SetHeight(winEvent.GetHeight());
         return true;
     });
+    
+    Lutra::SceneLoader sl;
+    sl.Save("/Users/JasonCheng/Desktop/scene.scene", scene);
+    scene = sl.Load("/Users/JasonCheng/Desktop/scene.scene");
+    engine.AddScene(scene);
 }
 
 void InitImGUI(GLFWwindow* window)

@@ -19,6 +19,10 @@ namespace Lutra {
         SpriteSystem(Scene* scene);
         virtual ~SpriteSystem();
         
+        static std::string GetTypeStatic() { return "SpriteSystem"; }
+        
+        virtual std::string GetType() const override { return "SpriteSystem"; }
+        
         virtual void OnUpdate(const FrameContext& context) override;
         virtual void OnRender(const RenderContext& context) override;
     };

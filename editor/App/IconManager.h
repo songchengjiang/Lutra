@@ -16,12 +16,16 @@ namespace LutraEditor {
 
     enum class IconType
     {
-        Folder,
+        Folder = 0,
+        
         Texture,
+        Material,
+        Mesh,
+        
         Camera,
         SceneObject,
         Tag,
-        Square,
+        Square
     };
 
     class IconManager

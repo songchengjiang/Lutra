@@ -51,6 +51,8 @@ namespace Lutra {
             LT_CORE_ASSERT(hasComponent<T>(), "Entity does not have component!");
             m_scene->m_registry.remove<T>(m_handle);
         }
+        
+        Scene* GetScene() { return m_scene; }
 
         operator bool() const { return m_handle != entt::null; }
         operator entt::entity() const { return m_handle; }
