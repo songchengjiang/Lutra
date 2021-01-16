@@ -18,21 +18,21 @@ namespace LutraEditor {
     {
     public:
         
-        ResourceGUI() = default;
+        ResourceGUI(const std::function<void()>& updateCallback)
+        : m_callback(updateCallback)
+        {}
         virtual ~ResourceGUI() = default;
-        
-        void SetResourceChangedCallback(const std::function<void()>& func) { m_changedCallback = func;}
         
     protected:
         
-        std::function<void()> m_changedCallback;
+        std::function<void()> m_callback;
     };
 
     class TextureGUI : public ResourceGUI
     {
     public:
         
-        TextureGUI(const std::shared_ptr<Lutra::Texture>& tex);
+        TextureGUI(const std::shared_ptr<Lutra::Texture>& tex, const std::function<void()>& updateCallback);
         virtual ~TextureGUI() = default;
         
         virtual void OnGUI() override;
@@ -47,8 +47,9 @@ namespace LutraEditor {
     {
     public:
         
-        MeshGUI(const std::shared_ptr<Lutra::Mesh>& mesh)
-        : m_mesh(mesh)
+        MeshGUI(const std::shared_ptr<Lutra::Mesh>& mesh, const std::function<void()>& updateCallback)
+        : ResourceGUI(updateCallback)
+        , m_mesh(mesh)
         {}
         virtual ~MeshGUI() = default;
         
@@ -64,8 +65,9 @@ namespace LutraEditor {
     {
     public:
         
-        MaterialGUI(const std::shared_ptr<Lutra::Material>& material)
-        : m_material(material)
+        MaterialGUI(const std::shared_ptr<Lutra::Material>& material, const std::function<void()>& updateCallback)
+        : ResourceGUI(updateCallback)
+        , m_material(material)
         {}
         virtual ~MaterialGUI() = default;
         

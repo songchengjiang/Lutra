@@ -23,15 +23,16 @@ namespace LutraEditor {
         ResourceBrowserWidget(const std::string& root, const std::unordered_map<std::string, IconType>& exts, bool showFolder = true);
         virtual ~ResourceBrowserWidget();
         
-        void OnGUI();
+        bool OnGUI();
         
         void SetClickItemCallback(const std::function<void(const std::filesystem::path& path)>& func) { m_callBack = func; }
         
         std::string GetSelectedPath() const { return m_selectedPath; }
+        void Reset() { m_selectedPath = m_root; }
         
     private:
         
-        void showPath(const std::filesystem::path& path);
+        bool showPath(const std::filesystem::path& path);
         
     private:
         

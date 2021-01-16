@@ -48,6 +48,7 @@ namespace Lutra {
         virtual void WriteValue(const std::string& key, const std::vector<uint16_t>& value) = 0;
         virtual void WriteValue(const std::string& key, const std::vector<glm::vec2>& value) = 0;
         virtual void WriteValue(const std::string& key, const std::vector<glm::vec3>& value) = 0;
+        virtual void WriteValue(const std::string& key, const std::vector<glm::vec4>& value) = 0;
         virtual void WriteValue(const std::string& key, const std::vector<uint8_t>& value) = 0;
     };
 
@@ -82,6 +83,7 @@ namespace Lutra {
         virtual void ReadValue(const std::string& key, std::vector<uint16_t>& value) = 0;
         virtual void ReadValue(const std::string& key, std::vector<glm::vec2>& value) = 0;
         virtual void ReadValue(const std::string& key, std::vector<glm::vec3>& value) = 0;
+        virtual void ReadValue(const std::string& key, std::vector<glm::vec4>& value) = 0;
         virtual void ReadValue(const std::string& key, std::vector<uint8_t>& value) = 0;
     };
 }

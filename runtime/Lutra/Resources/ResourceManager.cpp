@@ -16,6 +16,14 @@
 
 namespace Lutra {
 
+    ResourceManager::ResourceManager()
+    {
+        m_resourceFactorys[".tex"].reset(new ResourceFactoryImp<Texture2D>);
+        m_resourceFactorys[".rt"].reset(new ResourceFactoryImp<RenderTexture>);
+        m_resourceFactorys[".mesh"].reset(new ResourceFactoryImp<Mesh>);
+        m_resourceFactorys[".mat"].reset(new ResourceFactoryImp<Material>);
+    }
+
     ResourceManager& ResourceManager::Instance()
     {
         static ResourceManager mgr;
@@ -42,29 +50,11 @@ namespace Lutra {
         });
         if (iter != m_resources.end())
             return *iter;
+        
+        std::string ext = path.substr(path.find_last_of("."));
+        std::shared_ptr<Resource> resource = m_resourceFactorys[ext]->Create();
         ReadStreamYaml stream(path);
         stream.Open();
-        int Type = 0;
-        stream.ReadValue("Type", Type);
-        
-        std::shared_ptr<Resource> resource;
-        switch ((ResourceType)Type) {
-            case ResourceType::Texture2D:
-                resource = std::shared_ptr<Resource>(new Texture2D());
-                break;
-            case ResourceType::RenderTexture:
-                resource = std::shared_ptr<Resource>(new RenderTexture());
-                break;
-            case ResourceType::Material:
-                resource = std::shared_ptr<Resource>(new Material());
-                break;
-            case ResourceType::Mesh:
-                resource = std::shared_ptr<Resource>(new Mesh());
-                break;
-                
-            default:
-                break;
-        }
         resource->Deserialize(stream);
         stream.Close();
         m_resources.emplace_back(resource);
@@ -82,7 +72,6 @@ namespace Lutra {
         
         WriteStreamYaml stream(path);
         stream.Open();
-        stream.WriteValue("Type", (int)resource->GetResourceType());
         resource->Serialize(stream);
         stream.Close();
     }

@@ -9,18 +9,19 @@
 #define Program_hpp
 #include <string>
 #include <glm.hpp>
+#include "DeviceResource.h"
 
 namespace Lutra {
 
     class DeviceTexture;
-    class Program
+    class Program : public DeviceResource
     {
     public:
         
         ~Program() = default;
         
-        virtual void Bind() const = 0;
-        virtual void Unbind() const = 0;
+        virtual void Bind() = 0;
+        virtual void Unbind() = 0;
         
         virtual void SetUniform(const std::string& name, const float value[], int count) = 0;
         virtual void SetUniform(const std::string& name, const glm::vec2 value[], int count) = 0;

@@ -26,6 +26,13 @@ namespace Lutra {
     void FrameBufferGL::Bind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, m_id);
+        for (auto& colorAttr : m_spec.ColorAttachments) {
+            colorAttr->UpdateUsage();
+        }
+        if (m_spec.DepthStencilAttachment != nullptr) {
+            m_spec.DepthStencilAttachment->UpdateUsage();
+        }
+        UpdateUsage();
     }
 
     void FrameBufferGL::Unbind()

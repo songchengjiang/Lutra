@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "SpriteRenderer.h"
+#include "MeshRenderer.h"
 #include "MeshFilter.h"
 #include "Mesh.h"
 #include "SceneObjectDelegate.h"
@@ -28,12 +29,14 @@ namespace Lutra {
     {
         stream.WriteValue("Tag", m_tag.Tags);
         stream.WriteValue("Name", m_tag.Name);
+        stream.WriteValue("VisibleTag", m_tag.VisibleTag);
     }
 
     void TagParser::Deserialize(ReadStream& stream)
     {
         stream.ReadValue("Tag", m_tag.Tags);
         stream.ReadValue("Name", m_tag.Name);
+        stream.ReadValue("VisibleTag", m_tag.VisibleTag);
     }
 
     void TransformParser::Serialize(WriteStream& stream)
@@ -52,6 +55,8 @@ namespace Lutra {
 
     void CameraParser::Serialize(WriteStream& stream)
     {
+        stream.WriteValue("IsMain", m_camera.IsMain);
+        stream.WriteValue("VisibleMask", m_camera.VisibleMask);
         stream.WriteValue("ProjectionType", (int)m_camera.ProjType);
         stream.WriteValue("Fov", m_camera.Fov);
         stream.WriteValue("AspectRadio", m_camera.AspectRadio);
@@ -67,6 +72,8 @@ namespace Lutra {
 
     void CameraParser::Deserialize(ReadStream& stream)
     {
+        stream.ReadValue("IsMain", m_camera.IsMain);
+        stream.ReadValue("VisibleMask", m_camera.VisibleMask);
         int type; stream.ReadValue("ProjectionType", type); m_camera.ProjType = (Camera::ProjectionType)type;
         stream.ReadValue("Fov", m_camera.Fov);
         stream.ReadValue("AspectRadio", m_camera.AspectRadio);
@@ -105,6 +112,28 @@ namespace Lutra {
         stream.EndArray();
         stream.ReadValue("Size", m_spriteRenderer.Size);
         stream.ReadValue("Anchor", m_spriteRenderer.Anchor);
+    }
+
+    void MeshRendererParser::Serialize(WriteStream& stream)
+    {
+        stream.BeginArray("Materials");
+        for (auto& mat : m_meshRenderer.Materials) {
+            stream.WriteArrayElement(mat != nullptr? mat->GetUUID().str(): "");
+        }
+        stream.EndArray();
+    }
+
+    void MeshRendererParser::Deserialize(ReadStream& stream)
+    {
+        size_t size = stream.BeginArray("Materials");
+        for (size_t i = 0; i < size; ++i) {
+            stream.EnterArray(i);
+            std::string uuid;
+            stream.ReadArrayElement(uuid);
+            m_meshRenderer.Materials.push_back(ResourceManager::Instance().LoadResource<Material>(sole::rebuild(uuid)));
+            stream.LeaveArray();
+        }
+        stream.EndArray();
     }
 
     void MeshFilterParser::Serialize(WriteStream& stream)

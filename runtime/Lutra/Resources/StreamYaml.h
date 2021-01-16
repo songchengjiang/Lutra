@@ -43,6 +43,7 @@ namespace Lutra {
         virtual void WriteValue(const std::string& key, const std::vector<uint16_t>& value) override;
         virtual void WriteValue(const std::string& key, const std::vector<glm::vec2>& value) override;
         virtual void WriteValue(const std::string& key, const std::vector<glm::vec3>& value) override;
+        virtual void WriteValue(const std::string& key, const std::vector<glm::vec4>& value) override;
         virtual void WriteValue(const std::string& key, const std::vector<uint8_t>& value) override;
         
     private:
@@ -85,6 +86,7 @@ namespace Lutra {
         virtual void ReadValue(const std::string& key, std::vector<uint16_t>& value) override;
         virtual void ReadValue(const std::string& key, std::vector<glm::vec2>& value) override;
         virtual void ReadValue(const std::string& key, std::vector<glm::vec3>& value) override;
+        virtual void ReadValue(const std::string& key, std::vector<glm::vec4>& value) override;
         virtual void ReadValue(const std::string& key, std::vector<uint8_t>& value) override;
         
     private:

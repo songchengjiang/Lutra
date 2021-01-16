@@ -25,4 +25,11 @@ namespace LutraEditor {
         return texture;
     }
 
+    std::shared_ptr<Lutra::Texture> RenderTextureBuilder::Build(uint32_t width, uint32_t height)
+    {
+        auto texture = Lutra::ResourceManager::Instance().CreateResource<Lutra::RenderTexture>(width, height, Lutra::TextureFormat::RGBA8, Lutra::TextureFormat::D24S8);
+        return texture;
+    }
+
+
 }

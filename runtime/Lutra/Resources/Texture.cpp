@@ -44,7 +44,6 @@ namespace Lutra {
     , m_height(height)
     , m_format(format)
     {
-        m_resourceType = ResourceType::Texture2D;
         m_type = TextureType::TEX2D;
     }
 
@@ -56,6 +55,7 @@ namespace Lutra {
     void Texture2D::Serialize(WriteStream& stream)
     {
         Texture::Serialize(stream);
+        stream.WriteValue("Format", (int)m_format);
         stream.WriteValue("Width", m_width);
         stream.WriteValue("Height", m_height);
         stream.WriteValue("Data", m_data);
@@ -64,6 +64,8 @@ namespace Lutra {
     void Texture2D::Deserialize(ReadStream& stream)
     {
         Texture::Deserialize(stream);
+        int format;
+        stream.ReadValue("Format", format); m_format = (TextureFormat)format;
         stream.ReadValue("Width", m_width);
         stream.ReadValue("Height", m_height);
         stream.ReadValue("Data", m_data);
@@ -89,7 +91,6 @@ namespace Lutra {
     , m_colorFormat(colorFormat)
     , m_depthFormat(depthFormat)
     {
-        m_resourceType = ResourceType::RenderTexture;
         m_type = TextureType::RENDER;
     }
 

@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "DeviceResource.h"
 
 namespace Lutra {
 
@@ -125,13 +126,13 @@ namespace Lutra {
         uint32_t m_stride = 0;
     };
 
-    class VertexBuffer
+    class VertexBuffer : public DeviceResource
     {
     public:
         virtual ~VertexBuffer() = default;
 
-        virtual void Bind() const = 0;
-        virtual void Unbind() const = 0;
+        virtual void Bind() = 0;
+        virtual void Unbind() = 0;
 
         virtual void SetData(float* vertices, uint32_t size) = 0;
 
@@ -139,13 +140,13 @@ namespace Lutra {
         virtual void SetLayout(const BufferLayout& layout) = 0;
     };
 
-    class IndexBuffer
+    class IndexBuffer : public DeviceResource
     {
     public:
         virtual ~IndexBuffer() = default;
 
-        virtual void Bind() const = 0;
-        virtual void Unbind() const = 0;
+        virtual void Bind() = 0;
+        virtual void Unbind() = 0;
         
         virtual uint32_t GetSize() const = 0;
     };

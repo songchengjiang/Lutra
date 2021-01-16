@@ -12,6 +12,7 @@
 #include "SpriteSystem.h"
 #include "TransformSystem.h"
 #include "MeshFilterSystem.h"
+#include "MeshSystem.h"
 #include "SceneObject.h"
 #include "Serializable.h"
 
@@ -69,6 +70,8 @@ namespace Lutra {
                 m_scene->AppendSystem<SpriteSystem>();
             }else if (type == MeshFilterSystem::GetTypeStatic()) {
                 m_scene->AppendSystem<MeshFilterSystem>();
+            }else if (type == MeshSystem::GetTypeStatic()) {
+                m_scene->AppendSystem<MeshSystem>();
             }
             stream.LeaveArray();
         }

@@ -24,10 +24,12 @@
 #include "Components/Camera.h"
 #include "Components/MeshFilter.h"
 #include "Components/SpriteRenderer.h"
+#include "Components/MeshRenderer.h"
 #include "Components/Serializable.h"
 
 #include "Systems/TransformSystem.h"
 #include "Systems/SpriteSystem.h"
+#include "Systems/MeshSystem.h"
 #include "Systems/MeshFilterSystem.h"
 
 #include "Resources/Mesh.h"
@@ -44,5 +46,6 @@
 #include "Parsers/SceneLoader.h"
 
 #include <gtc/type_ptr.hpp>
+#include <gtx/matrix_decompose.hpp>
 
 #endif /* Lutra_h */

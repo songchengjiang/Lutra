@@ -20,6 +20,7 @@ namespace Lutra {
         SceneObjectDelegate,
         Camera,
         SpriteRenderer,
+        MeshRenderer,
         MeshFilter,
         Serializable
     };
@@ -96,6 +97,22 @@ namespace Lutra {
     private:
         
         SpriteRenderer& m_spriteRenderer;
+    };
+
+    class MeshRenderer;
+    class MeshRendererParser : public ComponentParser
+    {
+    public:
+        MeshRendererParser(MeshRenderer& mr)
+        : m_meshRenderer(mr)
+        {}
+        
+        virtual void Serialize(WriteStream& stream) override;
+        virtual void Deserialize(ReadStream& stream) override;
+        
+    private:
+        
+        MeshRenderer& m_meshRenderer;
     };
 
     class MeshFilter;

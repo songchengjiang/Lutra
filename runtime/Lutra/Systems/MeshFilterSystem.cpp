@@ -44,6 +44,12 @@ namespace Lutra {
                         mesh->SequentialBuffer.push_back(mesh->Tangents[i].y);
                         mesh->SequentialBuffer.push_back(mesh->Tangents[i].z);
                     }
+                    if (!mesh->Colors.empty()) {
+                        mesh->SequentialBuffer.push_back(mesh->Colors[i].x);
+                        mesh->SequentialBuffer.push_back(mesh->Colors[i].y);
+                        mesh->SequentialBuffer.push_back(mesh->Colors[i].z);
+                        mesh->SequentialBuffer.push_back(mesh->Colors[i].w);
+                    }
                     if (!mesh->Texcoord0.empty()) {
                         mesh->SequentialBuffer.push_back(mesh->Texcoord0[i].x);
                         mesh->SequentialBuffer.push_back(mesh->Texcoord0[i].y);
@@ -51,6 +57,13 @@ namespace Lutra {
                     if (!mesh->Texcoord1.empty()) {
                         mesh->SequentialBuffer.push_back(mesh->Texcoord1[i].x);
                         mesh->SequentialBuffer.push_back(mesh->Texcoord1[i].y);
+                    }
+                }
+                
+                for (auto& subMesh : mesh->SubMeshList){
+                    subMesh.BBox.Dirty();
+                    for (auto& index : subMesh.Indices) {
+                        subMesh.BBox.ExpandBy(mesh->Vertices[index]);
                     }
                 }
             }

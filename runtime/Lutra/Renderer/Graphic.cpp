@@ -15,12 +15,24 @@
 #include "DeviceTexture.h"
 #include "Program.h"
 #include "VertexArray.h"
+#include "Buffer.h"
 #include "FrameBuffer.h"
 #include <gtc/type_ptr.hpp>
 
 #include "RenderDevice_GL.h"
 
 namespace Lutra {
+
+    static float CaculateUsageRate(uint32_t usage)
+    {
+        usage = (usage & 0x55555555) + ((usage >> 1) & 0x55555555);
+        usage = (usage & 0x33333333) + ((usage >> 2) & 0x33333333);
+        usage = (usage & 0x0f0f0f0f) + ((usage >> 4) & 0x0f0f0f0f);
+        usage = (usage & 0x00ff00ff) + ((usage >> 8) & 0x00ff00ff);
+        usage = (usage & 0x0000ffff) + ((usage >> 16) & 0x0000ffff);
+
+        return (float)usage / (float)32;
+    }
 
     Graphic::Graphic(API api)
     {
@@ -87,6 +99,10 @@ namespace Lutra {
             
             if (!mesh->Tangents.empty()) {
                 bufferElements.push_back({BufferDataType::Float3, "a_tangent", false});
+            }
+            
+            if (!mesh->Colors.empty()) {
+                bufferElements.push_back({BufferDataType::Float4, "a_color", false});
             }
             
             if (!mesh->Texcoord0.empty()) {
@@ -172,13 +188,25 @@ namespace Lutra {
 
     void Graphic::DrawMesh(Mesh* mesh, Material* material, Camera* camera, uint8_t submesh, uint8_t passID, const glm::mat4& modelMatrix)
     {
-        auto VAO = getVertexArray(mesh, submesh);
-        auto program = getProgram(material, passID);
         
-        program->Bind();
+        RenderQueueType queueType = material->GetPass(passID)->GetBlendMode() == BlendMode::Disabled? RenderQueueType::Opacity: RenderQueueType::Transparent;
+        
+        glm::vec4 distanceToCamera = camera->ViewMat * modelMatrix * glm::vec4(mesh->SubMeshList[submesh].BBox.Center(), 1.0f);
+        if (queueType == RenderQueueType::Opacity) {
+            distanceToCamera = -distanceToCamera;
+        }
+        m_renderQueue[queueType].push_back({mesh, material, camera, submesh, passID, modelMatrix, distanceToCamera.z / distanceToCamera.w});
+    }
+
+    void Graphic::drawCommand(const RenderCommand& cmd)
+    {
+        auto VAO = getVertexArray(cmd.Mesh_, cmd.SubMesh);
+        auto program = getProgram(cmd.Material_, cmd.Pass);
+        
+        VAO->Bind(program);
         
         uint32_t texUnit = 0;
-        for (auto &value : material->GetPass(0)->GetShader().GetValues()) {
+        for (auto &value : cmd.Material_->GetPass(0)->GetShader().GetValues()) {
             switch (value.second.Type_) {
                 case ShaderValue::Type::Float:
                     program->SetUniform(value.first, &value.second.Value_.v1, 1);
@@ -208,22 +236,43 @@ namespace Lutra {
             }
         }
         
-        glm::mat4 mv = camera->ViewMat * modelMatrix;
-        glm::mat4 mvp = camera->ProjectMat * mv;
+        glm::mat4 mv = cmd.Camera_->ViewMat * cmd.ModelMatrix;
+        glm::mat4 mvp = cmd.Camera_->ProjectMat * mv;
         program->SetUniform("u_ModelViewProjMat", &mvp, 1);
         
-        glm::mat3 normalWorld{modelMatrix};
+        program->SetUniform("u_ModelViewMat", &mv, 1);
+        
+        glm::mat3 normalWorld{cmd.ModelMatrix};
         normalWorld = glm::transpose(glm::inverse(normalWorld));
         program->SetUniform("u_NormalWorldMat", &normalWorld, 1);
         
-        auto& pass = material->GetPass(passID);
-        m_renderDevice->DrawIndexed(VAO, {(GraphicBlendMode)pass->GetBlendMode(),
+        glm::mat3 normal{mv};
+        normal = glm::transpose(glm::inverse(normal));
+        program->SetUniform("u_NormalMat", &normal, 1);
+        
+        auto& pass = cmd.Material_->GetPass(cmd.Pass);
+        m_renderDevice->DrawIndexed({(GraphicBlendMode)pass->GetBlendMode(),
                                           (GraphicCullMode)pass->GetCullMode(),
                                           pass->GetDepthTest(),
                                           pass->GetDepthWrite(),
                                           pass->GetTwoSided(),
-                                          pass->GetColorMask()});
-        program->Unbind();
+                                          pass->GetColorMask()},
+                                         (DevicePrimitiveType)cmd.Mesh_->SubMeshList[cmd.SubMesh].Type,
+                                          VAO->GetIndexBuffer()->GetSize());
+        VAO->Unbind();
+    }
+
+    void Graphic::Finish()
+    {
+        for (auto& renderQueue : m_renderQueue) {
+            std::sort(renderQueue.second.begin(), renderQueue.second.end(), [](const RenderCommand& left, const RenderCommand& right){
+                return left.SortKey < right.SortKey;
+            });
+            for (auto& cmd : renderQueue.second) {
+                drawCommand(cmd);
+            }
+        }
+        m_renderQueue.clear();
     }
 
     void Graphic::Begin()
@@ -231,8 +280,27 @@ namespace Lutra {
         
     }
 
+    template<typename T>
+    void ResourceRecovery(std::unordered_map<std::size_t, std::shared_ptr<T>>& resList)
+    {
+        for (auto iter = resList.begin(); iter != resList.end();) {
+            iter->second->Update();
+            if (CaculateUsageRate(iter->second->GetUsage()) == 0) {
+                iter = resList.erase(iter);
+            }else {
+                ++iter;
+            }
+        }
+    }
+
     void Graphic::End()
     {
+        ResourceRecovery(m_vboList);
+        ResourceRecovery(m_vaoList);
+        ResourceRecovery(m_programList);
+        ResourceRecovery(m_deviceTextureList);
+        ResourceRecovery(m_frameBufferList);
+        
         m_renderDevice->SetGraphicState({GraphicBlendMode::Disabled, GraphicCullMode::Back, true, true, true, glm::bvec4(true)});
     }
 

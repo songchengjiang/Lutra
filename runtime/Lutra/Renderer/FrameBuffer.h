@@ -8,6 +8,7 @@
 #ifndef Framebuffer_hpp
 #define Framebuffer_hpp
 #include <vector>
+#include "DeviceResource.h"
 
 namespace Lutra {
     
@@ -18,7 +19,7 @@ namespace Lutra {
         std::shared_ptr<DeviceTexture> DepthStencilAttachment;
     };
 
-    class FrameBuffer
+    class FrameBuffer : public DeviceResource
     {
     public:
         virtual ~FrameBuffer() = default;

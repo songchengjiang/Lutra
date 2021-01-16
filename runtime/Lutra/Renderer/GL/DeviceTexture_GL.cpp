@@ -114,8 +114,9 @@ namespace Lutra {
         m_wrap = wrap;
     }
 
-    void DeviceTexture2DGL::Bind() const
+    void DeviceTexture2DGL::Bind()
     {
         glBindTexture(GL_TEXTURE_2D, m_id);
+        UpdateUsage();
     }
 }

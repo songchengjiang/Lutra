@@ -16,16 +16,16 @@ namespace LutraEditor {
         scene->AppendSystem<Lutra::TransformSystem>();
         scene->AppendSystem<Lutra::SpriteSystem>();
         scene->AppendSystem<Lutra::MeshFilterSystem>();
+        scene->AppendSystem<Lutra::MeshSystem>();
         
         auto cameraSO = scene->CreateSceneObject("Camera");
         auto& camera = cameraSO.AddComponent<Lutra::Camera>();
-        
         auto renderTexture = Lutra::ResourceManager::Instance().CreateResource<Lutra::RenderTexture>(1024, 1024, Lutra::TextureFormat::RGBA8, Lutra::TextureFormat::D24S8);
         renderTexture->SetName(DEVICE_TEXTURE_RESOURCE_ID);
         Lutra::ResourceManager::Instance().SaveResource(path + "/" + renderTexture->GetName() + ".rt", renderTexture);
         camera.RenderTexture_ = renderTexture;
         
-        cameraSO.GetComponent<Lutra::Transform>().Position.z = 1.0f;
+        cameraSO.GetComponent<Lutra::Transform>().Position.z = 10.0f;
         
         cameraSO.AddComponent<Lutra::Serializable>();
         return scene;

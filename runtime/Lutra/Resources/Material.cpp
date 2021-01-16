@@ -15,7 +15,6 @@ namespace Lutra {
 
     Material::Material()
     {
-        m_resourceType = ResourceType::Material;
     }
 
     void Material::Serialize(WriteStream& stream)

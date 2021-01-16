@@ -10,6 +10,7 @@
 
 #include "Program.h"
 #include "GLHeader.h"
+#include <unordered_map>
 
 namespace Lutra {
 
@@ -20,8 +21,8 @@ namespace Lutra {
         ProgramGL(const std::string& vShader, const std::string& fShader);
         ~ProgramGL() = default;
         
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        virtual void Bind() override;
+        virtual void Unbind() override;
         
         virtual void SetUniform(const std::string& name, const float value[], int count) override;
         virtual void SetUniform(const std::string& name, const glm::vec2 value[], int count) override;
@@ -32,9 +33,13 @@ namespace Lutra {
         
         virtual void SetSampler(const std::string& name, const std::shared_ptr<DeviceTexture>& tex, uint32_t slot) override;
         
+        const std::unordered_map<std::string, GLint>& GetActivedAttributes() const { return m_attributeMap; }
+        
     private:
         
         GLuint m_id;
+        std::unordered_map<std::string, GLint> m_attributeMap;
+        std::unordered_map<std::string, GLint> m_uniformMap;
     };
 
 }

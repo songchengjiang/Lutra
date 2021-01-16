@@ -11,11 +11,18 @@
 
 namespace LutraEditor {
 
-    class MaterialBuilder
+    class UnlintMaterialBuilder
     {
     public:
         
-        static std::shared_ptr<Lutra::Material> BuildUnlint();
+        static std::shared_ptr<Lutra::Material> Build();
+    };
+
+    class UnlintColorMaterialBuilder
+    {
+    public:
+        
+        static std::shared_ptr<Lutra::Material> Build();
     };
 
 }

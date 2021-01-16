@@ -16,19 +16,19 @@
 #include "imgui_impl_opengl3.h"
 
 const char* Vertex_Shader = R"(
-layout(location = 0) in vec3 a_position;
-layout(location = 1) in vec3 a_normal;
-layout(location = 2) in vec2 a_texcoord0;
+in vec3 a_position;
+//in vec3 a_normal;
+in vec2 a_texcoord0;
 
 uniform mat4 u_ModelViewProjMat;
 uniform mat3 u_NormalWorldMat;
 
-out vec3 v_normal;
+//out vec3 v_normal;
 out vec2 v_texcoord0;
 
 void main() {
     v_texcoord0 = a_texcoord0;
-    v_normal = u_NormalWorldMat * a_normal;
+    //v_normal = u_NormalWorldMat * a_normal;
     gl_Position = u_ModelViewProjMat * vec4(a_position, 1.0);
 }
 )";
@@ -36,7 +36,7 @@ void main() {
 const char* Fragment_Shader = R"(
 uniform sampler2D u_BaseTex;
 
-in vec3 v_normal;
+//in vec3 v_normal;
 in vec2 v_texcoord0;
 
 out vec4 FragColor;
@@ -55,24 +55,24 @@ std::shared_ptr<Lutra::Texture> LoadTexture(const std::string& path)
         data = stbi_load(path.c_str(), &width, &height, &channels, 0);
     }
     
-    Lutra::Texture2D* texture = new Lutra::Texture2D(width, height, channels == 3? Lutra::TextureFormat::RGB8: Lutra::TextureFormat::RGBA8);
+    auto texture = Lutra::ResourceManager::Instance().CreateResource<Lutra::Texture2D>(width, height, channels == 3? Lutra::TextureFormat::RGB8: Lutra::TextureFormat::RGBA8);
     texture->SetData(data, width * height * channels);
     
     stbi_image_free(data);
     
-    return std::shared_ptr<Lutra::Texture>(texture);
+    return texture;
 }
 
 void BuildResources(const std::string& path)
 {
-    Lutra::ResourceManifest::Instance().SetResourcesRootPath(path);
+    Lutra::ResourceManifest::Instance().SetRootDirectoty(path);
     
     auto tex = LoadTexture(path + "Grid.png");
     auto tex1 = LoadTexture(path + "Grid_2.jpg");
-    Lutra::ResourceManager::Instance().SaveResource("Textures/Grid.tex", tex);
-    Lutra::ResourceManager::Instance().SaveResource("Textures/Grid_2.tex", tex1);
+    Lutra::ResourceManager::Instance().SaveResource(path + "Grid.tex", tex);
+    Lutra::ResourceManager::Instance().SaveResource(path + "Grid_2.tex", tex1);
     
-    std::shared_ptr<Lutra::Material> material{new Lutra::Material};
+    auto material = Lutra::ResourceManager::Instance().CreateResource<Lutra::Material>();
     material->AddPass(std::shared_ptr<Lutra::Pass>(new Lutra::Pass({
         Vertex_Shader,
         Fragment_Shader,
@@ -84,9 +84,9 @@ void BuildResources(const std::string& path)
         glm::bvec4(true)
     })));
     material->GetPass(0)->GetShader().SetSampler("u_BaseTex", tex);
-    Lutra::ResourceManager::Instance().SaveResource("Materials/material.mat", material);
+    Lutra::ResourceManager::Instance().SaveResource(path + "material.mat", material);
     
-    std::shared_ptr<Lutra::Material> material_2{new Lutra::Material};
+    auto material_2 = Lutra::ResourceManager::Instance().CreateResource<Lutra::Material>();
     material_2->AddPass(std::shared_ptr<Lutra::Pass>(new Lutra::Pass({
         Vertex_Shader,
         Fragment_Shader,
@@ -98,9 +98,9 @@ void BuildResources(const std::string& path)
         glm::bvec4(true)
     })));
     material_2->GetPass(0)->GetShader().SetSampler("u_BaseTex", tex1);
-    Lutra::ResourceManager::Instance().SaveResource("Materials/material_2.mat", material_2);
+    Lutra::ResourceManager::Instance().SaveResource(path + "material_2.mat", material_2);
     
-    std::shared_ptr<Lutra::Mesh> mesh = std::shared_ptr<Lutra::Mesh>(new Lutra::Mesh);
+    std::shared_ptr<Lutra::Mesh> mesh = Lutra::ResourceManager::Instance().CreateResource<Lutra::Mesh>();
     mesh->Vertices.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
     mesh->Vertices.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
     mesh->Vertices.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -116,29 +116,32 @@ void BuildResources(const std::string& path)
     mesh->Texcoord0.push_back(glm::vec2(0.0f, 1.0f));
     mesh->Texcoord0.push_back(glm::vec2(1.0f, 1.0f));
     
-    mesh->SubMeshList.emplace_back(Lutra::SubMesh{0, {0, 1, 2}});
-    mesh->SubMeshList.emplace_back(Lutra::SubMesh{1, {1, 3, 2}});
+    mesh->SubMeshList.emplace_back(Lutra::SubMesh{Lutra::PrimitiveType::Triangle, 0, {0, 1, 2}});
+    mesh->SubMeshList.emplace_back(Lutra::SubMesh{Lutra::PrimitiveType::Triangle, 1, {1, 3, 2}});
     
-    Lutra::ResourceManager::Instance().SaveResource("Meshs/quat.mesh", mesh);
+    Lutra::ResourceManager::Instance().SaveResource(path + "quat.mesh", mesh);
     
-    Lutra::ResourceManifest::Instance().Save("Manifest.yaml");
-    Lutra::ResourceManifest::Instance().Load("Manifest.yaml");
+    Lutra::ResourceManifest::Instance().Save(path + "Manifest.yaml");
+    Lutra::ResourceManifest::Instance().Load(path + "Manifest.yaml");
 }
+
+std::shared_ptr<Lutra::RenderTexture> MainRenderTexture;
 
 void Init(Lutra::Engine& engine, int width, int height)
 {
-    BuildResources("/Users/JasonCheng/Desktop/");
+    std::string path = "/Users/JasonCheng/Desktop/";
+    BuildResources(path);
     
     auto scene = std::shared_ptr<Lutra::Scene>(new Lutra::Scene());
     scene->AppendSystem<Lutra::TransformSystem>();
     scene->AppendSystem<Lutra::SpriteSystem>();
     scene->AppendSystem<Lutra::MeshFilterSystem>();
     
-    auto gridTexture = Lutra::ResourceManager::Instance().LoadResource<Lutra::Texture>("Textures/Grid.tex");
-    auto gridTexture_2 = Lutra::ResourceManager::Instance().LoadResource<Lutra::Texture>("Textures/Grid_2.tex");
-    auto material = Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>("Materials/material.mat");
-    auto material_2 = Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>("Materials/material_2.mat");
-    auto mesh = Lutra::ResourceManager::Instance().LoadResource<Lutra::Mesh>("Meshs/quat.mesh");
+    auto gridTexture = Lutra::ResourceManager::Instance().LoadResource<Lutra::Texture>(path + "Grid.tex");
+    auto gridTexture_2 = Lutra::ResourceManager::Instance().LoadResource<Lutra::Texture>(path + "Grid_2.tex");
+    auto material = Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>(path + "material.mat");
+    auto material_2 = Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>(path + "material_2.mat");
+    auto mesh = Lutra::ResourceManager::Instance().LoadResource<Lutra::Mesh>(path + "quat.mesh");
     
     for (int i = 0; i < 2; ++i) {
         auto so = scene->CreateSceneObject("Sprite");
@@ -166,17 +169,14 @@ void Init(Lutra::Engine& engine, int width, int height)
 //    rttCamera.RenderTarget_ = std::shared_ptr<Lutra::RenderTarget>(renderTexture);
 //    rttCamera.RenderTarget_->SetClearColor(glm::vec4(0.8f));
     
-    auto renderWindow = std::shared_ptr<Lutra::RenderTarget>(new Lutra::RenderWindow(width, height));
-    
+    MainRenderTexture= Lutra::ResourceManager::Instance().CreateResource<Lutra::RenderTexture>(1024, 1024, Lutra::TextureFormat::RGBA8, Lutra::TextureFormat::D24S8);
     auto cameraLeftSO = scene->CreateSceneObject("LeftCamera");
     {
         auto& camera = cameraLeftSO.AddComponent<Lutra::Camera>();
         camera.Fov = 60.0f;
         camera.AspectRadio = (float)width * 0.5f / height;
         camera.Viewport_ = {0.0f, 0.0f, 0.5f, 1.0f};
-        camera.RenderTarget_ = renderWindow;
-        camera.RenderTarget_->SetClearColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
-        
+        camera.RenderTexture_ = MainRenderTexture;
         auto& cameraTrans = cameraLeftSO.GetComponent<Lutra::Transform>();
         cameraTrans.Position = glm::vec3(0.0f, 0.0f, 5.0f);
     }
@@ -187,24 +187,22 @@ void Init(Lutra::Engine& engine, int width, int height)
         camera.Fov = 60.0f;
         camera.AspectRadio = (float)width * 0.5f / height;
         camera.Viewport_ = {0.5f, 0.0f, 1.0f, 1.0f};
-        camera.RenderTarget_ = renderWindow;
+        camera.RenderTexture_ = MainRenderTexture;
         
         auto& cameraTrans = cameraRightSO.GetComponent<Lutra::Transform>();
         cameraTrans.Position = glm::vec3(0.0f, 0.0f, 2.0f);
     }
     
-    scene->GetEventDispatcher().Connect<Lutra::WindowResizeEvent>([renderWindow, cameraLeftSO, cameraRightSO](Lutra::Event& event) -> bool{
+    scene->GetEventDispatcher().Connect<Lutra::WindowResizeEvent>([cameraLeftSO, cameraRightSO](Lutra::Event& event) -> bool{
         Lutra::WindowResizeEvent& winEvent = static_cast<Lutra::WindowResizeEvent&>(event);
         cameraLeftSO.GetComponent<Lutra::Camera>().AspectRadio = (float)winEvent.GetWidth() * 0.5f / winEvent.GetHeight();
         cameraRightSO.GetComponent<Lutra::Camera>().AspectRadio = (float)winEvent.GetWidth() * 0.5f / winEvent.GetHeight();
-        renderWindow->SetWidth(winEvent.GetWidth());
-        renderWindow->SetHeight(winEvent.GetHeight());
         return true;
     });
     
-    Lutra::SceneLoader sl;
-    sl.Save("/Users/JasonCheng/Desktop/scene.scene", scene);
-    scene = sl.Load("/Users/JasonCheng/Desktop/scene.scene");
+    //Lutra::SceneLoader sl;
+    //sl.Save("/Users/JasonCheng/Desktop/scene.scene", scene);
+    //scene = sl.Load("/Users/JasonCheng/Desktop/scene.scene");
     engine.AddScene(scene);
 }
 
@@ -237,6 +235,9 @@ void ImGUIUpdate()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ImGui::Image((ImTextureID)MainRenderTexture->GetTextureID(), {800, 600}, {0, 1}, {1, 0});
     
     static bool show_demo_window = true;
     if (show_demo_window)

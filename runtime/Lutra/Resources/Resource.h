@@ -8,18 +8,12 @@
 #ifndef Resource_hpp
 #define Resource_hpp
 #include "sole.hpp"
+#include <functional>
 
 namespace Lutra {
 
     class WriteStream;
     class ReadStream;
-    enum class ResourceType
-    {
-        Texture2D = 0,
-        RenderTexture,
-        Material,
-        Mesh
-    };
 
     class Resource
     {
@@ -30,7 +24,6 @@ namespace Lutra {
         virtual void Serialize(WriteStream& stream);
         virtual void Deserialize(ReadStream& stream);
         
-        ResourceType GetResourceType() const { return m_resourceType; }
         const sole::uuid& GetUUID() const { return m_uuid; }
         
         void SetName(const std::string& name) { m_name = name; }
@@ -38,7 +31,6 @@ namespace Lutra {
         
     protected:
       
-        ResourceType m_resourceType;
         sole::uuid m_uuid;
         std::string m_name;
         friend class ResourceManager;

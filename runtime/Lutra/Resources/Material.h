@@ -17,6 +17,7 @@ namespace Lutra {
     class Material : public Resource
     {
     public:
+        Material();
         ~Material() = default;
         
         virtual void Serialize(WriteStream& stream) override;
@@ -37,11 +38,6 @@ namespace Lutra {
         size_t GetPassCount() const { return m_passList.size(); }
         
         const std::vector<std::shared_ptr<Pass>>& GetPasses() const { return m_passList; }
-        
-    private:
-        
-        Material();
-        friend class ResourceManager;
         
     private:
         

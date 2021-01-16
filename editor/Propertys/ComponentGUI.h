@@ -17,22 +17,24 @@ namespace LutraEditor {
     {
     public:
         
-        ComponentGUI(const Lutra::SceneObject& so)
+        ComponentGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
         : m_sceneObject(so)
+        , m_callback(updateCallback)
         {}
         virtual ~ComponentGUI() = default;
         
     protected:
         
-        Lutra::SceneObject m_sceneObject;
+        Lutra::SceneObject    m_sceneObject;
+        std::function<void()> m_callback;
     };
 
     class TagGUI : public ComponentGUI
     {
     public:
         
-        TagGUI(const Lutra::SceneObject& so)
-        : ComponentGUI(so)
+        TagGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~TagGUI() = default;
         
@@ -44,8 +46,8 @@ namespace LutraEditor {
     {
     public:
         
-        TransformGUI(const Lutra::SceneObject& so)
-        : ComponentGUI(so)
+        TransformGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~TransformGUI() = default;
         
@@ -58,10 +60,26 @@ namespace LutraEditor {
     {
     public:
         
-        SpriteRendererGUI(const Lutra::SceneObject& so)
-        : ComponentGUI(so)
+        SpriteRendererGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~SpriteRendererGUI() = default;
+        
+        virtual void OnGUI() override;
+        
+    private:
+        std::shared_ptr<ResourceBrowserWidget> m_browserWidget;
+        int m_selectedMaterial = -1;
+    };
+
+    class MeshRendererGUI : public ComponentGUI
+    {
+    public:
+        
+        MeshRendererGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
+        {}
+        virtual ~MeshRendererGUI() = default;
         
         virtual void OnGUI() override;
         
@@ -74,8 +92,8 @@ namespace LutraEditor {
     {
     public:
         
-        MeshFilterGUI(const Lutra::SceneObject& so)
-        : ComponentGUI(so)
+        MeshFilterGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~MeshFilterGUI() = default;
         
@@ -89,8 +107,8 @@ namespace LutraEditor {
     {
     public:
         
-        CameraGUI(const Lutra::SceneObject& so)
-        : ComponentGUI(so)
+        CameraGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~CameraGUI() = default;
         
@@ -105,15 +123,12 @@ namespace LutraEditor {
     public:
         
         ComponentAppendGUI(const Lutra::SceneObject& so, const std::function<void()>& updateCallback)
-        : ComponentGUI(so)
-        , m_callback(updateCallback)
+        : ComponentGUI(so, updateCallback)
         {}
         virtual ~ComponentAppendGUI() = default;
         
         virtual void OnGUI() override;
         
-    private:
-        std::function<void()> m_callback;
     };
 
 }

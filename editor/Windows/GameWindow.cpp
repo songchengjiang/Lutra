@@ -63,7 +63,7 @@ namespace LutraEditor {
             }
         }
         if (deviceTexture != nullptr)
-            ImGui::Image(reinterpret_cast<ImTextureID>(deviceTexture->GetTextureID()), size);
+            ImGui::Image(reinterpret_cast<ImTextureID>(deviceTexture->GetTextureID()), size, {0, 1}, {1, 0});
         ImGui::End();
         
     }

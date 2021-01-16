@@ -21,20 +21,23 @@ namespace LutraEditor {
     {
     }
 
-    void ResourceBrowserWidget::OnGUI()
+    bool ResourceBrowserWidget::OnGUI()
     {
+        bool isItemClicked = false;
         if (std::filesystem::is_directory(m_root)) {
             std::filesystem::directory_iterator end_iter;
             for (std::filesystem::directory_iterator iter(m_root); iter != end_iter; ++iter) {
-                showPath(*iter);
+                isItemClicked |= showPath(*iter);
             }
         }
+        
+        return isItemClicked;
     }
 
-    void ResourceBrowserWidget::showPath(const std::filesystem::path& path)
+    bool ResourceBrowserWidget::showPath(const std::filesystem::path& path)
     {
         if (!std::filesystem::exists(path))
-            return;
+            return false;
         
         ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanFullWidth;
         if (m_selectedPath == path)
@@ -45,16 +48,18 @@ namespace LutraEditor {
         if (!isDirectory) {
             node_flags |= ImGuiTreeNodeFlags_Leaf;
             if (m_exts.find(path.extension()) == m_exts.end())
-                return;
+                return false;
             iconType = m_exts[path.extension()];
         }
         
+        bool isClicked = false;
         std::string fileNameNoExt = path.filename();
         fileNameNoExt = fileNameNoExt.substr(0, fileNameNoExt.find_last_of('.'));
         if (m_showFolder) {
             if (ImGui::TreeNodeEx(fileNameNoExt.c_str(), node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(iconType)))) {
                 if (ImGui::IsItemClicked()) {
                     m_selectedPath = path;
+                    isClicked = true;
                     if (m_callBack != nullptr)
                         m_callBack(m_selectedPath);
                 }
@@ -62,7 +67,7 @@ namespace LutraEditor {
                 if (isDirectory) {
                     std::filesystem::directory_iterator end_iter;
                     for (std::filesystem::directory_iterator iter(path); iter != end_iter; ++iter) {
-                        showPath(*iter);
+                        isClicked |= showPath(*iter);
                     }
                 }
                 ImGui::TreePop();
@@ -71,12 +76,13 @@ namespace LutraEditor {
             if (isDirectory) {
                 std::filesystem::directory_iterator end_iter;
                 for (std::filesystem::directory_iterator iter(path); iter != end_iter; ++iter) {
-                    showPath(*iter);
+                    isClicked |= showPath(*iter);
                 }
             }else {
                 if (ImGui::TreeNodeEx(fileNameNoExt.c_str(), node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(iconType)))) {
                     if (ImGui::IsItemClicked()) {
                         m_selectedPath = path;
+                        isClicked = true;
                         if (m_callBack != nullptr)
                             m_callBack(m_selectedPath);
                     }
@@ -84,5 +90,6 @@ namespace LutraEditor {
                 }
             }
         }
+        return isClicked;
     }
 }

@@ -18,6 +18,13 @@ namespace LutraEditor {
         static std::shared_ptr<Lutra::Texture> Build(const std::string& path);
     };
 
+    class RenderTextureBuilder
+    {
+    public:
+        
+        static std::shared_ptr<Lutra::Texture> Build(uint32_t width, uint32_t height);
+    };
+
 }
 
 #endif /* TextureBuilder_hpp */

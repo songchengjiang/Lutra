@@ -10,6 +10,7 @@
 #include <vector>
 #include <glm.hpp>
 #include "Resource.h"
+#include "Base/BoundingBox.h"
 
 namespace Lutra {
 
@@ -24,6 +25,7 @@ namespace Lutra {
         PrimitiveType         Type;
         uint32_t              MaterialIndex;
         std::vector<uint16_t> Indices;
+        BoundingBox           BBox;
     };
 
     struct Mesh : public Resource
@@ -34,19 +36,16 @@ namespace Lutra {
         std::vector<glm::vec3> Vertices;
         std::vector<glm::vec3> Normals;
         std::vector<glm::vec3> Tangents;
+        std::vector<glm::vec4> Colors;
         std::vector<glm::vec2> Texcoord0;
         std::vector<glm::vec2> Texcoord1;
         
         bool MarkForUpdate = true;
         
-        //Auto Generating
-        std::vector<float> SequentialBuffer;
-        
         std::vector<SubMesh> SubMeshList;
         
-    private:
-        Mesh();
-        friend class ResourceManager;
+        //Auto Generating
+        std::vector<float> SequentialBuffer;
     };
 }
 

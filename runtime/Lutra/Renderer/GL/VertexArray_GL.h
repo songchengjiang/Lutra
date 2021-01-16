@@ -19,8 +19,8 @@ namespace Lutra {
         VertexArrayGL();
         virtual ~VertexArrayGL();
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        virtual void Bind(const std::shared_ptr<Program>& program) override;
+        virtual void Unbind() override;
 
         virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override;
         virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
@@ -29,11 +29,14 @@ namespace Lutra {
         virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override { return m_indexBuffer; }
 
     private:
+        void bindVertexAttributes();
+        
+    private:
         
         GLuint m_id;
-        uint32_t m_vertexBufferIndex = 0;
         std::vector<std::shared_ptr<VertexBuffer>> m_vertexBuffers;
         std::shared_ptr<IndexBuffer> m_indexBuffer;
+        std::shared_ptr<Program> m_bindingProgram;
     };
 
 }

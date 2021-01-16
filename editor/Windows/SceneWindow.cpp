@@ -6,6 +6,12 @@
 //
 
 #include "SceneWindow.h"
+#include "MeshBuilder.h"
+#include "MaterialBuilder.h"
+#include "Utils/MathHelper.h"
+
+static const uint32_t REF_GRID_SO   = 0x10000000;
+static const uint32_t REF_CAMERA_SO = 0x20000000;
 
 namespace LutraEditor {
 
@@ -16,13 +22,18 @@ namespace LutraEditor {
     {
         m_sceneCamera = m_scene->CreateSceneObject("SceneCamera");
         auto&camera = m_sceneCamera.AddComponent<Lutra::Camera>();
+        camera.VisibleMask |= REF_GRID_SO | REF_CAMERA_SO;
         camera.AspectRadio = (float)m_width / m_height;
+        camera.ZNear = 0.1f;
+        camera.ZFar  = 1000.0f;
         
         m_colorTexture = Lutra::ResourceManager::Instance().CreateResource<Lutra::RenderTexture>(m_width, m_height, Lutra::TextureFormat::RGBA8, Lutra::TextureFormat::D24S8);
         camera.RenderTexture_ = m_colorTexture;
         camera.RenderTexture_->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
         
-        m_sceneCamera.GetComponent<Lutra::Transform>().Position.z = 2.0f;
+        m_cameraManipulator.reset(new CameraManipulator(m_sceneCamera, glm::vec3(0.0f, 0.0f, 50.0f), glm::vec3(-30.0f, 0.0f, 0.0f)));
+        
+        createReferenceGrid();
     }
 
     SceneWindow::~SceneWindow()
@@ -57,8 +68,64 @@ namespace LutraEditor {
         if (size.x != m_width || size.y != m_height) {
             resize(size.x, size.y);
         }
-
-        ImGui::Image(reinterpret_cast<ImTextureID>(m_colorTexture->GetTextureID()), size);
+        
+        m_cameraManipulator->Update(width, height);
+        ImGui::Image(reinterpret_cast<ImTextureID>(m_colorTexture->GetTextureID()), size, {0, 1}, {1, 0});
         ImGui::End();
+    }
+
+    void SceneWindow::createReferenceGrid()
+    {
+        auto gridSO  = m_scene->CreateSceneObject("ReferenceGrid");
+        gridSO.GetComponent<Lutra::Tag>().VisibleTag = REF_GRID_SO;
+        auto& mf = gridSO.AddComponent<Lutra::MeshFilter>();
+        mf.MeshPtr = GridMeshBuilder::Build(50.0f, 50.0f);
+        gridSO.AddComponent<Lutra::MeshRenderer>().Materials.push_back(UnlintColorMaterialBuilder::Build());
+    }
+
+    void SceneWindow::OnNotifySceneObjectAdded(Lutra::SceneObject so)
+    {
+        if (so.HasComponent<Lutra::Serializable>() && so.HasComponent<Lutra::Camera>()) {
+            auto& camera = so.GetComponent<Lutra::Camera>();
+            auto cameraVisual  = m_scene->CreateSceneObject("CameraVisual");
+            cameraVisual.GetComponent<Lutra::Tag>().VisibleTag = REF_CAMERA_SO;
+            auto& mf = cameraVisual.AddComponent<Lutra::MeshFilter>();
+            mf.MeshPtr = ViewportMeshBuilder::Build(camera.Fov, camera.AspectRadio, camera.OrthographicSize, camera.ZNear, camera.ZFar, camera.ProjType == Lutra::Camera::ProjectionType::Perspective, glm::vec4(114.0f / 255.0f, 147.0f / 255.0f, 187.0f / 255.0f, 1.0f));
+            auto material = UnlintColorMaterialBuilder::Build();
+            material->GetPass(0)->GetBlendMode() = Lutra::BlendMode::Normal;
+            cameraVisual.AddComponent<Lutra::MeshRenderer>().Materials.push_back(material);
+            
+            so.GetComponent<Lutra::SceneObjectDelegate>().AddChild(cameraVisual);
+            
+            m_cameraMap[so] = cameraVisual;
+        }
+    }
+
+    void SceneWindow::OnNotifySceneObjectPropoertyChanged(Lutra::SceneObject so)
+    {
+        if (so.HasComponent<Lutra::Serializable>() && so.HasComponent<Lutra::Camera>()) {
+            auto& camera = so.GetComponent<Lutra::Camera>();
+            auto& cameraVisual = m_cameraMap[so];
+            auto& mf = cameraVisual.GetComponent<Lutra::MeshFilter>();
+            mf.MeshPtr = ViewportMeshBuilder::Build(camera.Fov, camera.AspectRadio, camera.OrthographicSize, camera.ZNear, camera.ZFar, camera.ProjType == Lutra::Camera::ProjectionType::Perspective, glm::vec4(114.0f / 255.0f, 147.0f / 255.0f, 187.0f / 255.0f, 1.0f));
+            
+//            glm::vec3 scale;
+//            glm::quat rotation;
+//            glm::vec3 translation;
+//            MathHelper::decompose(so.GetComponent<Lutra::Transform>().WorldMat, &translation, &rotation, &scale);
+//
+//            cameraVisual.GetComponent<Lutra::Transform>().Position = translation;
+//            cameraVisual.GetComponent<Lutra::Transform>().Rotation = glm::degrees(glm::eulerAngles(rotation));
+//            cameraVisual.GetComponent<Lutra::Transform>().Scale    = scale;
+        }
+    }
+
+    void SceneWindow::OnNotifySceneObjectRemoved(Lutra::SceneObject so)
+    {
+//        if (so.HasComponent<Lutra::Serializable>() && so.HasComponent<Lutra::Camera>()) {
+//            so.GetComponent<Lutra::SceneObjectDelegate>().RemoveChild(m_cameraMap[so]);
+//            m_cameraMap.erase(so);
+//            m_scene->DestroySceneObject(m_cameraMap[so]);
+//        }
     }
 }

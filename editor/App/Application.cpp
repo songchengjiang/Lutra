@@ -290,13 +290,13 @@ namespace LutraEditor {
         resourceWindow->Open();
         m_guiWindows.emplace_back(resourceWindow);
         
-        auto projectWindow = new ProjectWindow(m_scene, propertyWindow);
-        projectWindow->Open();
-        m_guiWindows.emplace_back(projectWindow);
-    
         auto sceneWindow = new SceneWindow(m_scene);
         sceneWindow->Open();
         m_guiWindows.emplace_back(sceneWindow);
+        
+        auto projectWindow = new ProjectWindow(m_scene, propertyWindow, sceneWindow);
+        projectWindow->Open();
+        m_guiWindows.emplace_back(projectWindow);
         
         auto gameWindow = new GameWindow(m_scene);
         gameWindow->Open();
@@ -311,9 +311,10 @@ namespace LutraEditor {
 
     void Application::saveScene()
     {
+        if (m_scene == nullptr)
+            return;
         Lutra::SceneLoader loader;
         loader.Save(m_projectFolder + "/Scene.scene", m_scene);
-        Lutra::ResourceManifest::Instance().Save(m_projectFolder + "/manifest.yaml");
     }
 
 }

@@ -143,11 +143,18 @@ namespace Lutra {
         glColorMask(colorMask.r? GL_TRUE: GL_FALSE, colorMask.g? GL_TRUE: GL_FALSE, colorMask.b? GL_TRUE: GL_FALSE, colorMask.a? GL_TRUE: GL_FALSE);
     }
 
-    void RenderDeviceGL::DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state)
+    void RenderDeviceGL::DrawIndexed(const GraphicState& state, DevicePrimitiveType type, uint32_t elementCount)
     {
+        GLenum mode;
+        switch (type) {
+            case DevicePrimitiveType::Line:
+                mode = GL_LINES;
+                break;
+            case DevicePrimitiveType::Triangle:
+                mode = GL_TRIANGLES;
+                break;
+        }
         SetGraphicState(state);
-        vao->Bind();
-        glDrawElements(GL_TRIANGLES, vao->GetIndexBuffer()->GetSize(), GL_UNSIGNED_SHORT, nullptr);
-        vao->Unbind();
+        glDrawElements(mode, elementCount, GL_UNSIGNED_SHORT, nullptr);
     }
 }

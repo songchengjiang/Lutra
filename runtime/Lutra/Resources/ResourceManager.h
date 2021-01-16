@@ -8,6 +8,8 @@
 #ifndef ResourceManager_hpp
 #define ResourceManager_hpp
 #include "Resource.h"
+#include "ResourceFactory.h"
+#include <unordered_map>
 
 namespace Lutra {
 
@@ -15,7 +17,7 @@ namespace Lutra {
     class ResourceManager
     {
     public:
-        ResourceManager() = default;
+        ResourceManager();
         ~ResourceManager() = default;
         
         static ResourceManager& Instance();
@@ -44,6 +46,7 @@ namespace Lutra {
     private:
         
         std::vector<std::shared_ptr<Resource>> m_resources;
+        std::unordered_map<std::string, std::unique_ptr<ResourceFactory>> m_resourceFactorys;
     };
 
     template<typename T, typename... Args>

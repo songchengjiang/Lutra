@@ -14,11 +14,12 @@
 namespace LutraEditor {
 
     class PropertyWindow;
+    class SceneWindow;
     class IconManager;
     class ProjectWindow : public GUIWindow
     {
     public:
-        ProjectWindow(const std::shared_ptr<Lutra::Scene>& scene, PropertyWindow* propertyWindow);
+        ProjectWindow(const std::shared_ptr<Lutra::Scene>& scene, PropertyWindow* propertyWindow, SceneWindow* sceneWindow);
         virtual ~ProjectWindow();
         
         virtual void Open() override;
@@ -29,8 +30,8 @@ namespace LutraEditor {
         
     private:
         
-        void showTree();
-        void showTreeNode(Lutra::SceneObject so);
+        bool showTree();
+        bool showTreeNode(Lutra::SceneObject so);
         
         void showMainPopup();
         
@@ -38,6 +39,7 @@ namespace LutraEditor {
         void destroySceneObject(Lutra::SceneObject so);
         
         Lutra::SceneObject createSprite(const std::string& name);
+        Lutra::SceneObject createMesh(const std::string& name);
         Lutra::SceneObject createCamera(const std::string& name);
         
         std::vector<std::shared_ptr<PropertyGUI>> getComponentGUIs(Lutra::SceneObject so);
@@ -46,6 +48,7 @@ namespace LutraEditor {
         
         bool m_isOpen = false;
         PropertyWindow* m_propertyWindow;
+        SceneWindow* m_sceneWindow;
         std::shared_ptr<Lutra::Scene> m_scene;
         std::vector<Lutra::SceneObject> m_rootSceneObjects;
         Lutra::SceneObject m_selectedSceneObject;

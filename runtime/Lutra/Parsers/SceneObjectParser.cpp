@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "SpriteRenderer.h"
+#include "MeshRenderer.h"
 #include "MeshFilter.h"
 #include "Serializable.h"
 #include "SceneObjectDelegate.h"
@@ -67,6 +68,13 @@ namespace Lutra {
             parser.Serialize(stream);
             stream.EndMap();
         }
+        if (m_sceneObject.HasComponent<MeshRenderer>()) {
+            stream.BeginMap("");
+            stream.WriteValue("Type", (int)ComponentType::MeshRenderer);
+            MeshRendererParser parser(m_sceneObject.GetComponent<MeshRenderer>());
+            parser.Serialize(stream);
+            stream.EndMap();
+        }
         if (m_sceneObject.HasComponent<MeshFilter>()) {
             stream.BeginMap("");
             stream.WriteValue("Type", (int)ComponentType::MeshFilter);
@@ -117,6 +125,12 @@ namespace Lutra {
                 case ComponentType::SpriteRenderer :
                 {
                     SpriteRendererParser parser(m_sceneObject.AddComponent<SpriteRenderer>());
+                    parser.Deserialize(stream);
+                }
+                    break;
+                case ComponentType::MeshRenderer :
+                {
+                    MeshRendererParser parser(m_sceneObject.AddComponent<MeshRenderer>());
                     parser.Deserialize(stream);
                 }
                     break;

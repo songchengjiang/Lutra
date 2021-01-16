@@ -53,21 +53,25 @@ namespace Lutra {
         
         RenderContext rContext;
         rContext.Graphic_ = &graphic;
-        std::vector<Camera*> rttCameras;
+        std::vector<Camera*> renderCameras;
         std::vector<Camera*> mainCameras;
-        std::set<std::shared_ptr<RenderTexture>> renderTextures;
         
         auto view = m_registry.view<Transform, Camera>();
         view.each([&, this](Transform& trans, Camera& cam){
             if (cam.RenderTexture_ != nullptr) {
-                rttCameras.push_back(&cam);
-                renderTextures.insert(cam.RenderTexture_);
-            }else {
+                graphic.SetRenderTexture(cam.RenderTexture_);
+                graphic.SetViewport(0, 0, cam.RenderTexture_->GetWidth(), cam.RenderTexture_->GetHeight());
+                graphic.SetClearColor(cam.RenderTexture_->GetClearColor());
+                graphic.Clear(ClearFlag::COLOR | ClearFlag::DEPTH | ClearFlag::STENCIL);
+            }
+            if (cam.IsMain) {
                 mainCameras.push_back(&cam);
+            }else {
+                renderCameras.push_back(&cam);
             }
         });
         
-        auto renderFunc = [&rContext, &graphic, this](Camera &cam){
+        auto renderFun = [this, &graphic, &rContext](Camera &cam){
             if (cam.RenderTexture_ != nullptr) {
                 uint32_t width = cam.RenderTexture_->GetWidth();
                 uint32_t height = cam.RenderTexture_->GetHeight();
@@ -81,23 +85,17 @@ namespace Lutra {
                 for (auto& system : m_systemList) {
                     system->OnRender(rContext);
                 }
+                graphic.Finish();
                 graphic.SetRenderTexture(cam.RenderTexture_, false);
             }
         };
-        
-        for (auto& rt : renderTextures) {
-            graphic.SetRenderTexture(rt);
-            graphic.SetViewport(0, 0, rt->GetWidth(), rt->GetHeight());
-            graphic.SetClearColor(rt->GetClearColor());
-            graphic.Clear(ClearFlag::COLOR | ClearFlag::DEPTH | ClearFlag::STENCIL);
+    
+        for (auto& cam : renderCameras) {
+            renderFun(*cam);
         }
         
-        for (auto& camera : rttCameras) {
-            renderFunc(*camera);
-        }
-        
-        for (auto& camera : mainCameras) {
-            renderFunc(*camera);
+        for (auto& cam : mainCameras) {
+            renderFun(*cam);
         }
     }
 }

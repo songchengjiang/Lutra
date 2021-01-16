@@ -44,6 +44,12 @@ namespace Lutra {
         FrontAndBack
     };
 
+    enum class DevicePrimitiveType
+    {
+        Line = 0,
+        Triangle
+    };
+
     struct GraphicState
     {
         GraphicBlendMode BMode;
@@ -79,7 +85,7 @@ namespace Lutra {
         
         virtual std::shared_ptr<DeviceTexture> CreateTexture2D(int width, int height, DeviceTextureForamt format) = 0;
         
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state) = 0;
+        virtual void DrawIndexed(const GraphicState& state, DevicePrimitiveType type, uint32_t elementCount) = 0;
     
 
     };

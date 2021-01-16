@@ -20,8 +20,8 @@ namespace Lutra {
         VertexBufferGL(float* vertices, uint32_t size);
         virtual ~VertexBufferGL();
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        virtual void Bind() override;
+        virtual void Unbind() override;
         
         virtual void SetData(float* vertices, uint32_t size) override;
 
@@ -41,8 +41,8 @@ namespace Lutra {
         IndexBufferGL(uint16_t* indices, uint32_t size);
         virtual ~IndexBufferGL();
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        virtual void Bind() override;
+        virtual void Unbind() override;
         
         virtual uint32_t GetSize() const override { return m_size;}
         

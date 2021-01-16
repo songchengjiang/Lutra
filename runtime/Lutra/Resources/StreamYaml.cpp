@@ -329,6 +329,17 @@ namespace Lutra {
         m_emitter << YAML::EndSeq;
     }
 
+    void WriteStreamYaml::WriteValue(const std::string& key, const std::vector<glm::vec4>& value)
+    {
+        m_emitter << YAML::Key << key << YAML::Value;
+        m_emitter << YAML::Flow;
+        m_emitter << YAML::BeginSeq;
+        for (auto &v : value) {
+            m_emitter << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
+        }
+        m_emitter << YAML::EndSeq;
+    }
+
     void WriteStreamYaml::WriteValue(const std::string& key, const std::vector<uint8_t>& value)
     {
         std::string encode = base64_encode({value.begin(), value.end()});
@@ -465,28 +476,29 @@ namespace Lutra {
 
     void ReadStreamYaml::ReadValue(const std::string& key, std::vector<uint16_t>& value)
     {
-        if (!m_nodeStack.top()[key].IsNull()) {
-            for (const auto &v : m_nodeStack.top()[key]) {
-                value.push_back(v.as<uint16_t>());
-            }
+        for (const auto &v : m_nodeStack.top()[key]) {
+            value.push_back(v.as<uint16_t>());
         }
     }
 
     void ReadStreamYaml::ReadValue(const std::string& key, std::vector<glm::vec2>& value)
     {
-        if (!m_nodeStack.top()[key].IsNull()) {
-            for (const auto &v : m_nodeStack.top()[key]) {
-                value.push_back(v.as<glm::vec2>());
-            }
+        for (const auto &v : m_nodeStack.top()[key]) {
+            value.push_back(v.as<glm::vec2>());
         }
     }
 
     void ReadStreamYaml::ReadValue(const std::string& key, std::vector<glm::vec3>& value)
     {
-        if (!m_nodeStack.top()[key].IsNull()) {
-            for (const auto &v : m_nodeStack.top()[key]) {
-                value.push_back(v.as<glm::vec3>());
-            }
+        for (const auto &v : m_nodeStack.top()[key]) {
+            value.push_back(v.as<glm::vec3>());
+        }
+    }
+
+    void ReadStreamYaml::ReadValue(const std::string& key, std::vector<glm::vec4>& value)
+    {
+        for (const auto &v : m_nodeStack.top()[key]) {
+            value.push_back(v.as<glm::vec4>());
         }
     }
 

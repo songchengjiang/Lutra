@@ -7,6 +7,7 @@
 
 #ifndef DeviceTexture_h
 #define DeviceTexture_h
+#include "DeviceResource.h"
 
 namespace Lutra {
 
@@ -34,7 +35,7 @@ namespace Lutra {
         Repeat,
     };
 
-    class DeviceTexture
+    class DeviceTexture : public DeviceResource
     {
     public:
         
@@ -51,7 +52,7 @@ namespace Lutra {
         virtual void SetWrap(DeviceTextureWrap wrap) = 0;
         virtual DeviceTextureWrap GettWrap() const = 0;
 
-        virtual void Bind() const = 0;
+        virtual void Bind() = 0;
         
         virtual uint32_t GetID() const = 0;
         

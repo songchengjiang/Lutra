@@ -12,7 +12,6 @@
 #include <imguiFileDialog/res/CustomFont.cpp>
 #include <Lutra.h>
 #include "ResourceGUI.h"
-#include "TextureBuilder.h"
 #include "MeshBuilder.h"
 #include "MaterialBuilder.h"
 
@@ -57,76 +56,93 @@ namespace LutraEditor {
             m_isOpenAddResource = false;
         }
         
+        auto treeNode = [](const std::string& name, IconType type) -> bool{
+            bool isClicked = false;
+            ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Leaf;
+            if (ImGui::TreeNodeEx(name.c_str(), node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(type)))) {
+                if (ImGui::IsItemClicked()) {
+                    isClicked = true;
+                }
+                ImGui::TreePop();
+            }
+            return isClicked;
+        };
+        auto popupWindow = [](const std::string& name) -> std::string{
+            std::string result;
+            ImGui::SetNextWindowSize({200, 80});
+            if (ImGui::BeginPopupModal(name.c_str(), NULL, ImGuiWindowFlags_NoResize)) {
+                static char defaultName[128] = "Default";
+                ImGui::InputText(name.c_str(), defaultName, IM_ARRAYSIZE(defaultName));
+                if (ImGui::Button("OK", ImVec2(50, 0))) {
+                    ImGui::CloseCurrentPopup();
+                    result = defaultName;
+                }
+                ImGui::SetItemDefaultFocus();
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel", ImVec2(50, 0))) {
+                    ImGui::CloseCurrentPopup();
+                }
+                
+                ImGui::EndPopup();
+            }
+            return result;
+        };
         bool isOpenFolder = false;
         bool isOpenCreatePlane = false;
+        bool isOpenCreateSphere = false;
         bool isOpenCreateUnlitMaterial = false;
         bool isOpenCreateRenderTexture = false;
         ImGui::SetNextWindowSize({200, 150});
         if (ImGui::BeginPopup("AddResource")) {
             
-            ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Leaf;
-            if (ImGui::TreeNodeEx("Folder", node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(IconType::Folder)))) {
-                if (ImGui::IsItemClicked()) {
-                    isOpenFolder = true;
-                }
-                ImGui::TreePop();
-            }
+            isOpenFolder = treeNode("Folder", IconType::Folder);
             ImGui::Separator();
             ImGui::MenuItem("Texture", NULL, false, false);
-            if (ImGui::TreeNodeEx("Image Texture", node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(IconType::Texture)))) {
-                if (ImGui::IsItemClicked()) {
-                    igfd::ImGuiFileDialog::Instance()->OpenDialog("ImageTextureDlgKey", ICON_IGFD_FOLDER_OPEN "Choose Image", ".png,.jpg,.tga", ".");
-                }
-                ImGui::TreePop();
+            if (treeNode("Image Texture", IconType::Texture)) {
+                igfd::ImGuiFileDialog::Instance()->OpenDialog("ImageTextureDlgKey", ICON_IGFD_FOLDER_OPEN "Choose Image", ".png,.jpg,.tga", ".");
             }
-            if (ImGui::TreeNodeEx("Render Texture", node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(IconType::Texture)))) {
-                if (ImGui::IsItemClicked()) {
-                    isOpenCreateRenderTexture = true;
-                }
-                ImGui::TreePop();
-            }
+            isOpenCreateRenderTexture = treeNode("Render Texture", IconType::Texture);
             ImGui::Separator();
             ImGui::MenuItem("Mesh", NULL, false, false);
-            if (ImGui::TreeNodeEx("Plane", node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(IconType::Mesh)))) {
-                if (ImGui::IsItemClicked()) {
-                    isOpenCreatePlane = true;
-                }
-                ImGui::TreePop();
-            }
+            isOpenCreatePlane = treeNode("Plane", IconType::Mesh);
+            isOpenCreateSphere = treeNode("Sphere", IconType::Mesh);
             ImGui::Separator();
             ImGui::MenuItem("Material", NULL, false, false);
-            if (ImGui::TreeNodeEx("Unlit", node_flags, reinterpret_cast<ImTextureID>(IconManager::Instance().GetTexture(IconType::Material)))) {
-                if (ImGui::IsItemClicked()) {
-                    isOpenCreateUnlitMaterial = true;
-                }
-                ImGui::TreePop();
-            }
+            isOpenCreateUnlitMaterial = treeNode("Unlit", IconType::Material);
             ImGui::EndPopup();
         }
         
         if (isOpenFolder) {
             ImGui::OpenPopup("Folder");
         }
-        
-        ImGui::SetNextWindowSize({200, 80});
-        if (ImGui::BeginPopupModal("Folder", NULL, ImGuiWindowFlags_NoResize)) {
-            static char folder[128] = "Default";
-            ImGui::InputText("Folder", folder, IM_ARRAYSIZE(folder));
-            if (ImGui::Button("OK", ImVec2(50, 0))) {
-                createFolder(folder);
-                ImGui::CloseCurrentPopup();
-            }
-            ImGui::SetItemDefaultFocus();
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel", ImVec2(50, 0))) {
-                ImGui::CloseCurrentPopup();
-            }
-            
-            ImGui::EndPopup();
+        if (isOpenCreatePlane) {
+            ImGui::OpenPopup("Plane");
         }
-        
+        if (isOpenCreateSphere) {
+            ImGui::OpenPopup("Sphere");
+        }
+        if (isOpenCreateUnlitMaterial) {
+            ImGui::OpenPopup("Unlit");
+        }
         if (isOpenCreateRenderTexture) {
             ImGui::OpenPopup("RenderTexture");
+        }
+        
+        std::string name;
+        if (!(name = popupWindow("Folder")).empty()) {
+            createFolder(name);
+        }
+        
+        if (!(name = popupWindow("Plane")).empty()) {
+            createResource<PlaneMeshBuilder>(name + std::string(".mesh"), 1, 1);
+        }
+        
+        if (!(name = popupWindow("Sphere")).empty()) {
+            createResource<SphereMeshBuilder>(name + std::string(".mesh"), 1.0f, 36, 18);
+        }
+    
+        if (!(name = popupWindow("Unlit")).empty()) {
+            createResource<UnlintMaterialBuilder>(name + std::string(".mat"));
         }
         
         ImGui::SetNextWindowSize({200, 200});
@@ -137,49 +153,7 @@ namespace LutraEditor {
             ImGui::InputInt("Width", &width);
             ImGui::InputInt("Height", &height);
             if (ImGui::Button("OK", ImVec2(50, 0))) {
-                createRenderTexture(name, width, height);
-                ImGui::CloseCurrentPopup();
-            }
-            ImGui::SetItemDefaultFocus();
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel", ImVec2(50, 0))) {
-                ImGui::CloseCurrentPopup();
-            }
-            
-            ImGui::EndPopup();
-        }
-        
-        if (isOpenCreatePlane) {
-            ImGui::OpenPopup("Plane");
-        }
-        
-        ImGui::SetNextWindowSize({200, 80});
-        if (ImGui::BeginPopupModal("Plane", NULL, ImGuiWindowFlags_NoResize)) {
-            static char name[128] = "Plane";
-            ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
-            if (ImGui::Button("OK", ImVec2(50, 0))) {
-                createPlaneMesh(name);
-                ImGui::CloseCurrentPopup();
-            }
-            ImGui::SetItemDefaultFocus();
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel", ImVec2(50, 0))) {
-                ImGui::CloseCurrentPopup();
-            }
-            
-            ImGui::EndPopup();
-        }
-        
-        if (isOpenCreateUnlitMaterial) {
-            ImGui::OpenPopup("Unlit");
-        }
-        
-        ImGui::SetNextWindowSize({200, 80});
-        if (ImGui::BeginPopupModal("Unlit", NULL, ImGuiWindowFlags_NoResize)) {
-            static char name[128] = "Unlit";
-            ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
-            if (ImGui::Button("OK", ImVec2(50, 0))) {
-                createUnlitMaterial(name);
+                createResource<RenderTextureBuilder>(name + std::string(".rt"), width, height);
                 ImGui::CloseCurrentPopup();
             }
             ImGui::SetItemDefaultFocus();
@@ -198,15 +172,19 @@ namespace LutraEditor {
                 std::string filePathName = igfd::ImGuiFileDialog::Instance()->GetFilePathName();
                 std::string fileName = filePathName.substr(filePathName.find_last_of("/\\") + 1);
                 fileName = fileName.substr(0, fileName.find_last_of('.'));
-                createImageTexture(fileName, filePathName);
+                createResource<TextureBuilder>(fileName + ".tex", filePathName);
             }
             // close
             igfd::ImGuiFileDialog::Instance()->CloseDialog();
         }
         
         ImGui::Separator();
-        m_browserWidget.OnGUI();
-        
+        if (!m_browserWidget.OnGUI() && ImGui::IsWindowHovered()) {
+            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+                onResourceClicked(m_root);
+                m_browserWidget.Reset();
+            }
+        }
         showMainPopup();
         
         ImGui::End();
@@ -234,16 +212,17 @@ namespace LutraEditor {
         m_propertyWindow->Clear();
         if (path.extension() == ".tex" || path.extension() == ".rt") {
             auto resource = Lutra::ResourceManager::Instance().LoadResource<Lutra::Texture>(path);
-            m_propertyWindow->SetPropertys({std::shared_ptr<TextureGUI>(new TextureGUI(resource))});
+            m_propertyWindow->SetPropertys({std::shared_ptr<TextureGUI>(new TextureGUI(resource, [path, resource](){
+                Lutra::ResourceManager::Instance().SaveResource(path, resource);
+            }))});
         }else if (path.extension() == ".mesh") {
             auto resource = Lutra::ResourceManager::Instance().LoadResource<Lutra::Mesh>(path);
-            m_propertyWindow->SetPropertys({std::shared_ptr<MeshGUI>(new MeshGUI(resource))});
+            m_propertyWindow->SetPropertys({std::shared_ptr<MeshGUI>(new MeshGUI(resource, nullptr))});
         }else if (path.extension() == ".mat") {
             auto resource = Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>(path);
-            auto materialUI = std::shared_ptr<MaterialGUI>(new MaterialGUI(resource));
-            materialUI->SetResourceChangedCallback([path, resource](){
+            auto materialUI = std::shared_ptr<MaterialGUI>(new MaterialGUI(resource, [path, resource](){
                 Lutra::ResourceManager::Instance().SaveResource(path, resource);
-            });
+            }));
             m_propertyWindow->SetPropertys({materialUI});
         }
         m_selectedPath = path;
@@ -263,34 +242,6 @@ namespace LutraEditor {
         std::filesystem::create_directory(m_root + "/" + folder);
     }
 
-    void ResourceWindow::createImageTexture(const std::string& name, const std::string& imagePath)
-    {
-        auto texture = TextureBuilder::Build(imagePath);
-        texture->SetName(name);
-        Lutra::ResourceManager::Instance().SaveResource(getFolder(m_selectedPath) + "/" + name + ".tex", texture);
-    }
-
-    void ResourceWindow::createRenderTexture(const std::string& name, uint32_t width, uint32_t height)
-    {
-        auto texture = Lutra::ResourceManager::Instance().CreateResource<Lutra::RenderTexture>(width, height, Lutra::TextureFormat::RGBA8, Lutra::TextureFormat::D24S8);
-        texture->SetName(name);
-        Lutra::ResourceManager::Instance().SaveResource(getFolder(m_selectedPath) + "/" + name + ".rt", texture);
-    }
-
-    void ResourceWindow::createPlaneMesh(const std::string& name)
-    {
-        auto mesh = MeshBuilder::BuildPlane();
-        mesh->SetName(name);
-        Lutra::ResourceManager::Instance().SaveResource(getFolder(m_selectedPath) + "/" + name + ".mesh", mesh);
-    }
-
-    void ResourceWindow::createUnlitMaterial(const std::string& name)
-    {
-        auto material = MaterialBuilder::BuildUnlint();
-        material->SetName(name);
-        Lutra::ResourceManager::Instance().SaveResource(getFolder(m_selectedPath) + "/" + name + ".mat", material);
-    }
-
     void ResourceWindow::destroyResource(const std::filesystem::path& path)
     {
         bool isDirectory = std::filesystem::is_directory(path);
@@ -303,6 +254,7 @@ namespace LutraEditor {
         if (!isDirectory)
             Lutra::ResourceManager::Instance().DestroyResource(Lutra::ResourceManifest::Instance().FindUUID(path));
         std::filesystem::remove(path);
+        Lutra::ResourceManifest::Instance().Save(m_root + "/manifest.yaml");
     }
 
 }

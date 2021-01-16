@@ -87,60 +87,98 @@ namespace Lutra {
             glDetachShader(program, id);
             glDeleteShader(id);
         }
+        
+        GLint activeAttribs  = 0;
+        GLint activeUniforms = 0;
+        GLint max0, max1;
+        glGetProgramiv(m_id, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &max0);
+        glGetProgramiv(m_id, GL_ACTIVE_UNIFORM_MAX_LENGTH,   &max1);
+        glGetProgramiv(m_id, GL_ACTIVE_ATTRIBUTES, &activeAttribs);
+        glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS,   &activeUniforms);
+        
+        uint32_t maxLength = std::max(max0, max1);
+        char* name = new char[maxLength + 1];
+        
+        for (uint32_t i = 0; i < activeAttribs; ++i) {
+            GLint size;
+            GLenum type = 0;
+            glGetActiveAttrib(m_id, i, maxLength + 1, NULL, &size, &type, name);
+            GLint loc = glGetAttribLocation(m_id, name);
+            m_attributeMap[name] = loc;
+        }
+        
+        for (uint32_t i = 0; i < activeUniforms; ++i) {
+            GLenum gltype;
+            GLint num;
+            glGetActiveUniform(m_id, i, maxLength + 1, NULL, &num, &gltype, name);
+            GLint loc = glGetUniformLocation(m_id, name);
+            m_uniformMap[name] = loc;
+        }
+        
+        
+        delete [] name;
     }
 
-    void ProgramGL::Bind() const
+    void ProgramGL::Bind()
     {
         glUseProgram(m_id);
+        UpdateUsage();
     }
 
-    void ProgramGL::Unbind() const
+    void ProgramGL::Unbind()
     {
         glUseProgram(0);
     }
         
     void ProgramGL::SetUniform(const std::string& name, const float value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniform1fv(location, count, value);
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniform1fv(iter->second, count, value);
     }
 
     void ProgramGL::SetUniform(const std::string& name, const glm::vec2 value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniform2fv(location, count, glm::value_ptr(value[0]));
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniform2fv(iter->second, count, glm::value_ptr(value[0]));
     }
 
     void ProgramGL::SetUniform(const std::string& name, const glm::vec3 value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniform3fv(location, count, glm::value_ptr(value[0]));
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniform3fv(iter->second, count, glm::value_ptr(value[0]));
     }
 
     void ProgramGL::SetUniform(const std::string& name, const glm::vec4 value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniform4fv(location, count, glm::value_ptr(value[0]));
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniform4fv(iter->second, count, glm::value_ptr(value[0]));
     }
 
     void ProgramGL::SetUniform(const std::string& name, const glm::mat3 value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniformMatrix3fv(location, count, GL_FALSE, glm::value_ptr(value[0]));
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniformMatrix3fv(iter->second, count, GL_FALSE, glm::value_ptr(value[0]));
     }
 
     void ProgramGL::SetUniform(const std::string& name, const glm::mat4 value[], int count)
     {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniformMatrix4fv(location, count, GL_FALSE, glm::value_ptr(value[0]));
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniformMatrix4fv(iter->second, count, GL_FALSE, glm::value_ptr(value[0]));
     }
 
     void ProgramGL::SetSampler(const std::string& name, const std::shared_ptr<DeviceTexture>& tex, uint32_t slot)
-    {
-        GLint location = glGetUniformLocation(m_id, name.c_str());
-        glUniform1i(location, slot);
-        glActiveTexture(GL_TEXTURE0 + slot);
-        tex->Bind();
+    {   auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end()) {
+            glUniform1i(iter->second, slot);
+            glActiveTexture(GL_TEXTURE0 + slot);
+            tex->Bind();
+        }
     }
 
 }

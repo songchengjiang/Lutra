@@ -38,7 +38,7 @@ namespace Lutra {
         
         virtual std::shared_ptr<DeviceTexture> CreateTexture2D(int width, int height, DeviceTextureForamt format) override;
 
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vao, const GraphicState& state) override;
+        virtual void DrawIndexed(const GraphicState& state, DevicePrimitiveType type, uint32_t elementCount) override;
         
     };
 

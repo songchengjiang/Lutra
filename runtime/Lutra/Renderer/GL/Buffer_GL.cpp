@@ -28,12 +28,13 @@ namespace Lutra {
         glDeleteBuffers(1, &m_id);
     }
 
-    void VertexBufferGL::Bind() const
+    void VertexBufferGL::Bind()
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_id);
+        UpdateUsage();
     }
 
-    void VertexBufferGL::Unbind() const
+    void VertexBufferGL::Unbind()
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -58,12 +59,13 @@ namespace Lutra {
         glDeleteBuffers(1, &m_id);
     }
 
-    void IndexBufferGL::Bind() const
+    void IndexBufferGL::Bind()
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+        UpdateUsage();
     }
 
-    void IndexBufferGL::Unbind() const
+    void IndexBufferGL::Unbind()
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }

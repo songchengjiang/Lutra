@@ -81,6 +81,8 @@ namespace Lutra {
     class Texture2D : public Texture
     {
     public:
+        Texture2D();
+        Texture2D(uint32_t width, uint32_t height, TextureFormat format);
         ~Texture2D();
         
         virtual void Serialize(WriteStream& stream) override;
@@ -96,11 +98,6 @@ namespace Lutra {
         
     private:
         
-        Texture2D();
-        Texture2D(uint32_t width, uint32_t height, TextureFormat format);
-        friend class ResourceManager;
-    private:
-        
         TextureFormat m_format;
         uint32_t m_width;
         uint32_t m_height;
@@ -110,6 +107,8 @@ namespace Lutra {
     class RenderTexture : public Texture
     {
     public:
+        RenderTexture();
+        RenderTexture(uint32_t width, uint32_t height, TextureFormat colorFormat, TextureFormat depthFormat);
         ~RenderTexture();
         
         virtual void Serialize(WriteStream& stream) override;
@@ -125,11 +124,6 @@ namespace Lutra {
         void SetClearColor(const glm::vec4& color) { m_clearColor = color; }
         const glm::vec4& GetClearColor() const { return m_clearColor; }
         
-    private:
-        
-        RenderTexture();
-        RenderTexture(uint32_t width, uint32_t height, TextureFormat colorFormat, TextureFormat depthFormat);
-        friend class ResourceManager;
     private:
         
         TextureFormat m_colorFormat;

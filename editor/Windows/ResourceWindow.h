@@ -13,6 +13,7 @@
 #include <filesystem>
 #include "IconManager.h"
 #include "ResourceBrowserWidget.h"
+#include "TextureBuilder.h"
 
 namespace LutraEditor {
 
@@ -34,11 +35,9 @@ namespace LutraEditor {
         
         void onResourceClicked(const std::filesystem::path& path);
         void createFolder(const std::string& folder);
-        void createImageTexture(const std::string& name, const std::string& imagePath);
-        void createRenderTexture(const std::string& name, uint32_t width, uint32_t height);
-        void createPlaneMesh(const std::string& name);
-        void createUnlitMaterial(const std::string& name);
         
+        template<typename T, typename... Args>
+        void createResource(const std::string& fileName, Args&&... args);
         void destroyResource(const std::filesystem::path& path);
         
         std::string getFolder(const std::filesystem::path& path);
@@ -52,6 +51,18 @@ namespace LutraEditor {
         std::string m_root;
         std::filesystem::path m_selectedPath;
     };
+
+    template<typename T, typename... Args>
+    void ResourceWindow::createResource(const std::string& fileName, Args&&... args)
+    {
+        std::string path = getFolder(m_selectedPath) + "/" + fileName;
+        if (std::filesystem::exists(path))
+            return;
+        auto resource = T::Build(std::forward<Args>(args)...);
+        resource->SetName(fileName.substr(0, fileName.find_last_of('.')));
+        Lutra::ResourceManager::Instance().SaveResource(path, resource);
+        Lutra::ResourceManifest::Instance().Save(m_root + "/manifest.yaml");
+    }
 
 }
 

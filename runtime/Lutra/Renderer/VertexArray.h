@@ -7,6 +7,7 @@
 
 #ifndef VertexArray_hpp
 #define VertexArray_hpp
+#include "DeviceResource.h"
 
 #include <memory>
 
@@ -14,13 +15,14 @@ namespace Lutra {
 
     class VertexBuffer;
     class IndexBuffer;
-    class VertexArray
+    class Program;
+    class VertexArray : public DeviceResource
     {
     public:
         virtual ~VertexArray() = default;
 
-        virtual void Bind() const = 0;
-        virtual void Unbind() const = 0;
+        virtual void Bind(const std::shared_ptr<Program>& program) = 0;
+        virtual void Unbind() = 0;
 
         virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) = 0;
         virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;

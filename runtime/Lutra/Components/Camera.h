@@ -31,11 +31,15 @@ namespace Lutra {
         };
         
         ProjectionType ProjType{ProjectionType::Perspective};
-        float Fov{60.0f};
+        float Fov{30.0f};
         float AspectRadio{1.0f};
         float OrthographicSize{1.0f};
         float ZNear{1.0f};
-        float ZFar{100.0f};
+        float ZFar{20.0f};
+        
+        uint32_t VisibleMask{1};
+        
+        bool IsMain{true};
         
         Viewport Viewport_{0.0f, 0.0f, 1.0f, 1.0f};
         std::shared_ptr<RenderTexture> RenderTexture_;

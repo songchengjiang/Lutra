@@ -28,6 +28,8 @@
 		BE72AAC525A9AAA10024C494 /* PropertyWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAC325A9AAA10024C494 /* PropertyWindow.cpp */; };
 		BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AAC725A9AB140024C494 /* PropertyGUI.cpp */; };
 		BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */; };
+		BE97615D25B035FE00E984D5 /* CameraManipulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE97615B25B035FE00E984D5 /* CameraManipulator.cpp */; };
+		BE97616325B0ABD800E984D5 /* MathHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE97616125B0ABD800E984D5 /* MathHelper.cpp */; };
 		BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA358825A9EDC7001B8E38 /* IconManager.cpp */; };
 		BEFA35A425AAB240001B8E38 /* folder.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359425AA14E3001B8E38 /* folder.png */; };
 		BEFA35A525AAB240001B8E38 /* camera.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359525AA14E3001B8E38 /* camera.png */; };
@@ -99,6 +101,10 @@
 		BE72AAC825A9AB140024C494 /* PropertyGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyGUI.h; sourceTree = "<group>"; };
 		BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResourceWindow.cpp; sourceTree = "<group>"; };
 		BE72AAD025A9B4140024C494 /* ResourceWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceWindow.h; sourceTree = "<group>"; };
+		BE97615B25B035FE00E984D5 /* CameraManipulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraManipulator.cpp; sourceTree = "<group>"; };
+		BE97615C25B035FE00E984D5 /* CameraManipulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraManipulator.h; sourceTree = "<group>"; };
+		BE97616125B0ABD800E984D5 /* MathHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MathHelper.cpp; sourceTree = "<group>"; };
+		BE97616225B0ABD800E984D5 /* MathHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathHelper.h; sourceTree = "<group>"; };
 		BEFA358825A9EDC7001B8E38 /* IconManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IconManager.cpp; sourceTree = "<group>"; };
 		BEFA358925A9EDC7001B8E38 /* IconManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
 		BEFA359425AA14E3001B8E38 /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder.png; sourceTree = "<group>"; };
@@ -141,6 +147,7 @@
 		BE72AA5C25A848D90024C494 = {
 			isa = PBXGroup;
 			children = (
+				BE97616025B0AB9B00E984D5 /* Utils */,
 				BE41ED1B25AE9DF00067AC14 /* Builders */,
 				BEFA359225AA14E3001B8E38 /* Resources */,
 				BE72AACD25A9B0C30024C494 /* Propertys */,
@@ -193,6 +200,8 @@
 				BE72AAC425A9AAA10024C494 /* PropertyWindow.h */,
 				BE72AA9325A863640024C494 /* SceneWindow.cpp */,
 				BE72AA9425A863640024C494 /* SceneWindow.h */,
+				BE97615B25B035FE00E984D5 /* CameraManipulator.cpp */,
+				BE97615C25B035FE00E984D5 /* CameraManipulator.h */,
 				BE41ED3225AEEB220067AC14 /* GameWindow.cpp */,
 				BE41ED3325AEEB220067AC14 /* GameWindow.h */,
 				BE72AAAE25A99F3B0024C494 /* LogWindow.cpp */,
@@ -216,6 +225,15 @@
 				BE41ED0C25ADAB280067AC14 /* ResourceGUI.h */,
 			);
 			path = Propertys;
+			sourceTree = "<group>";
+		};
+		BE97616025B0AB9B00E984D5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BE97616125B0ABD800E984D5 /* MathHelper.cpp */,
+				BE97616225B0ABD800E984D5 /* MathHelper.h */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		BEFA359225AA14E3001B8E38 /* Resources */ = {
@@ -305,6 +323,7 @@
 				BE41ED2325AE9E170067AC14 /* MeshBuilder.cpp in Sources */,
 				BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */,
 				BE41ED1125ADB0460067AC14 /* TextureManager.cpp in Sources */,
+				BE97615D25B035FE00E984D5 /* CameraManipulator.cpp in Sources */,
 				BE41ED3425AEEB220067AC14 /* GameWindow.cpp in Sources */,
 				BE41ED0D25ADAB280067AC14 /* ResourceGUI.cpp in Sources */,
 				BE41ED3925AF0D250067AC14 /* SceneBuilder.cpp in Sources */,
@@ -312,6 +331,7 @@
 				BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */,
 				BE72AA7425A849770024C494 /* Application.cpp in Sources */,
 				BE41ED2825AE9E460067AC14 /* TextureBuilder.cpp in Sources */,
+				BE97616325B0ABD800E984D5 /* MathHelper.cpp in Sources */,
 				BE41ED1E25AE9E010067AC14 /* MaterialBuilder.cpp in Sources */,
 				BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */,
 				BE41ED2E25AEB3B20067AC14 /* ResourceBrowserWidget.cpp in Sources */,

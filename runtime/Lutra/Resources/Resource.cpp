@@ -17,7 +17,6 @@ namespace Lutra {
 
     Resource::~Resource()
     {
-        
     }
 
     void Resource::Serialize(WriteStream& stream)

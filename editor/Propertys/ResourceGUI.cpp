@@ -43,8 +43,9 @@ namespace LutraEditor {
     }
 
 
-    TextureGUI::TextureGUI(const std::shared_ptr<Lutra::Texture>& tex)
-    : m_texture(tex)
+    TextureGUI::TextureGUI(const std::shared_ptr<Lutra::Texture>& tex, const std::function<void()>& updateCallback)
+    : ResourceGUI(updateCallback)
+    , m_texture(tex)
     {
         if (m_texture->GetType() == Lutra::TextureType::TEX2D) {
             auto tex2D = static_cast<Lutra::Texture2D*>(m_texture.get());
@@ -54,6 +55,7 @@ namespace LutraEditor {
 
     void TextureGUI::OnGUI()
     {
+        bool isChanged = false;
         auto inputText = [](const std::string& name, const std::string& str){
             char buf[128] = {0};
             strncpy(buf, str.c_str(), str.size());
@@ -66,14 +68,17 @@ namespace LutraEditor {
             auto tex2D = static_cast<Lutra::Texture2D*>(m_texture.get());
             inputText("Format", FormatToString(tex2D->GetFormat()));
             ImGui::Separator();
-            ImGui::Image(reinterpret_cast<ImTextureID>(m_texID), {ImGui::GetContentRegionAvailWidth(), ImGui::GetContentRegionAvailWidth()});
+            ImGui::Image(reinterpret_cast<ImTextureID>(m_texID), {ImGui::GetContentRegionAvailWidth(), ImGui::GetContentRegionAvailWidth()}, {0, 1}, {1, 0});
         }else {
             auto renderTex = static_cast<Lutra::RenderTexture*>(m_texture.get());
             inputText("ColorFormat", FormatToString(renderTex->GetColorFormat()));
             inputText("DepthFormat", FormatToString(renderTex->GetDepthFormat()));
             glm::vec4 clearColor = renderTex->GetClearColor();
-            ImGui::ColorEdit4("ClearColor", &clearColor.x);
+            isChanged |= ImGui::ColorEdit4("ClearColor", &clearColor.x);
             renderTex->SetClearColor(clearColor);
+        }
+        if (isChanged && m_callback != nullptr) {
+            m_callback();
         }
     }
 
@@ -195,8 +200,8 @@ namespace LutraEditor {
                 }
             }
         }
-        if (isMaterialChanged && m_changedCallback != nullptr) {
-            m_changedCallback();
+        if (isMaterialChanged && m_callback != nullptr) {
+            m_callback();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Lutra {
         virtual void SetWrap(DeviceTextureWrap wrap) override;
         virtual DeviceTextureWrap GettWrap() const override { return m_wrap; }
 
-        virtual void Bind() const override;
+        virtual void Bind() override;
         
     private:
         uint32_t m_width, m_height;
