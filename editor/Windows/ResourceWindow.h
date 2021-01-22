@@ -13,7 +13,8 @@
 #include <filesystem>
 #include "IconManager.h"
 #include "ResourceBrowserWidget.h"
-#include "TextureBuilder.h"
+#include "Blueprints/MaterialGraphicEditor.h"
+#include "Builders/TextureBuilder.h"
 
 namespace LutraEditor {
 
@@ -22,7 +23,7 @@ namespace LutraEditor {
     class ResourceWindow : public GUIWindow
     {
     public:
-        ResourceWindow(const std::string& root, PropertyWindow* propertyWindow);
+        ResourceWindow(const std::shared_ptr<Lutra::Scene>& scene, const std::string& root, PropertyWindow* propertyWindow);
         virtual ~ResourceWindow();
         
         virtual void Open() override;
@@ -46,8 +47,10 @@ namespace LutraEditor {
         
         bool m_isOpen = false;
         bool m_isOpenAddResource = false;
+        std::shared_ptr<Lutra::Scene>   m_scene;
         PropertyWindow* m_propertyWindow;
         ResourceBrowserWidget m_browserWidget;
+        std::unique_ptr<MaterialGraphicEditor> m_materialGraphicEditor;
         std::string m_root;
         std::filesystem::path m_selectedPath;
     };

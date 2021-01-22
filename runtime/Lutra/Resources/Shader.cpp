@@ -36,6 +36,18 @@ namespace Lutra {
         }
     }
 
+    void Shader::SetBool(const std::string& name, bool value)
+    {
+        m_valueMap[name].Type_ = ShaderValue::Type::Bool;
+        m_valueMap[name].Value_.b = value;
+    }
+
+    void Shader::SetInt(const std::string& name, int value)
+    {
+        m_valueMap[name].Type_ = ShaderValue::Type::Int;
+        m_valueMap[name].Value_.i = value;
+    }
+
     void Shader::SetFloat(const std::string& name, float value)
     {
         m_valueMap[name].Type_ = ShaderValue::Type::Float;

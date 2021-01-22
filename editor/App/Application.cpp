@@ -74,14 +74,14 @@ namespace LutraEditor {
     {
         onGUIInit();
         
-        IconManager::Instance().LoadTextue(IconType::Folder, "Resources/Icons/folder.png");
-        IconManager::Instance().LoadTextue(IconType::Texture, "Resources/Icons/image.png");
-        IconManager::Instance().LoadTextue(IconType::Material, "Resources/Icons/material.png");
-        IconManager::Instance().LoadTextue(IconType::Mesh, "Resources/Icons/mesh.png");
-        IconManager::Instance().LoadTextue(IconType::Camera, "Resources/Icons/camera.png");
-        IconManager::Instance().LoadTextue(IconType::SceneObject, "Resources/Icons/object.png");
-        IconManager::Instance().LoadTextue(IconType::Tag, "Resources/Icons/tag.png");
-        IconManager::Instance().LoadTextue(IconType::Square, "Resources/Icons/square.png");
+        IconManager::Instance().LoadTextue(IconType::Folder, "Resources/folder.png");
+        IconManager::Instance().LoadTextue(IconType::Texture, "Resources/image.png");
+        IconManager::Instance().LoadTextue(IconType::Material, "Resources/material.png");
+        IconManager::Instance().LoadTextue(IconType::Mesh, "Resources/mesh.png");
+        IconManager::Instance().LoadTextue(IconType::Camera, "Resources/camera.png");
+        IconManager::Instance().LoadTextue(IconType::SceneObject, "Resources/object.png");
+        IconManager::Instance().LoadTextue(IconType::Tag, "Resources/tag.png");
+        IconManager::Instance().LoadTextue(IconType::Square, "Resources/square.png");
     }
 
     void Application::onUpdate(double frameTime)
@@ -286,7 +286,7 @@ namespace LutraEditor {
         propertyWindow->Open();
         m_guiWindows.emplace_back(propertyWindow);
         
-        auto resourceWindow = new ResourceWindow(path, propertyWindow);
+        auto resourceWindow = new ResourceWindow(m_scene, path, propertyWindow);
         resourceWindow->Open();
         m_guiWindows.emplace_back(resourceWindow);
         

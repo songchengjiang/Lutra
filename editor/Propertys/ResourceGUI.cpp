@@ -64,6 +64,16 @@ namespace LutraEditor {
         inputText("Width", std::to_string(m_texture->GetWidth()));
         inputText("Height", std::to_string(m_texture->GetHeight()));
         
+        const char *filterMode[] = {"Linear", "Nearest"};
+        int currentItem = (int)m_texture->GetFilter();
+        isChanged |= ImGui::Combo("FilterMode", &currentItem, filterMode, IM_ARRAYSIZE(filterMode));
+        m_texture->SetFilter((Lutra::TextureFilter)currentItem);
+        
+        const char *wrapMode[] = {"Clamp", "Repeat"};
+        currentItem = (int)m_texture->GetWrap();
+        isChanged |= ImGui::Combo("WrapMode", &currentItem, wrapMode, IM_ARRAYSIZE(wrapMode));
+        m_texture->SetWrap((Lutra::TextureWrap)currentItem);
+        
         if (m_texture->GetType() == Lutra::TextureType::TEX2D) {
             auto tex2D = static_cast<Lutra::Texture2D*>(m_texture.get());
             inputText("Format", FormatToString(tex2D->GetFormat()));
@@ -77,6 +87,7 @@ namespace LutraEditor {
             isChanged |= ImGui::ColorEdit4("ClearColor", &clearColor.x);
             renderTex->SetClearColor(clearColor);
         }
+        
         if (isChanged && m_callback != nullptr) {
             m_callback();
         }
@@ -126,7 +137,7 @@ namespace LutraEditor {
                 isMaterialChanged |= ImGui::Combo("BlendMode", &currentItem, blendModes, IM_ARRAYSIZE(blendModes));
                 pass->GetBlendMode() = (Lutra::BlendMode)currentItem;
                 
-                const char *cullFaces[] = {"Front", "Back", "ScFrontAndBackreen"};
+                const char *cullFaces[] = {"Front", "Back", "FrontAndBack"};
                 currentItem = (int)pass->GetCullMode();
                 isMaterialChanged |= ImGui::Combo("CullMode", &currentItem, cullFaces, IM_ARRAYSIZE(cullFaces));
                 pass->GetCullMode() = (Lutra::CullMode)currentItem;
@@ -135,24 +146,38 @@ namespace LutraEditor {
                 
                 for (auto& uniform : pass->GetShader().GetValues()) {
                     switch (uniform.second.Type_) {
+                        case Lutra::ShaderValue::Bool:
+                        {
+                            bool value = uniform.second.Value_.b;
+                            isMaterialChanged |= ImGui::Checkbox(uniform.first.c_str(), &value);
+                            pass->GetShader().SetBool(uniform.first, value);
+                        }
+                            break;
+                        case Lutra::ShaderValue::Int:
+                        {
+                            int value = uniform.second.Value_.i;
+                            isMaterialChanged |= ImGui::DragInt(uniform.first.c_str(), &value);
+                            pass->GetShader().SetInt(uniform.first, value);
+                        }
+                            break;
                         case Lutra::ShaderValue::Float:
                         {
                             float value = uniform.second.Value_.v1;
-                            isMaterialChanged |= ImGui::SliderFloat(uniform.first.c_str(), &value, 0.0f, 1.0f);
+                            isMaterialChanged |= ImGui::DragFloat(uniform.first.c_str(), &value, 0.1f);
                             pass->GetShader().SetFloat(uniform.first, value);
                         }
                             break;
                         case Lutra::ShaderValue::Float2:
                         {
                             glm::vec2 value = uniform.second.Value_.v2;
-                            isMaterialChanged |= ImGui::SliderFloat2(uniform.first.c_str(), &value.x, 0.0f, 1.0f);
+                            isMaterialChanged |= ImGui::DragFloat2(uniform.first.c_str(), &value.x, 0.1f);
                             pass->GetShader().SetFloat2(uniform.first, value);
                         }
                             break;
                         case Lutra::ShaderValue::Float3:
                         {
                             glm::vec3 value = uniform.second.Value_.v3;
-                            isMaterialChanged |= ImGui::SliderFloat3(uniform.first.c_str(), &value.x, 0.0f, 1.0f);
+                            isMaterialChanged |= ImGui::DragFloat3(uniform.first.c_str(), &value.x, 0.1f);
                             pass->GetShader().SetFloat3(uniform.first, value);
                         }
                             break;

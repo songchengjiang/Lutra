@@ -13,6 +13,7 @@
 #include <map>
 #include <functional>
 #include "RenderDevice.h"
+#include "Scene/Timestep.h"
 
 namespace Lutra {
 
@@ -55,7 +56,7 @@ namespace Lutra {
         
         void Finish();
         
-        void Begin();
+        void Begin(Timestep time);
         void End();
     
     private:
@@ -76,6 +77,7 @@ namespace Lutra {
         std::shared_ptr<DeviceTexture> getDeviceTextureBy(Texture* tex);
         
         void drawCommand(const RenderCommand& cmd);
+        void updateInternalUniforms(const RenderCommand& cmd, Program* program);
         
     private:
         
@@ -88,6 +90,9 @@ namespace Lutra {
         std::unordered_map<std::size_t, std::shared_ptr<Program>>       m_programList;
         std::unordered_map<std::size_t, std::shared_ptr<DeviceTexture>> m_deviceTextureList;
         std::unordered_map<std::size_t, std::shared_ptr<FrameBuffer>>   m_frameBufferList;
+        
+        float m_deltaTime{0.0f};
+        float m_elapsedTime{0.0f};
     };
 
 }

@@ -30,6 +30,18 @@
 		BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE72AACF25A9B4140024C494 /* ResourceWindow.cpp */; };
 		BE97615D25B035FE00E984D5 /* CameraManipulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE97615B25B035FE00E984D5 /* CameraManipulator.cpp */; };
 		BE97616325B0ABD800E984D5 /* MathHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE97616125B0ABD800E984D5 /* MathHelper.cpp */; };
+		BED2AD3225B548EE00996C55 /* MaterialGraphicEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BED2AD3025B548EE00996C55 /* MaterialGraphicEditor.cpp */; };
+		BED2AD3D25B55FC100996C55 /* builders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BED2AD3725B55FC100996C55 /* builders.cpp */; };
+		BED2AD3E25B55FC100996C55 /* drawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BED2AD3925B55FC100996C55 /* drawing.cpp */; };
+		BED2AD3F25B55FC100996C55 /* widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BED2AD3B25B55FC100996C55 /* widgets.cpp */; };
+		BED2AD4325B561A200996C55 /* BlueprintBackground.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BED2AD4225B5619300996C55 /* BlueprintBackground.png */; };
+		BED2AD4725B5656600996C55 /* Blueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BED2AD4525B5656600996C55 /* Blueprint.cpp */; };
+		BEEAAC8F25B6D1A300C23CFF /* BlueprintNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAAC8D25B6D1A300C23CFF /* BlueprintNode.cpp */; };
+		BEEAAC9325B6D23D00C23CFF /* MaterialNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAAC9125B6D23D00C23CFF /* MaterialNode.cpp */; };
+		BEEAAC9925B6EADE00C23CFF /* BlueprintFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAAC9725B6EADE00C23CFF /* BlueprintFactory.cpp */; };
+		BEEAAC9E25B6F20100C23CFF /* MaterialNodeFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAAC9C25B6F20100C23CFF /* MaterialNodeFactory.cpp */; };
+		BEEAACA325B730D500C23CFF /* BlueprintVM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAACA125B730D500C23CFF /* BlueprintVM.cpp */; };
+		BEEAACA725B733CA00C23CFF /* Varient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEAACA525B733CA00C23CFF /* Varient.cpp */; };
 		BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEFA358825A9EDC7001B8E38 /* IconManager.cpp */; };
 		BEFA35A425AAB240001B8E38 /* folder.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359425AA14E3001B8E38 /* folder.png */; };
 		BEFA35A525AAB240001B8E38 /* camera.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEFA359525AA14E3001B8E38 /* camera.png */; };
@@ -44,9 +56,10 @@
 		BE72AA6325A848D90024C494 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
-			dstPath = Resources/Icons;
+			dstPath = Resources;
 			dstSubfolderSpec = 6;
 			files = (
+				BED2AD4325B561A200996C55 /* BlueprintBackground.png in CopyFiles */,
 				BE41ED0925AD7A380067AC14 /* material.png in CopyFiles */,
 				BEFA35AD25AABBC5001B8E38 /* square.png in CopyFiles */,
 				BEFA35AE25AABBC5001B8E38 /* tag.png in CopyFiles */,
@@ -105,6 +118,29 @@
 		BE97615C25B035FE00E984D5 /* CameraManipulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraManipulator.h; sourceTree = "<group>"; };
 		BE97616125B0ABD800E984D5 /* MathHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MathHelper.cpp; sourceTree = "<group>"; };
 		BE97616225B0ABD800E984D5 /* MathHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathHelper.h; sourceTree = "<group>"; };
+		BED2AD3025B548EE00996C55 /* MaterialGraphicEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialGraphicEditor.cpp; sourceTree = "<group>"; };
+		BED2AD3125B548EE00996C55 /* MaterialGraphicEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialGraphicEditor.h; sourceTree = "<group>"; };
+		BED2AD3725B55FC100996C55 /* builders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = builders.cpp; sourceTree = "<group>"; };
+		BED2AD3825B55FC100996C55 /* builders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = builders.h; sourceTree = "<group>"; };
+		BED2AD3925B55FC100996C55 /* drawing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawing.cpp; sourceTree = "<group>"; };
+		BED2AD3A25B55FC100996C55 /* drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawing.h; sourceTree = "<group>"; };
+		BED2AD3B25B55FC100996C55 /* widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = widgets.cpp; sourceTree = "<group>"; };
+		BED2AD3C25B55FC100996C55 /* widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = widgets.h; sourceTree = "<group>"; };
+		BED2AD4225B5619300996C55 /* BlueprintBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueprintBackground.png; sourceTree = "<group>"; };
+		BED2AD4525B5656600996C55 /* Blueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Blueprint.cpp; sourceTree = "<group>"; };
+		BED2AD4625B5656600996C55 /* Blueprint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blueprint.h; sourceTree = "<group>"; };
+		BEEAAC8D25B6D1A300C23CFF /* BlueprintNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintNode.cpp; sourceTree = "<group>"; };
+		BEEAAC8E25B6D1A300C23CFF /* BlueprintNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueprintNode.h; sourceTree = "<group>"; };
+		BEEAAC9125B6D23D00C23CFF /* MaterialNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialNode.cpp; sourceTree = "<group>"; };
+		BEEAAC9225B6D23D00C23CFF /* MaterialNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialNode.h; sourceTree = "<group>"; };
+		BEEAAC9725B6EADE00C23CFF /* BlueprintFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintFactory.cpp; sourceTree = "<group>"; };
+		BEEAAC9825B6EADE00C23CFF /* BlueprintFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueprintFactory.h; sourceTree = "<group>"; };
+		BEEAAC9C25B6F20100C23CFF /* MaterialNodeFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialNodeFactory.cpp; sourceTree = "<group>"; };
+		BEEAAC9D25B6F20100C23CFF /* MaterialNodeFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialNodeFactory.h; sourceTree = "<group>"; };
+		BEEAACA125B730D500C23CFF /* BlueprintVM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintVM.cpp; sourceTree = "<group>"; };
+		BEEAACA225B730D500C23CFF /* BlueprintVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueprintVM.h; sourceTree = "<group>"; };
+		BEEAACA525B733CA00C23CFF /* Varient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Varient.cpp; sourceTree = "<group>"; };
+		BEEAACA625B733CA00C23CFF /* Varient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Varient.h; sourceTree = "<group>"; };
 		BEFA358825A9EDC7001B8E38 /* IconManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IconManager.cpp; sourceTree = "<group>"; };
 		BEFA358925A9EDC7001B8E38 /* IconManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
 		BEFA359425AA14E3001B8E38 /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder.png; sourceTree = "<group>"; };
@@ -147,6 +183,7 @@
 		BE72AA5C25A848D90024C494 = {
 			isa = PBXGroup;
 			children = (
+				BED2AD2F25B548A300996C55 /* Blueprints */,
 				BE97616025B0AB9B00E984D5 /* Utils */,
 				BE41ED1B25AE9DF00067AC14 /* Builders */,
 				BEFA359225AA14E3001B8E38 /* Resources */,
@@ -236,9 +273,55 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		BED2AD2F25B548A300996C55 /* Blueprints */ = {
+			isa = PBXGroup;
+			children = (
+				BED2AD3625B55FC100996C55 /* utilities */,
+				BED2AD3025B548EE00996C55 /* MaterialGraphicEditor.cpp */,
+				BED2AD3125B548EE00996C55 /* MaterialGraphicEditor.h */,
+				BEEAAC9C25B6F20100C23CFF /* MaterialNodeFactory.cpp */,
+				BEEAAC9D25B6F20100C23CFF /* MaterialNodeFactory.h */,
+				BEEAAC9125B6D23D00C23CFF /* MaterialNode.cpp */,
+				BEEAAC9225B6D23D00C23CFF /* MaterialNode.h */,
+				BED2AD4525B5656600996C55 /* Blueprint.cpp */,
+				BED2AD4625B5656600996C55 /* Blueprint.h */,
+				BEEAAC8D25B6D1A300C23CFF /* BlueprintNode.cpp */,
+				BEEAAC8E25B6D1A300C23CFF /* BlueprintNode.h */,
+				BEEAAC9725B6EADE00C23CFF /* BlueprintFactory.cpp */,
+				BEEAAC9825B6EADE00C23CFF /* BlueprintFactory.h */,
+				BEEAACA125B730D500C23CFF /* BlueprintVM.cpp */,
+				BEEAACA225B730D500C23CFF /* BlueprintVM.h */,
+				BEEAACA525B733CA00C23CFF /* Varient.cpp */,
+				BEEAACA625B733CA00C23CFF /* Varient.h */,
+			);
+			path = Blueprints;
+			sourceTree = "<group>";
+		};
+		BED2AD3625B55FC100996C55 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BED2AD3725B55FC100996C55 /* builders.cpp */,
+				BED2AD3825B55FC100996C55 /* builders.h */,
+				BED2AD3925B55FC100996C55 /* drawing.cpp */,
+				BED2AD3A25B55FC100996C55 /* drawing.h */,
+				BED2AD3B25B55FC100996C55 /* widgets.cpp */,
+				BED2AD3C25B55FC100996C55 /* widgets.h */,
+			);
+			path = utilities;
+			sourceTree = "<group>";
+		};
+		BED2AD4125B5615A00996C55 /* Blueprints */ = {
+			isa = PBXGroup;
+			children = (
+				BED2AD4225B5619300996C55 /* BlueprintBackground.png */,
+			);
+			path = Blueprints;
+			sourceTree = "<group>";
+		};
 		BEFA359225AA14E3001B8E38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BED2AD4125B5615A00996C55 /* Blueprints */,
 				BEFA359325AA14E3001B8E38 /* Icons */,
 				BE41ED3D25AF1EDA0067AC14 /* ResourceID.h */,
 			);
@@ -318,7 +401,10 @@
 			files = (
 				BE72AAC525A9AAA10024C494 /* PropertyWindow.cpp in Sources */,
 				BE72AA9A25A8AA550024C494 /* ComponentGUI.cpp in Sources */,
+				BEEAAC9925B6EADE00C23CFF /* BlueprintFactory.cpp in Sources */,
+				BEEAAC9325B6D23D00C23CFF /* MaterialNode.cpp in Sources */,
 				BE72AA9525A863640024C494 /* SceneWindow.cpp in Sources */,
+				BEEAACA325B730D500C23CFF /* BlueprintVM.cpp in Sources */,
 				BE72AA7925A849D20024C494 /* main.cpp in Sources */,
 				BE41ED2325AE9E170067AC14 /* MeshBuilder.cpp in Sources */,
 				BE72AAD125A9B4140024C494 /* ResourceWindow.cpp in Sources */,
@@ -326,17 +412,25 @@
 				BE97615D25B035FE00E984D5 /* CameraManipulator.cpp in Sources */,
 				BE41ED3425AEEB220067AC14 /* GameWindow.cpp in Sources */,
 				BE41ED0D25ADAB280067AC14 /* ResourceGUI.cpp in Sources */,
+				BEEAAC8F25B6D1A300C23CFF /* BlueprintNode.cpp in Sources */,
 				BE41ED3925AF0D250067AC14 /* SceneBuilder.cpp in Sources */,
 				BE72AA8D25A853EB0024C494 /* ProjectWindow.cpp in Sources */,
 				BE72AAC925A9AB140024C494 /* PropertyGUI.cpp in Sources */,
 				BE72AA7425A849770024C494 /* Application.cpp in Sources */,
 				BE41ED2825AE9E460067AC14 /* TextureBuilder.cpp in Sources */,
+				BED2AD4725B5656600996C55 /* Blueprint.cpp in Sources */,
+				BED2AD3D25B55FC100996C55 /* builders.cpp in Sources */,
+				BEEAACA725B733CA00C23CFF /* Varient.cpp in Sources */,
+				BED2AD3E25B55FC100996C55 /* drawing.cpp in Sources */,
 				BE97616325B0ABD800E984D5 /* MathHelper.cpp in Sources */,
 				BE41ED1E25AE9E010067AC14 /* MaterialBuilder.cpp in Sources */,
 				BEFA358A25A9EDC7001B8E38 /* IconManager.cpp in Sources */,
 				BE41ED2E25AEB3B20067AC14 /* ResourceBrowserWidget.cpp in Sources */,
 				BE72AA8725A8527D0024C494 /* GUIWindow.cpp in Sources */,
+				BED2AD3225B548EE00996C55 /* MaterialGraphicEditor.cpp in Sources */,
+				BED2AD3F25B55FC100996C55 /* widgets.cpp in Sources */,
 				BE72AAB025A99F3B0024C494 /* LogWindow.cpp in Sources */,
+				BEEAAC9E25B6F20100C23CFF /* MaterialNodeFactory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

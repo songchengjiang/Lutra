@@ -27,7 +27,7 @@ namespace Lutra {
 
     void Engine::OnUpdateFrame(Timestep time)
     {
-        m_graphic.Begin();
+        m_graphic.Begin(time);
         FrameContext context{time};
         for (auto& scene : m_sceneList) {
             scene->OnUpdate(context, m_graphic);

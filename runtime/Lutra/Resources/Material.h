@@ -24,6 +24,7 @@ namespace Lutra {
         virtual void Deserialize(ReadStream& stream) override;
         
         void AddPass(const std::shared_ptr<Pass>& pass);
+        void SetPass(size_t idx, const std::shared_ptr<Pass>& pass);
         
         std::shared_ptr<Pass>& GetPass(size_t idx) {
             LT_CORE_ASSERT(idx < m_passList.size(), "Out Of Range!");

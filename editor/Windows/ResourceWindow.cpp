@@ -17,10 +17,11 @@
 
 namespace LutraEditor {
 
-    ResourceWindow::ResourceWindow(const std::string& root, PropertyWindow* propertyWindow)
-    : m_root(root)
+    ResourceWindow::ResourceWindow(const std::shared_ptr<Lutra::Scene>& scene, const std::string& root, PropertyWindow* propertyWindow)
+    : m_scene(scene)
+    , m_root(root)
     , m_propertyWindow(propertyWindow)
-    , m_browserWidget(root, {{".tex", IconType::Texture}, {".rt", IconType::Texture}, {".mat", IconType::Material}, {".mesh", IconType::Mesh}})
+    , m_browserWidget(root, {{".tex", IconType::Texture}, {".rt", IconType::Texture}, {".mat", IconType::Material}, {".gmat", IconType::Material}, {".mesh", IconType::Mesh}})
     {
         m_browserWidget.SetClickItemCallback(std::bind(&ResourceWindow::onResourceClicked, this, std::placeholders::_1));
         Lutra::ResourceManifest::Instance().SetRootDirectoty(root);
@@ -187,6 +188,9 @@ namespace LutraEditor {
         }
         showMainPopup();
         
+        if (m_materialGraphicEditor != nullptr)
+            m_materialGraphicEditor->OnGUI(width, height);
+        
         ImGui::End();
     }
 
@@ -202,6 +206,10 @@ namespace LutraEditor {
             }
             if (ImGui::MenuItem("Add")) {
                 m_isOpenAddResource = true;
+            }
+            if (m_selectedPath.extension() == ".mat" && ImGui::MenuItem("Edit")) {
+                m_materialGraphicEditor.reset(new MaterialGraphicEditor(m_scene, Lutra::ResourceManager::Instance().LoadResource<Lutra::Material>(m_selectedPath)));
+                m_materialGraphicEditor->Open();
             }
             ImGui::EndPopup();
         }

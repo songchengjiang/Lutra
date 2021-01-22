@@ -198,6 +198,44 @@ namespace Lutra {
         m_renderQueue[queueType].push_back({mesh, material, camera, submesh, passID, modelMatrix, distanceToCamera.z / distanceToCamera.w});
     }
 
+    void Graphic::updateInternalUniforms(const RenderCommand& cmd, Program* program)
+    {
+        glm::mat4 mv = cmd.Camera_->ViewMat * cmd.ModelMatrix;
+        
+        if (program->IsUniformActived("u_ModelViewMat")) {
+            program->SetUniform("u_ModelViewMat", &mv, 1);
+        }
+        
+        if (program->IsUniformActived("u_NormalMat")) {
+            glm::mat3 normal{mv};
+            normal = glm::transpose(glm::inverse(normal));
+            program->SetUniform("u_NormalMat", &normal, 1);
+        }
+        
+        if (program->IsUniformActived("u_ModelViewProjMat")) {
+            glm::mat4 mvp = cmd.Camera_->ProjectMat * mv;
+            program->SetUniform("u_ModelViewProjMat", &mvp, 1);
+        }
+        
+        if (program->IsUniformActived("u_ModelMat")) {
+            program->SetUniform("u_ModelMat", &cmd.ModelMatrix, 1);
+        }
+        
+        if (program->IsUniformActived("u_ViewProjMat")) {
+            glm::mat4 vp = cmd.Camera_->ProjectMat * cmd.Camera_->ViewMat;
+            program->SetUniform("u_ViewProjMat", &vp, 1);
+        }
+        
+        if (program->IsUniformActived("u_NormalWorldMat")) {
+            glm::mat3 normalWorld{cmd.ModelMatrix};
+            normalWorld = glm::transpose(glm::inverse(normalWorld));
+            program->SetUniform("u_NormalWorldMat", &normalWorld, 1);
+        }
+        
+        program->SetUniform("u_DeltaTime", &m_deltaTime, 1);
+        program->SetUniform("u_ElapsedTime", &m_elapsedTime, 1);
+    }
+
     void Graphic::drawCommand(const RenderCommand& cmd)
     {
         auto VAO = getVertexArray(cmd.Mesh_, cmd.SubMesh);
@@ -208,6 +246,14 @@ namespace Lutra {
         uint32_t texUnit = 0;
         for (auto &value : cmd.Material_->GetPass(0)->GetShader().GetValues()) {
             switch (value.second.Type_) {
+                case ShaderValue::Type::Bool: {
+                    int toInt = value.second.Value_.b;
+                    program->SetUniform(value.first, &toInt, 1);
+                }
+                    break;
+                case ShaderValue::Type::Int:
+                    program->SetUniform(value.first, &value.second.Value_.i, 1);
+                    break;
                 case ShaderValue::Type::Float:
                     program->SetUniform(value.first, &value.second.Value_.v1, 1);
                     break;
@@ -236,19 +282,7 @@ namespace Lutra {
             }
         }
         
-        glm::mat4 mv = cmd.Camera_->ViewMat * cmd.ModelMatrix;
-        glm::mat4 mvp = cmd.Camera_->ProjectMat * mv;
-        program->SetUniform("u_ModelViewProjMat", &mvp, 1);
-        
-        program->SetUniform("u_ModelViewMat", &mv, 1);
-        
-        glm::mat3 normalWorld{cmd.ModelMatrix};
-        normalWorld = glm::transpose(glm::inverse(normalWorld));
-        program->SetUniform("u_NormalWorldMat", &normalWorld, 1);
-        
-        glm::mat3 normal{mv};
-        normal = glm::transpose(glm::inverse(normal));
-        program->SetUniform("u_NormalMat", &normal, 1);
+        updateInternalUniforms(cmd, program.get());
         
         auto& pass = cmd.Material_->GetPass(cmd.Pass);
         m_renderDevice->DrawIndexed({(GraphicBlendMode)pass->GetBlendMode(),
@@ -275,9 +309,10 @@ namespace Lutra {
         m_renderQueue.clear();
     }
 
-    void Graphic::Begin()
+    void Graphic::Begin(Timestep time)
     {
-        
+        m_deltaTime = time.GetSeconds();
+        m_elapsedTime += m_deltaTime;
     }
 
     template<typename T>

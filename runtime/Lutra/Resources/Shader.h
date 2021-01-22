@@ -19,6 +19,8 @@ namespace Lutra {
     {
         enum Type
         {
+            Bool = 0,
+            Int,
             Float,
             Float2,
             Float3,
@@ -30,6 +32,8 @@ namespace Lutra {
         
         union Value
         {
+            bool      b;
+            int       i;
             float     v1;
             glm::vec2 v2;
             glm::vec3 v3;
@@ -51,6 +55,8 @@ namespace Lutra {
 
         Shader(const Shader& other) = default;
         
+        void SetBool(const std::string& name, bool value);
+        void SetInt(const std::string& name, int value);
         void SetFloat(const std::string& name, float value);
         void SetFloat2(const std::string& name, const glm::vec2& value);
         void SetFloat3(const std::string& name, const glm::vec3& value);
@@ -59,6 +65,8 @@ namespace Lutra {
         void SetMat3(const std::string& name, const glm::mat3& value);
         void SetMat4(const std::string& name, const glm::mat4& value);
         
+        bool GetBool(const std::string& name) { return m_valueMap[name].Value_.b; }
+        int GetInt(const std::string& name) { return m_valueMap[name].Value_.i; }
         float GetFloat(const std::string& name) { return m_valueMap[name].Value_.v1; }
         glm::vec2 GetFloat2(const std::string& name) { return m_valueMap[name].Value_.v2; }
         glm::vec3 GetFloat3(const std::string& name) { return m_valueMap[name].Value_.v3; }

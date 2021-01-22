@@ -36,10 +36,12 @@ namespace Lutra {
                     stream.WriteValue("Type", (int)value.second.Type_);
                     stream.WriteValue("Name", value.first);
                     switch (value.second.Type_) {
+                        case ShaderValue::Type::Bool: stream.WriteValue("Value", value.second.Value_.b); break;
+                        case ShaderValue::Type::Int: stream.WriteValue("Value", value.second.Value_.i); break;
                         case ShaderValue::Type::Float: stream.WriteValue("Value", value.second.Value_.v1); break;
                         case ShaderValue::Type::Float2: stream.WriteValue("Value", value.second.Value_.v2); break;
                         case ShaderValue::Type::Float3: stream.WriteValue("Value", value.second.Value_.v3); break;
-                        case ShaderValue::Type::Float4: stream.WriteValue("Value", value.second.Value_.v3); break;
+                        case ShaderValue::Type::Float4: stream.WriteValue("Value", value.second.Value_.v4); break;
                         case ShaderValue::Type::Sampler: stream.WriteValue("Value", (*value.second.Value_.tex) != nullptr? (*value.second.Value_.tex)->GetUUID().str(): ""); break;
                         case ShaderValue::Type::Mat3: stream.WriteValue("Value", *value.second.Value_.m3); break;
                         case ShaderValue::Type::Mat4: stream.WriteValue("Value", *value.second.Value_.m4); break;
@@ -81,6 +83,20 @@ namespace Lutra {
                     std::string name;
                     stream.ReadValue("Name", name);
                     switch ((ShaderValue::Type)type) {
+                        case ShaderValue::Type::Bool:
+                        {
+                            bool value;
+                            stream.ReadValue("Value", value);
+                            pass->GetShader().SetInt(name, value);
+                        }
+                            break;
+                        case ShaderValue::Type::Int:
+                        {
+                            int value;
+                            stream.ReadValue("Value", value);
+                            pass->GetShader().SetInt(name, value);
+                        }
+                            break;
                         case ShaderValue::Type::Float:
                         {
                             float value;
@@ -146,6 +162,11 @@ namespace Lutra {
     void Material::AddPass(const std::shared_ptr<Pass>& pass)
     {
         m_passList.push_back(pass);
+    }
+
+    void Material::SetPass(size_t idx, const std::shared_ptr<Pass>& pass)
+    {
+        m_passList[idx] = pass;
     }
 
 }

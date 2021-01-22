@@ -14,7 +14,7 @@ namespace Lutra {
     class ResourceFactory
     {
     public:
-        
+        virtual ~ResourceFactory() = default;
         virtual std::shared_ptr<Resource> Create() = 0;
     };
 

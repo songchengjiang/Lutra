@@ -28,6 +28,8 @@ namespace LutraEditor {
 
     void CameraManipulator::Update(uint32_t width, uint32_t height)
     {
+        if (!ImGui::IsWindowHovered())
+            return;
         if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
             m_g0 = m_g1 = UnitMouseCoordinate(ImGui::GetMousePos(), {width, height});
         }
@@ -39,9 +41,7 @@ namespace LutraEditor {
             rotateCamera(m_g0, m_g1);
         }
         
-        if (ImGui::IsWindowHovered()) {
-            zoomCamera(-ImGui::GetIO().MouseWheel);
-        }
+        zoomCamera(-ImGui::GetIO().MouseWheel);
     }
 
     void CameraManipulator::updateCamera()

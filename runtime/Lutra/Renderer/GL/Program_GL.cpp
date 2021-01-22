@@ -46,6 +46,8 @@ namespace Lutra {
                 glDeleteShader(shader);
 
                 LT_CORE_ASSERT(false, "Shader compilation failure!");
+                printf("%s\n", infoLog.data());
+                printf("Shader - \n%s\n", sourceCStr);
             }
 
             glAttachShader(program, shader);
@@ -129,6 +131,13 @@ namespace Lutra {
     {
         glUseProgram(0);
     }
+
+    void ProgramGL::SetUniform(const std::string& name, const int value[], int count)
+    {
+        auto iter = m_uniformMap.find(name);
+        if (iter != m_uniformMap.end())
+            glUniform1iv(iter->second, count, value);
+    }
         
     void ProgramGL::SetUniform(const std::string& name, const float value[], int count)
     {
@@ -170,6 +179,12 @@ namespace Lutra {
         auto iter = m_uniformMap.find(name);
         if (iter != m_uniformMap.end())
             glUniformMatrix4fv(iter->second, count, GL_FALSE, glm::value_ptr(value[0]));
+    }
+
+    bool ProgramGL::IsUniformActived(const std::string& name)
+    {
+        auto iter = m_uniformMap.find(name);
+        return iter != m_uniformMap.end();
     }
 
     void ProgramGL::SetSampler(const std::string& name, const std::shared_ptr<DeviceTexture>& tex, uint32_t slot)
